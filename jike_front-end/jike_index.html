@@ -1,0 +1,558 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>集课-JIKE</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="icon" type="image/png" href="myicon.png">
+
+        <!-- Raleway Google fonts  -->
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,400italic,500,100italic,700' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="assets/css/materialize.min.css">
+        <link rel="stylesheet" href="assets/css/normalize.css">
+        <link rel="stylesheet" href="assets/css/fonticons.css">
+        <link rel="stylesheet" href="assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/bootstrap1.css">
+
+        <!-- For navmenu css -->
+        <link rel="stylesheet" href="assets/css/navmenu.css" />
+
+        <!--For Plugins external css-->
+        <link rel="stylesheet" href="assets/css/plugins.css" />
+
+        <!--Theme custom css -->
+        <link rel="stylesheet" href="assets/css/style1.css">
+
+        <!--Theme Responsive css-->
+        <link rel="stylesheet" href="assets/css/responsive.css" />
+
+        <!--Theme Colors css-->
+        <!--<link rel="stylesheet" href="assets/css/white.css">-->
+
+        <!--Old browser  JS-->
+		<script type="text/javascript" src="assets/js/jquery.form.js"></script>
+	    <script type="text/javascript" src="assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+		<script type="text/javascript" src="assets/js/vendor/jquery-1.11.2.min.js"></script>
+	    <script type="text/javascript" src="assets/js/jquery.validate.min.js" ></script>
+		<script type="text/javascript" src="assets/js/vendor/bootstrap.min.js"></script>
+		<script type="text/javascript" src="assets/js/vendor/bootstrap.js"></script>
+		<script type="text/javascript" src="assets/js/Jquery.Query.js"></script>
+        <script type="text/javascript" src="assets/js/materialize.min.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.easing.1.3.js"></script>
+        <script type="text/javascript" src="assets/js/materialize.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.magnific-popup.js"></script>
+        <script type="text/javascript" src="assets/js/plugins.js"></script>
+        <script type="text/javascript" src="assets/js/main.js"></script>
+		<script type="text/javascript">
+			$(function(){
+			   getUsername();
+			});
+			
+			function getUsername(){
+			    var name = $.query.get("name");
+				var rNum = $.query.get("r");
+				var seed = $.query.get("s");
+				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
+				if(name!=""&&rNum==rNum2){
+				    $("#welcome_div").css("display","block");
+					document.getElementById("userName").innerHTML = "您好，"+name;
+					$("#logout_div").css("display", "block");
+					$("#login_div").css("display", "none");
+				}
+				else{
+					document.getElementById("userName").innerHTML = "";
+					$("#welcome_div").css("display","none");
+					$("#logout_div").css("display", "none");
+					$("#login_div").css("display", "block");
+				}
+			}
+		</script>
+
+		<script type="text/javascript">
+			$(function() {
+			    var name = $.query.get("name");
+				var rNum = $.query.get("r");
+				var seed = $.query.get("s");
+				$("#login_btn").click(function() {
+					var url="../jike_login?ref=jike_index";
+					window.location.href = url;
+				});
+				$("#logout_btn").click(function() {
+					var url="../jike_index";
+					window.location.href = url;
+				});
+				$("#mooc").click(function() {
+					var url="../jike_search?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;
+				});
+				$("#other").click(function() {
+					var url="../jike_search?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;
+				});
+			});
+		</script>
+		
+		<script> 
+			 $(document).ready(function(){
+				$("#newscarousel").carousel({interval:2000});//每隔2秒自动轮播 
+			 }); 
+		</script> 
+    </head>
+
+    <body data-spy="scroll" data-target="#scrollspy">
+        <div class="main_figur">
+	
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+				<div class="container-fluid">
+					<div class="row">
+					<div class="col-md-1">
+						<ul class="nav navbar-nav">
+						    <li><a class="navbar-brand"><b>JIKE</b></a></li>
+						</ul>
+					</div>
+		            
+					<div class="col-md-2" align="right">
+						<select class="select-btn" id = "searchID"">
+										<option value="" selected="selected">请选择...</option>
+										<option value="101">标题</option>
+										<option value="102">授课学校名</option>
+										<option value="103">专业类别名</option>
+										<option value="104">来源网站</option>
+						</select>
+					</div>
+					
+					<div class="input-append col-md-6">
+						  <input id="searchText" type="text" style="color:#fff;" placeholder="请输入您想搜索的内容...">
+						  <button id="search_btn" class="btn btn-search" type="button">搜索</button>
+					</div>
+					
+					<div id="login_div" class="nav navbar-nav navbar-right" class="col-md-3">
+						<li><a id="login_btn" class="navbar-link">登录/注册</a></li>
+				    </div>
+					
+					<div id="logout_div" class="nav navbar-nav navbar-right"class="col-md-1">
+						<li><a id="logout_btn" class="navbar-link">退出</a></li>
+				    </div>
+					
+					<div id="welcome_div" class="nav navbar-nav navbar-right"class="col-md-2">
+						<li><a id="userName" class="navbar-link">欢迎您</a></li>
+				    </div>
+					</div>
+				</div>
+			</nav>
+
+            <!-- Home Section -->
+            <section id="home" class="home">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main_home text-center wow fadeInUp" data-wow-duration="700ms">
+                                <h1>集课<br /> 
+                                    Collecting the Best Courses on the Internet</h1>
+								<ul class="list-inline">
+                                    <li><a target="_blank">激励</a></li>
+                                    <li><a target="_blank">创新</a></li>
+                                    <li><a target="_blank">分享</a></li>
+                                    <li><a target="_blank">前行</a></li>
+                                </ul>
+                                <ul class="list-inline">
+                                    <li><a target="_blank">Motivate</a></li>
+                                    <li><a target="_blank">Innovate </a></li>
+                                    <li><a target="_blank">Share</a></li>
+                                    <li><a target="_blank">Advance</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="scrolldown">
+                                <a href="#news"><i class="fa fa-long-arrow-down"></i></a>
+                            </div>
+                            
+                        </div><!-- End of col-md-12 -->
+                    </div><!-- End of row -->
+                </div><!-- End of Container -->
+
+            </section><!-- End of Home Section -->
+
+
+            
+
+            <!-- Portfolio Section -->
+            <section id="news" class="team">
+                <div class="container">
+                    <div class="row">
+                        <div class="main_team_area m-t-3">
+                            <div class="head_title m-y-3  wow fadeInUp">
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <h2>最新消息</h2>
+                                    </div>
+									<div class="col-md-1">
+                                        <h6><a style="color:#000;">More</a></h6>
+                                    </div>									
+                                </div>
+                            </div>
+
+                                <div id="newscarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
+									<!-- 轮播（Carousel）指标 -->
+									<ol class="carousel-indicators">
+										<li data-target="#newscarousel" data-slide-to="0" class="active"></li>
+										<li data-target="#newscarousel" data-slide-to="1"></li>
+										<li data-target="#newscarousel" data-slide-to="2"></li>
+										<li data-target="#newscarousel" data-slide-to="3"></li>
+										<li data-target="#newscarousel" data-slide-to="4"></li>
+									</ol>   
+									<!-- 轮播（Carousel）项目 -->
+									<div class="carousel-inner">
+										<div class="item active">
+											<img src="assets/images/homebg.jpg" alt="First slide" >
+										</div>
+										<div class="item">
+											<img src="assets/images/homebg.jpg" alt="Second slide">
+										</div>
+										<div class="item">
+											<img src="assets/images/homebg.jpg" alt="Third slide">
+										</div>
+										<div class="item">
+											<img src="assets/images/homebg.jpg" alt="Fourth slide">
+										</div>
+										<div class="item">
+											<img src="assets/images/homebg.jpg" alt="Fifth slide">
+										</div>
+									</div>
+									
+								</div> 
+
+                        </div><!-- End of main Team area -->
+                    </div><!-- End of row -->
+                </div><!-- End of container -->
+            </section><!-- End of Team Section -->
+
+            <section id="resource" class="service colorsbg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main_service_area">
+                                <div class="head_title m-y-3 p-t-3 wow fadeInUp">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h2>热门慕课</h2>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <h6></h6>
+                                        </div>
+									    <div class="col-md-1">
+                                            <h6><a id="mooc" style="color:#000;">More</a></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main_service_content">
+									<div class="row">
+										<div class="col-md-8">
+											<ul class="list-inline" style="margin-left:15%;">
+												<li class="inline-block">
+													<a href="javascript:void(0)">
+														全部
+													</a>
+												</li>
+												<li class="inline-block">
+													<a href="javascript:void(0)">
+														计算机科学
+													</a>
+												</li>
+												<li class="inline-block">
+													<a href="javascript:void(0)">
+														经济管理
+													</a>
+												</li>
+												<li class="inline-block">
+													<a href="javascript:void(0)">
+														社会科学
+													</a>
+												</li>
+												<li class="inline-block">
+													<a href="javascript:void(0)">
+														自然科学
+													</a>
+												</li>
+												<li class="inline-block">
+													<a href="javascript:void(0)">
+														人文艺术
+													</a>
+												</li>
+											</ul> 
+										</div>
+								    </div>
+                                </div><!-- End of main service content -->
+								<hr />
+                            </div><!-- End of main service area -->			
+                        </div><!-- End of col-md-12 -->
+                    </div><!-- End of row -->
+                </div><!-- End of container -->
+            </section><!-- End of Service Section -->
+			
+			<section id="resource" class="service colorsbg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main_service_area">
+                                <div class="head_title m-y-3 p-t-3 wow fadeInUp">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h2>热门资源</h2>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <h6></h6>
+                                        </div>
+									    <div class="col-md-1">
+                                            <h6><a id="other" style="color:#000;">More</a></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main_service_content">
+                                    
+                                </div><!-- End of main service content -->
+								<hr />
+                            </div><!-- End of main service area -->			
+                        </div><!-- End of col-md-12 -->
+                    </div><!-- End of row -->
+                </div><!-- End of container -->
+            </section><!-- End of Service Section -->
+			
+			<section id="resource" class="service colorsbg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main_service_area">
+                                <div class="head_title m-y-3 p-t-3 wow fadeInUp">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h2>学习建议</h2>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <h6></h6>
+                                        </div>
+									    <div class="col-md-1">
+                                            <h6><a href="Resources.html" style="color:#000;">More</a></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main_service_content">
+                                    <div class="row">
+										<div class="col-md-8">
+											<ul class="list-inline" style="margin-left:15%;">
+												<li class="inline-block">
+													<a href="javascript:void(0)">
+														全部
+													</a>
+												</li>
+												<li class="inline-block">
+													<a href="javascript:void(0)">
+														计算机科学
+													</a>
+												</li>
+												<li class="inline-block">
+													<a href="javascript:void(0)">
+														经济管理
+													</a>
+												</li>
+												<li class="inline-block">
+													<a href="javascript:void(0)">
+														社会科学
+													</a>
+												</li>
+												<li class="inline-block">
+													<a href="javascript:void(0)">
+														自然科学
+													</a>
+												</li>
+												<li class="inline-block">
+													<a href="javascript:void(0)">
+														人文艺术
+													</a>
+												</li>
+											</ul> 
+										</div>
+								    </div>
+                                </div><!-- End of main service content -->
+								<hr />
+                            </div><!-- End of main service area -->			
+                        </div><!-- End of col-md-12 -->
+                    </div><!-- End of row -->
+                </div><!-- End of container -->
+            </section><!-- End of Service Section -->
+
+            <section id="resource" class="service colorsbg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main_service_area">
+                                <div class="head_title m-y-3 p-t-3 wow fadeInUp">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h2>主题讨论</h2>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <h6></h6>
+                                        </div>
+									    <div class="col-md-1">
+                                            <h6><a href="Resources.html" style="color:#000;">More</a></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main_service_content">		
+									<div class = "row">
+										<div class = "col-md-1 col-xs-5">
+										</div>
+										<div class = "col-md-4 col-xs-5">
+											<div class="signle_service_left text-sm-center wow fadeInleft">
+												<img src="assets/images/zhutitaolun.png" alt="" />
+											</div>
+										</div>
+										<div class = "col-md-1 col-xs-5">
+										</div>
+										<div class = "col-md-6 col-xs-5">
+											<div class = "row">
+												<h4>MOOC搜索方法与技巧</h4></br>
+												<h4>值得一上的慕课集锦</h4></br>
+												<h4>全球慕课平台比较</h4></br>
+												<h4>计算机类慕课学习轨迹</h4></br>
+												<h4>经管类慕课笔记</h4></br>
+											</div>
+										</div>
+									</div>
+                                </div><!-- End of main service content -->
+								<hr />
+                            </div><!-- End of main service area -->			
+                        </div><!-- End of col-md-12 -->
+                    </div><!-- End of row -->
+                </div><!-- End of container -->
+            </section><!-- End of Service Section -->
+			</br></br></br></br>
+
+            <section id="contact" class="blog">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main_blog_area m-y-3 p-y-3 wow fadeInUp">
+                                <div class="col-md-4">
+                                    <div class="single_blog_menu">
+                                        <h2>联系方式</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h4>Tel: 010-66666666</h4></br>
+									<h4>Email: jike@mails.tsinghua.edu.cn</h4></br>
+									<h4>公众号: jikethu</h4></br>
+                                </div>
+                                <div class="col-md-3">
+									<div class="signle_service_left text-sm-center wow fadeInleft">
+										<img src="assets/images/ecode.jpg" alt="" />
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End of container  -->
+            </section><!-- End of blog Section -->
+			
+			
+			<section id="contactus" class="contactus colorsbg">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="main_service_area main_contactus_area">
+
+                            <div class="row">
+                                <div class="col-md-6 no-padding">
+                                    <div class="contact_us_right wow fadeInLeft">
+                                        <div class="single_contactus">
+                                            <div class="ourmap" style="background:#ccc; height:650px;"></div>
+                                        </div>
+                                    </div>
+                                </div><!-- End of col-md-6 --><!-- End of col-md-6 -->
+
+
+                                <div class="col-md-6 no-padding wow rollIn">
+                                    <div class="main_contact_area p-t-2 p-x-3" style="height:650px;">
+                                        <div class="head_title">
+                                            <h2>联系我们</h2>
+                                        </div>
+                                        <div class="single_contant_right">
+                                            <form id="contact_form" method="post">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="name" name="name" placeholder="您的姓名" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="联系电话" required="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input type="email" class="form-control" id="email" name="email" placeholder="邮箱地址" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <textarea class="form-control" name="message" id="message" rows="8" placeholder="您的留言" style="width:100%;"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="m-b-2 m-t-2">
+                                                        <input type="button" id="send_btn" value="发送">
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                        <!-- Copyright -->
+                                        <div class="row">
+                                            <div class="main_footer">
+                                                <div class="col-md-10">
+                                                    <div class="copyright_text margin-top-20 center">
+                                                        <p>
+														集课&nbsp &nbsp 激励 Motivate&nbsp &nbsp 创新 Innovate &nbsp &nbsp 分享 Share &nbsp &nbsp 前行 Advance
+														</p>
+														<p>Copyright &copy;2017 清华大学软件工程“集课”项目</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1 no-padding">
+												    <div></br></div>
+                                                    <div class="scrollup center">
+                                                        <a href="#"><i class="fa fa-chevron-up"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- End of row -->
+                                    </div><!-- End of main contact area -->
+
+                                </div><!-- End of col-md-6 -->
+                            </div>
+                        </div>
+                    </div><!-- End of row -->
+                </div><!-- End of container -->
+            </section><!-- End of Contactus Section -->
+        </div>
+
+    </body>
+</html>

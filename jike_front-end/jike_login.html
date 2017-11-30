@@ -1,0 +1,237 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>集课-JIKE</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="icon" type="image/png" href="myicon.png">
+
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,400italic,500,100italic,700' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/font-awesome.min.css">
+		
+		<script type="text/javascript" src="assets/js/jquery.form.js"></script>
+	    <script type="text/javascript" src="assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+		<script type="text/javascript" src="assets/js/vendor/jquery-1.11.2.min.js"></script>
+	    <script type="text/javascript" src="assets/js/jquery.validate.min.js" ></script>
+		<script type="text/javascript" src="assets/js/vendor/bootstrap.min.js"></script>
+		<script type="text/javascript" src="assets/js/Jquery.Query.js"></script>
+				
+		<style type="text/css">
+			body{background: url(assets/images/login.jpg) no-repeat;
+				 background-size: cover;font-size: 16px;}
+			.form{background: rgba(255,255,255,0.2);
+				width:400px;margin:100px auto;}
+			#login_form{display: block;}
+			#register_form{display:none;}
+			.fa{display: inline-block;top: 27px;left: 6px;position: relative;color: #ccc;}
+			input[type="text"],input[type="password"]{padding-left:26px;}
+			.checkbox{padding-left:21px;}
+			h3,.h3{text-align:center;}
+		</style>
+		
+		<script type="text/javascript">
+			$(function() {
+			    var ref = $.query.get("ref");
+				$("#register_btn").click(function() {
+					$("#register_form").css("display", "block");
+					$("#login_form").css("display", "none");
+				});
+				$("#back_btn").click(function() {
+					$("#register_form").css("display", "none");
+					$("#login_form").css("display", "block");
+				});
+				$("#backto_btn").click(function() {
+					window.location.href = ref;
+				});
+			});
+		</script>
+	    
+		<script type="text/javascript">
+			$(document).ready(function() {
+			    var ref = $.query.get("ref");
+				$("#submit_btn").click(function() {	    
+				//点击登陆按钮时进行的判断
+					if ($("#login_name").val()== "" || $("#login_psw").val()== "") {
+						alert("用户名或密码不能为空！");
+					} 
+					else {
+					    var JSONObject= {
+							"username":document.getElementById("login_name").value,
+							"password":document.getElementById("login_psw").value
+						};
+						$.ajax({
+							type: "POST",
+							url: "http://123.56.26.95/userlogin/",
+							data: JSONObject,
+							dataType:"text",
+							success: function (result) {
+								if (result == "0") {
+									alert("用户名或密码错误！");
+								}
+								else{
+								    alert("登录成功！");
+									if(ref=="index") ref="";
+								    var seed = Math.round(Math.random()*1000);  
+								    var rNum= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);   
+								    var url="../"+ref+"?name="+$("#login_name").val()+"&r="+rNum+"&s="+seed;
+								    window.location.href = url;
+								}
+							},
+							error: function (result){
+								var str=result.responseText;
+								alert(str);
+								alert("向服务器请求失败，登录失败！");
+							}
+						});
+					}
+				});
+			});
+		</script>
+		
+        <script type="text/javascript">
+			$(document).ready(function() {
+				$("#register").click(function() {
+				//点击注册按钮时进行的判断
+					if ($("#register_name").val()== "" || $("#register_psw").val()== "") {
+						alert("用户名或密码不能为空！");
+					} 
+					else if($("#register_rpsw").val()!=$("#register_psw").val()){
+						alert("两次输入的密码不相同，请重新输入！");
+					}
+					else if($("#register_email").val()== ""){
+						alert("请输入电子邮箱！");
+					}
+					else if($("#register_phone").val()== ""){
+						alert("请输入联系电话！");
+					}
+					else {
+					    var JSONObject= {
+							"username":document.getElementById("register_name").value,
+							"password":document.getElementById("register_psw").value,
+							"email":document.getElementById("register_email").value,
+							"phone":document.getElementById("register_phone").value,
+						};
+						$.ajax({
+							type: "POST",
+							url: "http://123.56.26.95/userregister/",
+							data: JSONObject,
+							dataType:"text",
+							success: function (result) {
+								if(result=="0"){
+									alert("注册失败：请完整填写表格！");
+								}
+								else if (result == "2") {
+									alert("注册失败：用户名已存在！");
+								}
+								else{
+									alert("注册成功，请重新登录！");
+									$("#register_form").css("display", "none");
+									$("#login_form").css("display", "block");
+								}
+							},
+							error: function () {
+								alert("向服务器请求失败，注册失败！");
+							}
+						});
+					}
+				});
+			});
+		</script>
+						
+		</head>
+		
+		<body>  
+		
+			<!--  
+				基础知识：  
+				网格系统:通过行和列布局  
+				行必须放在container内  
+				手机用col-xs-*  
+				平板用col-sm-*  
+				笔记本或普通台式电脑用col-md-*  
+				大型设备台式电脑用col-lg-*  
+				为了兼容多个设备，可以用多个col-*-*来控制；  
+			-->  
+		<div class="container">  
+			<div class="form row" onsubmit="return login();">  
+				<form class="form-horizontal" id="login_form" style="color:#fff;" method="post">  
+					<h3 class="form-title" style="color:#fff;">登录</h3> 
+					<div class="col-sm-2 col-md-2"></div>
+					<div class="col-sm-8 col-md-8">  
+						<div class="form-group">
+							<i class="fa fa-user fa-lg"></i>  
+							<input id="login_name" class="form-control required" type="text" placeholder=" 用户名" name="username" maxlength="20"/> 
+						</div>  
+						<div class="form-group">  
+							<i class="fa fa-lock fa-lg"></i>  
+							<input id="login_psw" class="form-control required" type="password" placeholder=" 密码" name="password" maxlength="16" /> 
+						</div>
+						<div class="form-group">  
+							<div class="row">
+								<div class="col-md-6">
+									<label class="checkbox" style="color:#fff;">
+										<input type="checkbox" name="remember" value="1"/>记住我
+									</label> 
+								</div>
+								<div class="col-md-6" style="text-align:right;margin-top:5px;">
+									<a id="forget_btn" class="" style="color:#fff;">忘记密码？</a>	
+							    </div>
+							</div>
+							<hr />  
+							<a id="register_btn" class="" style="color:#fff;">还没有账号？立刻注册！</a>  
+						</div>  
+						<div class="form-group">  
+							<input id="submit_btn" type="button" class="btn btn-success pull-right" value="登录"/>
+							<input type="button" id="backto_btn" class="btn btn-info pull-left" value="返回"/>							
+						</div>  
+					</div>
+					<div class="col-sm-2 col-md-2"></div>
+				</form>  
+			</div>  
+	  
+			<div class="form row">  
+				<form class="form-horizontal" id="register_form" style="color:#fff;" method="post" action="http://123.56.26.95/Introduction/">  
+					<h3 class="form-title" style="color:#fff;">注册</h3>  
+					<div class="col-sm-2 col-md-2"></div>
+					<div class="col-sm-8 col-md-8">  
+						<div class="form-group">  
+							<i class="fa fa-user fa-lg"></i>  
+							<input class="form-control required" id="register_name" type="text" placeholder=" 用户名" name="username" />  
+						</div>  
+						<div class="form-group">  
+								<i class="fa fa-lock fa-lg"></i>  
+								<input class="form-control required" id="register_psw" type="password" placeholder=" 密码" id="register_password" name="register_password"/>  
+						</div>  
+						<div class="form-group">  
+								<i class="fa fa-check fa-lg"></i>  
+								<input class="form-control required" id="register_rpsw" type="password" placeholder=" 再次输入密码" name="rpassword"/>  
+						</div>  
+						<div class="form-group">  
+								<i class="fa fa-envelope fa-lg"></i>  
+								<input class="form-control eamil" id="register_email" type="text" placeholder=" 电子邮箱" name="email"/>  
+						</div>
+						<div class="form-group">  
+							<i class="fa fa-phone fa-lg"></i>  
+							<input id="register_phone" class="form-control required" type="text" placeholder=" 电话" name="phone" maxlength="16" /> 
+						</div>						
+						<div class="form-group">  
+							<input type="button" id="register" class="btn btn-success pull-right" value="注册"/>  
+							<input type="button" id="back_btn" class="btn btn-info pull-left" value="已有账号，返回登录"/>  
+						</div>  
+					</div> 
+					<div class="col-sm-2 col-md-2"></div>
+				</form>  
+			</div>  
+			</div>  
+		
+		</body>
+</html>           
