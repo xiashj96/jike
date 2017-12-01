@@ -114,6 +114,7 @@
 			var name = $.query.get("name");
 			var rNum = $.query.get("r");
 			var seed = $.query.get("s");
+			var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);
 			if(name!=""&&rNum==rNum2){
 				var formData = new FormData();
 				var myselect=document.getElementById("cID1");
