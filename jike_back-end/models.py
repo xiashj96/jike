@@ -56,6 +56,7 @@ class Jkmooc(models.Model):
 	uploader = models.CharField(max_length=200)
 	uploadtime = models.CharField(max_length=200)
 	clicktime = models.IntegerField(default=0)
+	teacher = models.CharField(max_length=200)
 
 class Jkother(models.Model):
 	name = models.CharField(max_length=200)
