@@ -134,11 +134,9 @@
 		<script type="text/javascript">
 			$(function(){
 				$("table tr:not(:first)").empty();
-				
 				$.ajax({
 					type: "POST",
 					url:"http://123.56.26.95/resourcelist/",
-					data: JSONObject,
 					dataType: "json",
 					jsonp: "callback",
 					success: function(result){
