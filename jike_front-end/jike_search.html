@@ -116,7 +116,7 @@
 						var index=myselect.selectedIndex;
 						var JSONObject= {
 							"cID":myselect.options[index].value,
-							"keyword":$('#searchText').value
+							"keyword":$('#searchText').val()
 						};
 						$("#searchresult").empty();
 						$.ajax({
