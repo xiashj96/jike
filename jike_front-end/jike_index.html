@@ -66,7 +66,7 @@
 				$("#moocAll").focus();
 				$("#mooclist").empty();
 				var JSONObject= {
-					"cID":"all"
+					"cID":"000"
 				};
 				$.ajax({
 					type: "POST",
@@ -128,24 +128,7 @@
 					}
 				});
 				
-				$.ajax({
-					type: "POST",
-					url:"http://123.56.26.95/resourcelist/",
-					data: JSONObject,
-					dataType: "json",
-					jsonp: "callback",
-					success: function(result){
-						var length=result.length;
-						for(var i = 0, l =length; i < l; i++){
-						    var type[22]={" ","计算机","经济管理","创业","电子","工程","环境·地球","医学·健康","生命科学","数学","物理","化学","社科·法律","文学","历史","哲学","建筑","外语","教育","艺术设计","公共管理","职场","大学先修","其他"};
-							var item = '<tr><td><a href='+result[i].fields.fileAddress+">"+result[i].fields.name+'</a></td><td>'+result[i].fields.uploader+"</td><td>"+type[parseInt(result[i].fields.typeID)-100]+"</td><td>"+result[i].fields.uploadtime+"</td></tr>";//根据后台传递过来的数据生成html内容。
-							$("table").append(item);//内容添加到页面上。
-						}
-					},
-					error: function(result){						
-						alert("查询失败");
-					}
-				});
+				
 			
 			});
 		</script>
