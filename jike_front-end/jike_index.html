@@ -54,6 +54,102 @@
         <script type="text/javascript" src="../assets/js/jquery.magnific-popup.js"></script>
         <script type="text/javascript" src="../assets/js/plugins.js"></script>
         <script type="text/javascript" src="../assets/js/main.js"></script>
+		
+		<!--script type="text/javascript">
+			$(function(){
+			   $("#mooclist").empty();
+			});
+		</script-->
+		
+		<script type="text/javascript">
+			$(function(){
+				$("#moocAll").focus();
+				$("#mooclist").empty();
+				var JSONObject= {
+					"cID":"all"
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/mooclist/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					var item1='<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[0].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[0].fields.name+'</h6>'+
+									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[1].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[1].fields.name+'</h6>'+
+									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[2].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[2].fields.name+'</h6>'+
+									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>'+
+						  '<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[3].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[3].fields.name+'</h6>'+
+									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[4].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[4].fields.name+'</h6>'+
+									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[5].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[5].fields.name+'</h6>'+
+									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>';
+				    $("#mooclist").append(item1);
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
+				});
+				
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/resourcelist/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+						var length=result.length;
+						for(var i = 0, l =length; i < l; i++){
+						    var type[22]={" ","计算机","经济管理","创业","电子","工程","环境·地球","医学·健康","生命科学","数学","物理","化学","社科·法律","文学","历史","哲学","建筑","外语","教育","艺术设计","公共管理","职场","大学先修","其他"};
+							var item = '<tr><td><a href='+result[i].fields.fileAddress+">"+result[i].fields.name+'</a></td><td>'+result[i].fields.uploader+"</td><td>"+type[parseInt(result[i].fields.typeID)-100]+"</td><td>"+result[i].fields.uploadtime+"</td></tr>";//根据后台传递过来的数据生成html内容。
+							$("table").append(item);//内容添加到页面上。
+						}
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
+				});
+			
+			});
+		</script>
+		
 		<script type="text/javascript">
 			$(function(){
 			   getUsername();
@@ -100,6 +196,402 @@
 					var url="../jike_search?name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
 				});
+				$("#moocAll").click(function() {
+					$("#moocAll").focus();
+					$("#mooclist").empty();
+					var JSONObject= {
+						"cID":"000"
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/mooclist/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+						var item1='<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[0].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[0].fields.name+'</h6>'+
+									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[1].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[1].fields.name+'</h6>'+
+									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[2].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[2].fields.name+'</h6>'+
+									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>'+
+						  '<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[3].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[3].fields.name+'</h6>'+
+									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[4].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[4].fields.name+'</h6>'+
+									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[5].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[5].fields.name+'</h6>'+
+									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>';
+					   $("#mooclist").append(item1);
+						},
+						error: function(result){						
+							alert("查询失败");
+						}
+					});
+				});
+				$("#moocCS").click(function() {
+					$("#moocCS").focus();
+					$("#mooclist").empty();
+					var JSONObject= {
+						"cID":"101"
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/mooclist/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+						var item1='<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[0].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[0].fields.name+'</h6>'+
+									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[1].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[1].fields.name+'</h6>'+
+									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[2].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[2].fields.name+'</h6>'+
+									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>'+
+						  '<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[3].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[3].fields.name+'</h6>'+
+									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[4].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[4].fields.name+'</h6>'+
+									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[5].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[5].fields.name+'</h6>'+
+									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>';
+					   $("#mooclist").append(item1);
+						},
+						error: function(result){						
+							alert("查询失败");
+						}
+					});
+				});
+				$("#moocEM").click(function() {
+					$("#moocEM").focus();
+					$("#mooclist").empty();
+					var JSONObject= {
+						"cID":"102"
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/mooclist/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+						var item1='<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[0].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[0].fields.name+'</h6>'+
+									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[1].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[1].fields.name+'</h6>'+
+									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[2].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[2].fields.name+'</h6>'+
+									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>'+
+						  '<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[3].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[3].fields.name+'</h6>'+
+									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[4].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[4].fields.name+'</h6>'+
+									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[5].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[5].fields.name+'</h6>'+
+									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>';
+					   $("#mooclist").append(item1);
+						},
+						error: function(result){						
+							alert("查询失败");
+						}
+					});
+				});
+				$("#moocSS").click(function() {
+					$("#moocSS").focus();
+					$("#mooclist").empty();
+					var JSONObject= {
+						"cID":"112"
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/mooclist/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+						var item1='<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[0].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[0].fields.name+'</h6>'+
+									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[1].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[1].fields.name+'</h6>'+
+									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[2].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[2].fields.name+'</h6>'+
+									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>'+
+						  '<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[3].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[3].fields.name+'</h6>'+
+									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[4].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[4].fields.name+'</h6>'+
+									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[5].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[5].fields.name+'</h6>'+
+									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>';
+					   $("#mooclist").append(item1);
+						},
+						error: function(result){						
+							alert("查询失败");
+						}
+					});
+				});
+				$("#moocLan").click(function() {
+					$("#moocLan").focus();
+					$("#mooclist").empty();
+					var JSONObject= {
+						"cID":"117"
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/mooclist/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+						var item1='<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[0].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[0].fields.name+'</h6>'+
+									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[1].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[1].fields.name+'</h6>'+
+									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[2].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[2].fields.name+'</h6>'+
+									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>'+
+						  '<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[3].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[3].fields.name+'</h6>'+
+									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[4].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[4].fields.name+'</h6>'+
+									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[5].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[5].fields.name+'</h6>'+
+									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>';
+					   $("#mooclist").append(item1);
+						},
+						error: function(result){						
+							alert("查询失败");
+						}
+					});
+				});
+				$("#moocArt").click(function() {
+					$("#moocArt").focus();
+					$("#mooclist").empty();
+					var JSONObject= {
+						"cID":"119"
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/mooclist/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+						var item1='<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[0].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[0].fields.name+'</h6>'+
+									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[1].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[1].fields.name+'</h6>'+
+									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[2].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[2].fields.name+'</h6>'+
+									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>'+
+						  '<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[3].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[3].fields.name+'</h6>'+
+									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[4].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[4].fields.name+'</h6>'+
+									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[5].fields.img+'" alt="" />'+
+								'<div class="single_team_text text-center">'+
+									'<h6>'+result[5].fields.name+'</h6>'+
+									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
+								'</div>'+
+							'</div>'+
+						   '</div>';
+					   $("#mooclist").append(item1);
+						},
+						error: function(result){						
+							alert("查询失败");
+						}
+					});
+				});
 			});
 		</script>
 		
@@ -108,6 +600,7 @@
 				$("#newscarousel").carousel({interval:2000});//每隔2秒自动轮播 
 			 }); 
 		</script> 
+		
     </head>
 
     <body data-spy="scroll" data-target="#scrollspy">
@@ -262,40 +755,43 @@
 										<div class="col-md-8">
 											<ul class="list-inline" style="margin-left:15%;">
 												<li class="inline-block">
-													<a href="javascript:void(0)">
+													<a href="javascript:void(0)" id="moocAll">
 														全部
 													</a>
 												</li>
 												<li class="inline-block">
-													<a href="javascript:void(0)">
-														计算机科学
+													<a href="javascript:void(0)" id="moocCS">
+														计算机
 													</a>
 												</li>
 												<li class="inline-block">
-													<a href="javascript:void(0)">
+													<a href="javascript:void(0)" id="moocEM">
 														经济管理
 													</a>
 												</li>
 												<li class="inline-block">
-													<a href="javascript:void(0)">
+													<a href="javascript:void(0)" id="moocSS">
 														社会科学
 													</a>
 												</li>
 												<li class="inline-block">
-													<a href="javascript:void(0)">
-														自然科学
+													<a href="javascript:void(0)" id="moocLan">
+														外语
 													</a>
 												</li>
 												<li class="inline-block">
-													<a href="javascript:void(0)">
-														人文艺术
+													<a href="javascript:void(0)" id="moocArt">
+														艺术设计
 													</a>
 												</li>
 											</ul> 
 										</div>
 								    </div>
+									<div id="mooclist">
+										
+									</div>
                                 </div><!-- End of main service content -->
-								<hr />
+								<hr/>
                             </div><!-- End of main service area -->			
                         </div><!-- End of col-md-12 -->
                     </div><!-- End of row -->
@@ -319,6 +815,16 @@
                                             <h6><a id="other" style="color:#000;">More</a></h6>
                                         </div>
                                     </div>
+									<table id="table" class="table table-hover m-t-1" data-classes="table table-hover"  
+										   data-striped="true"  data-sort-name="stargazers_count"  
+										   data-sort-order="desc" >   
+										<tr id="table-head" style="text-align:center;">  
+											<th data-field="title" style="text-align:center;">资料标题</th>  
+											<th data-field="typeid" style="text-align:center;">类别</th>	
+											<th data-field="uploader" style="text-align:center;">上传者</th>  
+											<th data-field="time" style="text-align:center;">上传时间</th>										
+										</tr> 
+									</table> 
                                 </div>
                                 <div class="main_service_content">
                                     
@@ -353,33 +859,33 @@
 										<div class="col-md-8">
 											<ul class="list-inline" style="margin-left:15%;">
 												<li class="inline-block">
-													<a href="javascript:void(0)">
+													<a href="javascript:void(0)" id="tipAll">
 														全部
-													</a>
-												</li>
-												<li class="inline-block">
-													<a href="javascript:void(0)">
-														计算机科学
-													</a>
-												</li>
-												<li class="inline-block">
-													<a href="javascript:void(0)">
+													</a>                             
+												</li>                                
+												<li class="inline-block">            
+													<a href="javascript:void(0)" id="tipCS">>
+														计算机
+													</a>                             
+												</li>                                
+												<li class="inline-block">          
+													<a href="javascript:void(0)" id="tipEM">>
 														经济管理
-													</a>
-												</li>
-												<li class="inline-block">
-													<a href="javascript:void(0)">
+													</a>                             
+												</li>                                
+												<li class="inline-block">            
+													<a href="javascript:void(0)" id="tipSS">>
 														社会科学
-													</a>
-												</li>
-												<li class="inline-block">
-													<a href="javascript:void(0)">
-														自然科学
-													</a>
-												</li>
-												<li class="inline-block">
-													<a href="javascript:void(0)">
-														人文艺术
+													</a>                             
+												</li>                                
+												<li class="inline-block">            
+													<a href="javascript:void(0)" id="tipLan">
+														外语
+													</a>                            
+												</li>                                
+												<li class="inline-block">            
+													<a href="javascript:void(0)" id="tipArt">
+														艺术设计
 													</a>
 												</li>
 											</ul> 
