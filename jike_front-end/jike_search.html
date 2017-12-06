@@ -112,24 +112,28 @@
 		<script type="text/javascript">
 				$(document).ready(function(){
 					$("#search_btn").click(function(){
-						var myselect=document.getElementById("cID1");
+						var myselect=document.getElementById("searchID");
 						var index=myselect.selectedIndex;
 						var JSONObject= {
 							"cID":myselect.options[index].value,
 							"keyword":$('#searchText').value
 						};
-						$("table tr:not(:first)").empty();
+						$("#searchresult").empty();
 						$.ajax({
 							type: "POST",
-							url:"http://123.56.26.95/usersearch/",
+							url:"http://123.56.26.95/keysearch/",
 							data: JSONObject,
 							dataType: "json",
 							jsonp: "callback",
 							success: function(result){
 								var length=result.length;
 								for(var i = 0, l =length; i < l; i++){
-									var item = '<tr><td><a href='+result[i].fields.fileAddress+">"+result[i].fields.cName+'</a></td><td>'+result[i].fields.uploadername+"</td><td>"+result[i].fields.uploadTime+"</td><td>"+result[i].fields.clickTime+"</td></tr>";//根据后台传递过来的数据生成html内容。
-									$("table").append(item);//内容添加到页面上。
+									var item ='<div class="row m-b-2"><div class="col-md-4">'+
+											  '<img src="'+result[i].fields.img+'"/></div><div class="col-md-8">'+
+					                          '<h4>'+result[i].fields.name+'</h4>'+
+				                              '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
+					                          '<p>'+result[i].fields.content+'</h6></div></div>';
+									$("#searchresult").append(item);//内容添加到页面上。
 								}
 							},
 							error: function(result){						
@@ -180,10 +184,10 @@
 						<div class="col-md-2">
 							<select class="search-type" id = "searchID" style="width:100%;">
 											<option value="" selected="selected">请选择...</option>
-											<option value="101">标题</option>
-											<option value="102">授课学校名</option>
-											<option value="103">专业类别名</option>
-											<option value="104">来源网站</option>
+											<option value="201">慕课课程名</option>
+											<option value="202">慕课授课学校名</option>
+											<option value="203">慕课授课教师名</option>
+											<option value="204">资源标题名</option>
 							</select>
 						</div>
 						
@@ -191,6 +195,10 @@
 							  <input id="searchText" class="search-area" type="text" style="color:#000;" placeholder="请输入您想搜索的内容...">
 							  <button id="search_btn" class="btn btn-searchinput" type="button">搜索</button>
 						</div>					
+					</div>
+					
+					<div id="searchresult">
+					
 					</div>
                 </div><!-- End of Container-fluid -->
             </section><!-- End of Home Section -->
