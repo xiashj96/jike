@@ -173,7 +173,7 @@
 							"keyword":$('#searchText').val()
 						};
 						$("#searchresult").empty();
-						if(cID!='204'){
+						if(myselect.options[index].value!='204'){
 						$.ajax({
 							type: "POST",
 							url:"http://123.56.26.95/keysearch/",
