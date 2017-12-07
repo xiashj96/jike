@@ -71,7 +71,7 @@
 								for(var i = 0, l =length; i < l; i++){
 									var item ='<div class="row m-b-5"><div class="col-md-4">'+
 											  '<img src="'+result[i].fields.img+'"/></div><div class="col-md-8">'+
-					                          '<a href='+result[i].fields.link+'>''<h4>'+result[i].fields.name+'</h4></a>'+
+					                          '<a href='+result[i].fields.link+'><h4>'+result[i].fields.name+'</h4></a>'+
 				                              '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
 					                          '<p>'+result[i].fields.content+'</h6></div></div>';
 									$("#searchresult").append(item);//内容添加到页面上。
@@ -93,7 +93,7 @@
 								var length=result.length;
 								for(var i = 0, l =length; i < l; i++){
 									var item ='<div class="row m-b-5"><div class="col-md-8">'+
-					                          '<a href='+result[i].fields.fileAddress+'>''<h4>'+result[i].fields.name+'</h4></a>'+
+					                          '<a href='+result[i].fields.fileAddress+'><h4>'+result[i].fields.name+'</h4></a>'+
 				                              '<h6>用户 '+result[i].fields.uploader+' 上传于'+result[i].fields.teacher+'</h6>'+
 					                          '<p>'+result[i].fields.content+'</h6></div></div>';
 									$("#searchresult").append(item);//内容添加到页面上。
