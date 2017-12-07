@@ -597,6 +597,18 @@
 						}
 					});
 				});
+				
+				$("#search_btn").click(function() {
+				    var name = $.query.get("name");
+				    var rNum = $.query.get("r");
+				    var seed = $.query.get("s");
+					var myselect=document.getElementById("searchID");
+					var index=myselect.selectedIndex;
+					var cID=myselect.options[index].value;
+					var keyword=$('#searchText').val();
+					var url="../jike_search?cID="+cID+"&keyword="+keyword+"&name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;
+				});
 			});
 		</script>
 		
@@ -621,12 +633,11 @@
 					</div>
 		            
 					<div class="col-md-2" align="right">
-						<select class="select-btn" id = "searchID"">
-										<option value="" selected="selected">请选择...</option>
-										<option value="101">标题</option>
-										<option value="102">授课学校名</option>
-										<option value="103">专业类别名</option>
-										<option value="104">来源网站</option>
+						<select class="select-btn" id = "searchID">
+							<option value="201" selected="selected">慕课课程名</option>
+							<option value="202">慕课授课学校名</option>
+							<option value="203">慕课授课教师名</option>
+							<option value="204">资源标题名</option>
 						</select>
 					</div>
 					

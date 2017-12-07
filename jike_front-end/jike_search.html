@@ -50,7 +50,37 @@
 		<script type="text/javascript" src="../assets/js/Jquery.Query.js"></script>
 		<script type="text/javascript">
 			$(function(){
-			   getUsername();
+			    getUsername();
+			    var cID = $.query.get("cID");
+			    var keyword = $.query.get("keyword");
+			    if(cID!=""&&keyword!=""){
+					var JSONObject= {
+							"cID":cID,
+							"keyword":keyword
+						};
+						$("#searchresult").empty();
+						$.ajax({
+							type: "POST",
+							url:"http://123.56.26.95/keysearch/",
+							data: JSONObject,
+							dataType: "json",
+							jsonp: "callback",
+							success: function(result){
+								var length=result.length;
+								for(var i = 0, l =length; i < l; i++){
+									var item ='<div class="row m-b-5"><div class="col-md-4">'+
+											  '<img src="'+result[i].fields.img+'"/></div><div class="col-md-8">'+
+					                          '<h4>'+result[i].fields.name+'</h4>'+
+				                              '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
+					                          '<p>'+result[i].fields.content+'</h6></div></div>';
+									$("#searchresult").append(item);//内容添加到页面上。
+								}
+							},
+							error: function(result){						
+							    alert("查询失败");
+							}
+						});	
+			    }
 			});
 			
 			function getUsername(){
@@ -128,7 +158,7 @@
 							success: function(result){
 								var length=result.length;
 								for(var i = 0, l =length; i < l; i++){
-									var item ='<div class="row m-b-2"><div class="col-md-4">'+
+									var item ='<div class="row m-b-5"><div class="col-md-4">'+
 											  '<img src="'+result[i].fields.img+'"/></div><div class="col-md-8">'+
 					                          '<h4>'+result[i].fields.name+'</h4>'+
 				                              '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
@@ -183,8 +213,7 @@
                     <div class="row">
 						<div class="col-md-2">
 							<select class="search-type" id = "searchID" style="width:100%;">
-											<option value="" selected="selected">请选择...</option>
-											<option value="201">慕课课程名</option>
+											<option value="201" selected="selected">慕课课程名</option>
 											<option value="202">慕课授课学校名</option>
 											<option value="203">慕课授课教师名</option>
 											<option value="204">资源标题名</option>
