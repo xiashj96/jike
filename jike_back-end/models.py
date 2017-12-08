@@ -49,14 +49,14 @@ class Jkother(models.Model):
 class Jkmooc(models.Model):
 	name = models.CharField(max_length=200)
 	school = models.CharField(max_length=200)
-	source = models.CharField(max_length=200)
 	typeID = models.CharField(max_length=100)
-	content = models.CharField(max_length=800)
+	content = models.CharField(max_length=3000)
 	link = models.CharField(max_length=200)
 	uploader = models.CharField(max_length=200)
 	uploadtime = models.CharField(max_length=200)
 	clicktime = models.IntegerField(default=0)
 	teacher = models.CharField(max_length=200)
+	img = models.CharField(max_length=200)
 
 class Jkother(models.Model):
 	name = models.CharField(max_length=200)
