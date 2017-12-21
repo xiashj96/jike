@@ -917,6 +917,7 @@
 					var index=myselect.selectedIndex;
 					var cID=myselect.options[index].value;
 					var keyword=$('#searchText').val();
+					keyword=encodeURIComponent(keyword);
 					var url="../jike_search?cID="+cID+"&keyword="+keyword+"&name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
 				});
