@@ -55,11 +55,12 @@
         <script type="text/javascript" src="../assets/js/plugins.js"></script>
         <script type="text/javascript" src="../assets/js/main.js"></script>
 		
-		<!--script type="text/javascript">
-			$(function(){
-			   $("#mooclist").empty();
-			});
-		</script-->
+		<script type="text/javascript">
+			function courseCount(obj){
+			   var rsrcid= obj.id;
+			   alert(rsrcid);
+			}
+		</script>
 		
 		<script type="text/javascript">
 			$(function(){
@@ -78,49 +79,68 @@
 					var item1='<div class="row">'+
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[0].fields.img+'" alt="" />'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[1].fields.img+'" alt="" />'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[2].fields.img+'" alt="" />'+
+							'</div>'+
+						   '</div>'+
+						   
+						   '<div class="row">'+
+						   '<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
+									'<a id='+result[0].fields.id+' href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
 									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[1].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
+									'<a id='+result[1].fields.id+' href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
 									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[2].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
+									'<a id='+result[2].fields.id+' href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
 									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 						   '</div>'+
-						  '<div class="row">'+
+						   
+						   '<div class="row">'+
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[3].fields.img+'" alt="" />'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[4].fields.img+'" alt="" />'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[5].fields.img+'" alt="" />'+
+							'</div>'+
+						   '</div>'+
+						   
+						   '<div class="row">'+
+						   '<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
+									'<a id='+result[3].fields.id+' href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
 									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[4].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
+									'<a id='+result[4].fields.id+' href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
 									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[5].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
+									'<a id='+result[5].fields.id+' href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
 									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
-						   '</div>';
+						   '</div>'+;
 				    $("#mooclist").append(item1);
 					},
 					error: function(result){						
@@ -143,7 +163,7 @@
 						var length=result.length;
 						for(var i = 0, l =length; i < l; i++){
 						    var type=new Array(" ","计算机","经济管理","创业","电子","工程","环境·地球","医学·健康","生命科学","数学","物理","化学","社科·法律","文学","历史","哲学","建筑","外语","教育","艺术设计","公共管理","职场","大学先修","其他");
-							var item = '<tr><td><a href='+result[i].fields.fileAddress+">"+result[i].fields.name+'</a></td><td>'+type[parseInt(result[i].fields.typeID)-100]+"</td><td>"+result[i].fields.uploader+"</td><td>"+result[i].fields.uploadtime+"</td></tr>";//根据后台传递过来的数据生成html内容。
+							var item = '<tr><td><a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+">"+result[i].fields.name+'</a></td><td>'+type[parseInt(result[i].fields.typeID)-100]+"</td><td>"+result[i].fields.uploader+"</td><td>"+result[i].fields.uploadtime+"</td></tr>";//根据后台传递过来的数据生成html内容。
 							$("table").append(item);//内容添加到页面上。
 						}
 					},
@@ -170,12 +190,14 @@
 					document.getElementById("userName").innerHTML = "您好，"+name;
 					$("#logout_div").css("display", "block");
 					$("#login_div").css("display", "none");
+					$("#recommend_div").css("display", "block");
 				}
 				else{
 					document.getElementById("userName").innerHTML = "";
 					$("#welcome_div").css("display","none");
 					$("#logout_div").css("display", "none");
 					$("#login_div").css("display", "block");
+					$("#recommend_div").css("display", "none");
 				}
 			}
 		</script>
@@ -218,21 +240,21 @@
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[0].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
+									'<a id='+result[0].fields.id+' href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
 									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[1].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
+									'<a id='+result[1].fields.id+' href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
 									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[2].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
+									'<a id='+result[2].fields.id+' href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
 									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
@@ -241,26 +263,26 @@
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[3].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
+									'<a id='+result[3].fields.id+' href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
 									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[4].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
+									'<a id='+result[4].fields.id+' href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
 									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[5].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
+									'<a id='+result[5].fields.id+' href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
 									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 						   '</div>';
-					   $("#mooclist").append(item1);
+				    $("#mooclist").append(item1);
 						},
 						error: function(result){						
 							alert("查询失败");
@@ -284,21 +306,21 @@
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[0].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
+									'<a id='+result[0].fields.id+' href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
 									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[1].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
+									'<a id='+result[1].fields.id+' href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
 									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[2].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
+									'<a id='+result[2].fields.id+' href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
 									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
@@ -307,21 +329,21 @@
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[3].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
+									'<a id='+result[3].fields.id+' href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
 									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[4].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
+									'<a id='+result[4].fields.id+' href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
 									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[5].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
+									'<a id='+result[5].fields.id+' href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
 									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
@@ -350,21 +372,21 @@
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[0].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
+									'<a id='+result[0].fields.id+' href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
 									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[1].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
+									'<a id='+result[1].fields.id+' href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
 									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[2].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
+									'<a id='+result[2].fields.id+' href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
 									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
@@ -373,21 +395,21 @@
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[3].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
+									'<a id='+result[3].fields.id+' href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
 									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[4].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
+									'<a id='+result[4].fields.id+' href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
 									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[5].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
+									'<a id='+result[5].fields.id+' href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
 									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
@@ -416,21 +438,21 @@
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[0].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
+									'<a id='+result[0].fields.id+' href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
 									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[1].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
+									'<a id='+result[1].fields.id+' href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
 									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[2].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
+									'<a id='+result[2].fields.id+' href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
 									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
@@ -439,21 +461,21 @@
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[3].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
+									'<a id='+result[3].fields.id+' href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
 									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[4].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
+									'<a id='+result[4].fields.id+' href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
 									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[5].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
+									'<a id='+result[5].fields.id+' href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
 									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
@@ -482,21 +504,21 @@
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[0].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
+									'<a id='+result[0].fields.id+' href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
 									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[1].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
+									'<a id='+result[1].fields.id+' href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
 									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[2].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
+									'<a id='+result[2].fields.id+' href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
 									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
@@ -505,21 +527,21 @@
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[3].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
+									'<a id='+result[3].fields.id+' href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
 									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[4].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
+									'<a id='+result[4].fields.id+' href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
 									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[5].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
+									'<a id='+result[5].fields.id+' href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
 									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
@@ -548,21 +570,21 @@
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[0].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
+									'<a id='+result[0].fields.id+' href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
 									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[1].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
+									'<a id='+result[1].fields.id+' href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
 									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[2].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
+									'<a id='+result[2].fields.id+' href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
 									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
@@ -571,21 +593,21 @@
 							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 								'<img src="'+result[3].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
+									'<a id='+result[3].fields.id+' href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
 									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[4].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
+									'<a id='+result[4].fields.id+' href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
 									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-md-3" style="margin-top:5%;">'+
 								'<img src="'+result[5].fields.img+'" alt="" />'+
 								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
+									'<a id='+result[5].fields.id+' href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
 									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
 								'</div>'+
 							'</div>'+
@@ -713,41 +735,89 @@
                                 </div>
                             </div>
 
-                                <div id="newscarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
-									<!-- 轮播（Carousel）指标 -->
-									<ol class="carousel-indicators">
-										<li data-target="#newscarousel" data-slide-to="0" class="active"></li>
-										<li data-target="#newscarousel" data-slide-to="1"></li>
-										<li data-target="#newscarousel" data-slide-to="2"></li>
-										<li data-target="#newscarousel" data-slide-to="3"></li>
-										<li data-target="#newscarousel" data-slide-to="4"></li>
-									</ol>   
-									<!-- 轮播（Carousel）项目 -->
-									<div class="carousel-inner">
-										<div class="item active">
-											<img src="../assets/images/homebg.jpg" alt="First slide" >
-										</div>
-										<div class="item">
-											<img src="../assets/images/homebg.jpg" alt="Second slide">
-										</div>
-										<div class="item">
-											<img src="../assets/images/homebg.jpg" alt="Third slide">
-										</div>
-										<div class="item">
-											<img src="../assets/images/homebg.jpg" alt="Fourth slide">
-										</div>
-										<div class="item">
-											<img src="../assets/images/homebg.jpg" alt="Fifth slide">
-										</div>
+                            <div id="newscarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
+								<!-- 轮播（Carousel）指标 -->
+								<ol class="carousel-indicators">
+									<li data-target="#newscarousel" data-slide-to="0" class="active"></li>
+									<li data-target="#newscarousel" data-slide-to="1"></li>
+									<li data-target="#newscarousel" data-slide-to="2"></li>
+									<li data-target="#newscarousel" data-slide-to="3"></li>
+									<li data-target="#newscarousel" data-slide-to="4"></li>
+								</ol>   
+								<!-- 轮播（Carousel）项目 -->
+								<div class="carousel-inner">
+									<div class="item active">
+										<img src="../assets/images/homebg.jpg" alt="First slide" >
 									</div>
-									
-								</div> 
+									<div class="item">
+										<img src="../assets/images/homebg.jpg" alt="Second slide">
+									</div>
+									<div class="item">
+										<img src="../assets/images/homebg.jpg" alt="Third slide">
+									</div>
+									<div class="item">
+										<img src="../assets/images/homebg.jpg" alt="Fourth slide">
+									</div>
+									<div class="item">
+										<img src="../assets/images/homebg.jpg" alt="Fifth slide">
+									</div>
+								</div>
+								
+							</div> 
 
                         </div><!-- End of main Team area -->
                     </div><!-- End of row -->
                 </div><!-- End of container -->
             </section><!-- End of Team Section -->
 
+			<section id="recommend" class="service colorsbg">
+                <div id="recommend_div" class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main_service_area">
+                                <div class="head_title m-y-3 p-t-3 wow fadeInUp">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h2>猜你喜欢</h2>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <h6></h6>
+                                        </div>
+									    <div class="col-md-1">
+                                            <h6><a href="Resources.html" style="color:#000;">More</a></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main_service_content">
+                                    <div id="recommendcarousel" class="carousel slide" data-ride="carousel" data-interval="3000">  
+										<!-- 轮播（Carousel）项目 -->
+										<div class="carousel-inner">
+											<div class="item active">
+												<img src="../assets/images/homebg.jpg" alt="First slide" >
+											</div>
+											<div class="item">
+												<img src="../assets/images/homebg.jpg" alt="Second slide">
+											</div>
+											<div class="item">
+												<img src="../assets/images/homebg.jpg" alt="Third slide">
+											</div>
+											<div class="item">
+												<img src="../assets/images/homebg.jpg" alt="Fourth slide">
+											</div>
+											<div class="item">
+												<img src="../assets/images/homebg.jpg" alt="Fifth slide">
+											</div>
+										</div>
+										
+									</div> 
+                                </div><!-- End of main service content -->
+								<hr />
+                            </div><!-- End of main service area -->			
+                        </div><!-- End of col-md-12 -->
+                    </div><!-- End of row -->
+                </div><!-- End of container -->
+            </section><!-- End of Service Section -->
+				
             <section id="resource" class="service colorsbg">
                 <div class="container">
                     <div class="row">
@@ -880,17 +950,17 @@
 													</a>                             
 												</li>                                
 												<li class="inline-block">            
-													<a href="javascript:void(0)" id="tipCS">>
+													<a href="javascript:void(0)" id="tipCS">
 														计算机
 													</a>                             
 												</li>                                
 												<li class="inline-block">          
-													<a href="javascript:void(0)" id="tipEM">>
+													<a href="javascript:void(0)" id="tipEM">
 														经济管理
 													</a>                             
 												</li>                                
 												<li class="inline-block">            
-													<a href="javascript:void(0)" id="tipSS">>
+													<a href="javascript:void(0)" id="tipSS">
 														社会科学
 													</a>                             
 												</li>                                
