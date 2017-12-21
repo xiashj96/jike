@@ -48,6 +48,105 @@
 	    <script type="text/javascript" src="../assets/js/jquery.validate.min.js" ></script>
 		<script type="text/javascript" src="../assets/js/vendor/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../assets/js/Jquery.Query.js"></script>
+		
+		<script type="text/javascript">
+			function courseCount(obj){
+			   var cid= obj.id;
+			   $.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/courseclick/",
+					data: cid,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					},
+					error: function(result){						
+					}
+				});
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function resourceCount(obj){
+			   var rid= obj.id;
+			   $.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/resourceclick/",
+					data: rid,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					},
+					error: function(result){						
+					}
+				});
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function courseCollect(obj){
+			   var cid= obj.id;
+			   var name = $.query.get("name");
+			   if(name!=""){
+				   var JSONObject= {
+						"cID":cid,
+						"name":name
+					};
+				   $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/coursecollect/",
+						data: rid,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							if(result=="1")
+								alert("收藏成功");
+							else if(result=="2")
+							    alert("此课程已经在您的收藏中")；
+						},
+						error: function(result){	
+							alert("收藏失败");
+						}
+					});
+				}
+				else{
+					alert("请先登录！");
+				}
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function resourceCollect(obj){
+			   var rid= obj.id;
+			   var name = $.query.get("name");
+			   if(name!=""){
+				   var JSONObject= {
+						"rID":rid,
+						"name":name
+					};
+				   $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/resourcecollect/",
+						data: rid,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							if(result=="1")
+								alert("收藏成功");
+							else if(result=="2")
+							    alert("此资源已经在您的收藏中")；
+						},
+						error: function(result){	
+							alert("收藏失败");
+						}
+					});
+				}
+				else{
+					alert("请先登录！");
+				}
+			}
+		</script>
+		
 		<script type="text/javascript">
 			$(function(){
 			    getUsername();
@@ -71,10 +170,10 @@
 								for(var i = 0, l =length; i < l; i++){
 									var item ='<div class="row m-b-5"><div class="col-md-4">'+
 											  '<img src="'+result[i].fields.img+'"/></div><div class="col-md-8">'+
-					                          '<a id='+result[i].fields.id+' href='+result[i].fields.link+'><h4>'+result[i].fields.name+'</h4></a>'+
+					                          '<a id='+result[i].fields.id+' href='+result[i].fields.link+' onclick="courseCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
 				                              '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
 					                          '<p>'+result[i].fields.content+'</h6>'+
-											  '<a id='+result[i].fields.id+'><h6>收藏</h6></a>'+
+											  '<a id='+result[i].fields.id+' onclick="coursecollect(this);"><h6>收藏</h6></a>'+
 											  '</div></div>';
 									$("#searchresult").append(item);//内容添加到页面上。
 								}
@@ -95,10 +194,10 @@
 								var length=result.length;
 								for(var i = 0, l =length; i < l; i++){
 									var item ='<div class="row m-b-5"><div class="col-md-8">'+
-					                          '<a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+'><h4>'+result[i].fields.name+'</h4></a>'+
+					                          '<a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
 				                              '<h6>用户 '+result[i].fields.uploader+' 上传于'+result[i].fields.uploadtime+'</h6>'+
 					                          '<p>'+result[i].fields.content+'</h6>'+
-											  '<a id='+result[i].fields.id+'><h6>收藏</h6></a>'+
+											  '<a id='+result[i].fields.id+' onclick="resourcecollect(this);"><h6>收藏</h6></a>'+
 											  '</div></div>';
 									$("#searchresult").append(item);//内容添加到页面上。
 								}
@@ -189,10 +288,10 @@
 								for(var i = 0, l =length; i < l; i++){
 									var item ='<div class="row m-b-5"><div class="col-md-4">'+
 											  '<img src="'+result[i].fields.img+'"/></div><div class="col-md-8">'+
-					                          '<a id='+result[i].fields.id+' href='+result[i].fields.link+'><h4>'+result[i].fields.name+'</h4></a>'+
+					                          '<a id='+result[i].fields.id+' href='+result[i].fields.link+' onclick="courseCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
 				                              '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
 					                          '<p>'+result[i].fields.content+'</h6>'+
-											  '<a id='+result[i].fields.id+'><h6>收藏</h6></a>'+
+											  '<a id='+result[i].fields.id+' onclick="coursecollect(this);"><h6>收藏</h6></a>'+
 											  '</div></div>';
 									$("#searchresult").append(item);//内容添加到页面上。
 								}
@@ -213,10 +312,10 @@
 								var length=result.length;
 								for(var i = 0, l =length; i < l; i++){
 									var item ='<div class="row m-b-5"><div class="col-md-8">'+
-					                          '<a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+'><h4>'+result[i].fields.name+'</h4></a>'+
+					                          '<a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
 				                              '<h6>用户 '+result[i].fields.uploader+' 上传于'+result[i].fields.uploadtime+'</h6>'+
 					                          '<p>'+result[i].fields.content+'</h6>'+
-											  '<a id='+result[i].fields.id+'><h6>收藏</h6></a>'+
+											  '<a id='+result[i].fields.id+' onclick="resourcecollect(this);"><h6>收藏</h6></a>'+
 											  '</div></div>';
 									$("#searchresult").append(item);//内容添加到页面上。
 								}
