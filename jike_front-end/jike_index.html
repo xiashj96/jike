@@ -266,7 +266,7 @@
 						var length=result.length;
 						for(var i = 0, l =length; i < l; i++){
 						    var type=new Array(" ","计算机","经济管理","创业","电子","工程","环境·地球","医学·健康","生命科学","数学","物理","化学","社科·法律","文学","历史","哲学","建筑","外语","教育","艺术设计","公共管理","职场","大学先修","其他");
-							var item = '<tr><td><a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+">"+result[i].fields.name+'</a></td><td>'+type[parseInt(result[i].fields.typeID)-100]+"</td><td>"+result[i].fields.uploader+"</td><td>"+result[i].fields.uploadtime+"</td></tr>";//根据后台传递过来的数据生成html内容。
+							var item = '<tr><td><a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+">"+result[i].fields.name+'</a></td><td>'+type[parseInt(result[i].fields.typeID)-100]+'</td><td>'+result[i].fields.uploader+'</td><td>'+result[i].fields.uploadtime+'</td><td><a id='+result[i].fields.id+'>收藏</a></td><td><a id='+result[i].fields.id+'>反馈</a></td></tr>";//根据后台传递过来的数据生成html内容。
 							$("table").append(item);//内容添加到页面上。
 						}
 					},
@@ -1194,10 +1194,11 @@
 										   data-striped="true"  data-sort-name="stargazers_count"  
 										   data-sort-order="desc">   
 										<tr id="table-head">  
-											<th data-field="title" style="text-align:center;">资料标题</th>  
-											<th data-field="typeid" style="text-align:center;">类别</th>	
-											<th data-field="uploader" style="text-align:center;">上传者</th>  
-											<th data-field="time" style="text-align:center;">上传时间</th>										
+											<th data-field="title">资料标题</th>  
+											<th data-field="typeid">类别</th>	
+											<th data-field="uploader">上传者</th>  
+											<th data-field="time">上传时间</th>
+											<th data-field="operation">操作</th>												
 										</tr> 
 									</table> 
                                 </div>
