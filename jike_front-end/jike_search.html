@@ -152,7 +152,7 @@
 			    getUsername();
 			    var cID = $.query.get("cID");
 			    var keyword = $.query.get("keyword");
-				$("#searchText").value=keyword;
+				$('#searchText').val(keyword);
 			    if(cID!=""&&keyword!=""){
 					var JSONObject= {
 							"cID":cID,
