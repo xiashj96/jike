@@ -152,7 +152,7 @@
 			    getUsername();
 			    var cID = $.query.get("cID");
 			    var keyword = $.query.get("keyword");
-				keyword=encodeURIComponent(keyword);
+				keyword=decodeURIComponent(keyword);
 				$('#searchText').val(keyword);
 			    if(cID!=""&&keyword!=""){
 					var JSONObject= {
@@ -280,6 +280,7 @@
 					var index=myselect.selectedIndex;
 					var cID=myselect.options[index].value;
 					var keyword=$('#searchText').val();
+					keyword=encodeURIComponent(keyword);
 					var url="../jike_search?cID="+cID+"&keyword="+keyword+"&name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
 				});
