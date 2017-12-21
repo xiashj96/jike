@@ -58,6 +58,7 @@
 		<script type="text/javascript">
 			function courseCount(obj){
 			   var cid= obj.id;
+			   alert(cid);
 			   $.ajax({
 					type: "POST",
 					url:"http://123.56.26.95/courseclick/",
@@ -101,7 +102,7 @@
 				   $.ajax({
 						type: "POST",
 						url:"http://123.56.26.95/coursecollect/",
-						data: rid,
+						data: JSONObject,
 						dataType: "json",
 						jsonp: "callback",
 						success: function(result){
@@ -133,7 +134,7 @@
 				   $.ajax({
 						type: "POST",
 						url:"http://123.56.26.95/resourcecollect/",
-						data: rid,
+						data: JSONObject,
 						dataType: "json",
 						jsonp: "callback",
 						success: function(result){
@@ -266,7 +267,7 @@
 						var length=result.length;
 						for(var i = 0, l =length; i < l; i++){
 						    var type=new Array(" ","计算机","经济管理","创业","电子","工程","环境·地球","医学·健康","生命科学","数学","物理","化学","社科·法律","文学","历史","哲学","建筑","外语","教育","艺术设计","公共管理","职场","大学先修","其他");
-							var item = '<tr><td><a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+">"+result[i].fields.name+'</a></td><td>'+type[parseInt(result[i].fields.typeID)-100]+'</td><td>'+result[i].fields.uploader+'</td><td>'+result[i].fields.uploadtime+'</td><td><a id='+result[i].fields.id+' style="display:inline;">收藏</a>&nbsp&nbsp<a id='+result[i].fields.id+' style="display:inline;">反馈</a></td></tr>";//根据后台传递过来的数据生成html内容。
+							var item = '<tr><td><a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+'>'+result[i].fields.name+'</a></td><td>'+type[parseInt(result[i].fields.typeID)-100]+'</td><td>'+result[i].fields.uploader+'</td><td>'+result[i].fields.uploadtime+'</td><td><a id='+result[i].fields.id+' style="display:inline;">收藏</a>&nbsp&nbsp<a id='+result[i].fields.id+' style="display:inline;">反馈</a></td></tr>';//根据后台传递过来的数据生成html内容。
 							$("table").append(item);//内容添加到页面上。
 						}
 					},
