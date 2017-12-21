@@ -52,10 +52,13 @@
 		<script type="text/javascript">
 			function courseCount(obj){
 			   var cid= obj.id;
+			   var JSONObject= {
+					"cID":cid
+				};
 			   $.ajax({
 					type: "POST",
 					url:"http://123.56.26.95/courseclick/",
-					data: cid,
+					data: JSONObject,
 					dataType: "json",
 					jsonp: "callback",
 					success: function(result){
@@ -69,10 +72,13 @@
 		<script type="text/javascript">
 			function resourceCount(obj){
 			   var rid= obj.id;
+			   var JSONObject= {
+					"rID":rid
+				};
 			   $.ajax({
 					type: "POST",
 					url:"http://123.56.26.95/resourceclick/",
-					data: rid,
+					data: JSONObject,
 					dataType: "json",
 					jsonp: "callback",
 					success: function(result){
@@ -176,7 +182,7 @@
 				                              '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
 					                          '<p>'+result[i].fields.content+'</p>'+
 											  '<a id='+result[i].fields.moocid+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
-											  '<a id='+result[i].fields.moocid+' onclick="courseReport(this);"><h6 style="display: inline;">反馈</h6></a>'+
+											  '<a id='+result[i].fields.moocid+'><h6 style="display: inline;">反馈</h6></a>'+
 											  '</div></div>';
 									$("#searchresult").append(item);//内容添加到页面上。
 								}
@@ -201,7 +207,7 @@
 				                              '<h6>用户 '+result[i].fields.uploader+' 上传于'+result[i].fields.uploadtime+'</h6>'+
 					                          '<p>'+result[i].fields.content+'</p>'+
 											  '<a id='+result[i].fields.otherid+' onclick="resourceCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
-											  '<a id='+result[i].fields.otherid+' onclick="resourceReport(this);"><h6 style="display: inline;">反馈</h6></a>'+
+											  '<a id='+result[i].fields.otherid+'><h6 style="display: inline;">反馈</h6></a>'+
 											  '</div></div>';
 									$("#searchresult").append(item);//内容添加到页面上。
 								}
