@@ -85,34 +85,7 @@
 		
 		<script type="text/javascript">
 			$(function(){
-			    getUsername();
-				$("#info").focus();
-				$("#displayArea").empty();
-				var name = $.query.get("name");
-				var JSONObject= {
-					"name":name
-				};
-				$.ajax({
-					type: "POST",
-					url:"http://123.56.26.95/infoShow/",
-					data: JSONObject,
-					dataType: "json",
-					jsonp: "callback",
-					success: function(result){
-					    var length=result.length;
-						for(var i = 0, l =length; i < l; i++){
-							var item ='<div class="row m-b-5"><div class="col-md-8">'+
-				                      '<h4>用户名：'+result[i].fields.username'</h4>'+
-					                  '<h4>用户名：'+result[i].fields.phone'</h4>'+
-									  '<h4>用户名：'+result[i].fields.email'</h4>'+
-									  '</div></div>';
-							$("#searchresult").append(item);//内容添加到页面上。
-						}
-					},
-					error: function(result){						
-						alert("查询失败");
-					}
-				});
+			   getUsername();
 			});
 			
 			function getUsername(){
@@ -124,6 +97,13 @@
 				    $("#welcome_div").css("display","block");
 					document.getElementById("userName").innerHTML = "您好，"+name;
 					$("#logout_div").css("display", "block");
+					$("#login_div").css("display", "none");
+				}
+				else{
+					document.getElementById("userName").innerHTML = "";
+					$("#welcome_div").css("display","none");
+					$("#logout_div").css("display", "none");
+					$("#login_div").css("display", "block");
 				}
 			}
 		</script>
@@ -286,6 +266,9 @@
 							<li><a id="discussion">主题讨论</a></li>
 						</ul>
 					</div>
+					<div id="login_div" class="nav navbar-nav navbar-right">
+						<li><a id="login_btn" class="navbar-link">登录/注册</a></li>
+				    </div>
 					<div id="logout_div" class="nav navbar-nav navbar-right">
 						<li><a id="logout_btn" class="navbar-link">退出</a></li>
 				    </div>
