@@ -208,75 +208,94 @@
 		</script>
 		
 		<script type="text/javascript">
-			$(function() {
-				$("#resourceCollect").click(function(){
-					$("#resourceCollects").focus();
-					$("#displayArea").empty();
-					var name = $.query.get("name");
-					var JSONObject= {
-						"name":name
-					};
-					$.ajax({
-						type: "POST",
-						url:"http://123.56.26.95/otherShow/",
-						data: JSONObject,
-						dataType: "json",
-						jsonp: "callback",
-						success: function(result){
-							var length=result.length;
-							for(var i = 0, l =length; i < l; i++){
-								var item ='<div class="row m-b-5"><div class="col-md-8">'+
-										  '<a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
-										  '<h6>用户 '+result[i].fields.uploader+' 上传于'+result[i].fields.uploadtime+'</h6>'+
-										  '<p>'+result[i].fields.content+'</p>'+
-										  '<a id='+result[i].fields.id+' onclick="resourceCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
-										  '<a id='+result[i].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
-										  '</div></div>';
-								$("#searchresult").append(item);//内容添加到页面上。
-							}
-						},
-						error: function(result){						
-							alert("查询失败");
+		$(function(){
+			$("#resourceCollect").click(function(){
+				$("#resourceCollect").focus();
+				$("#displayArea").empty();
+				var name = $.query.get("name");
+				var JSONObject= {
+					"name":name
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/otherShow/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+						var length=result.length;
+						for(var i = 0, l =length; i < l; i++){
+						    var rid=result[i].fields.otherID;
+							var Json_Object= {
+								"rID":courseid
+							};
+							$.ajax({
+								type: "POST",
+								url:"http://123.56.26.95/otherCollectShow/",
+								data: Json_Object,
+								dataType: "json",
+								jsonp: "callback",
+								success: function(result2){
+									var length2=result2.length;
+									for(var j = 0, l =length; j < l; j++){
+										var item ='<div class="row m-b-5"><div class="col-md-8">'+
+									  '<a id='+result2[j].fields.id+' href='+result2[j].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result2[j].fields.name+'</h4></a>'+
+									  '<h6>用户 '+result2[j].fields.uploader+' 上传于'+result2[j].fields.uploadtime+'</h6>'+
+									  '<p>'+result2[j].fields.content+'</p>'+
+									  '<a id='+result2[j].fields.id+' onclick="resourceCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
+									  '<a id='+result2[j].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
+									  '</div></div>';
+							          $("#displayArea").append(item);//内容添加到页面上。
+									}
+								},
+								error: function(result){						
+									alert("查询失败");
+								}
+							});
+
 						}
-					});
-				
-				});
-			});
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
+				});		
+			});	
+		});			
 		</script>
 		
 		<script type="text/javascript">
-			$(function(){
-				$("#info").click(function(){
-					$("#info").focus();
-					$("#displayArea").empty();
-					var name = $.query.get("name");
-					var JSONObject= {
-						"name":name
-					};
-					$.ajax({
-						type: "POST",
-						url:"http://123.56.26.95/infoShow/",
-						data: JSONObject,
-						dataType: "json",
-						jsonp: "callback",
-						success: function(result){
-							var length=result.length;
-							for(var i = 0, l =length; i < l; i++){
-								var item ='<div class="row m-b-5"><div class="col-md-8">'+
-										  '<h4>用户名：'+result[i].fields.username'</h4>'+
-										  '<h4>用户名：'+result[i].fields.phone'</h4>'+
-										  '<h4>用户名：'+result[i].fields.email'</h4>'+
-										  '</div></div>';
-								$("#displayArea").append(item);//内容添加到页面上。
-							}
-						},
-						error: function(result){						
-							alert("查询失败");
+		$(function(){
+			$("#userinfo").click(function(){
+				$("#userinfo").focus();
+				$("#displayArea").empty();
+				var name = $.query.get("name");
+				var JSONObject= {
+					"name":name
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/infoShow/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+						var length=result.length;
+						for(var i = 0, l =length; i < l; i++){
+							var item ='<div class="row m-b-5"><div class="col-md-8">'+
+									'<h4>用户名：'+result[i].fields.username'</h4>'+
+									'<h4>用户名：'+result[i].fields.phone'</h4>'+
+									'<h4>用户名：'+result[i].fields.email'</h4>'+
+									'</div></div>';
+							$("#displayArea").append(item);//内容添加到页面上。
 						}
-					});
-				
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
 				});
+			
 			});
+		});
 		</script>
 
     </head>
@@ -330,7 +349,7 @@
 										<div class="col-md-8">
 											<ul class="list-inline" style="margin-left:15%;">
 											    <li class="inline-block">            
-													<a href="javascript:void(0)" id="info">
+													<a href="javascript:void(0)" id="userinfo">
 														个人资料
 													</a>                             
 												</li> 	
