@@ -150,68 +150,33 @@
 		<script type="text/javascript">
 			$(function(){
 			    getUsername();
-			    var cID = $.query.get("cID");
-			    var keyword = $.query.get("keyword");
-				keyword=decodeURIComponent(keyword);
-				$('#searchText').val(keyword);
-			    if(cID!=""&&keyword!=""){
-					var JSONObject= {
-							"cID":cID,
-							"keyword":keyword
-						};
-					$("#searchresult").empty();
-					if(cID!='204'){
-						$.ajax({
-							type: "POST",
-							url:"http://123.56.26.95/keysearch/",
-							data: JSONObject,
-							dataType: "json",
-							jsonp: "callback",
-							success: function(result){
-								var length=result.length;
-								for(var i = 0, l =length; i < l; i++){
-									var item ='<div class="row m-b-5"><div class="col-md-4">'+
-											  '<img src="'+result[i].fields.img+'"/></div><div class="col-md-8">'+
-					                          '<a id='+result[i].fields.id+' href='+result[i].fields.link+' onclick="courseCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
-				                              '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
-					                          '<p>'+result[i].fields.content+'</p>'+
-											  '<a id='+result[i].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
-											  '<a id='+result[i].fields.id+' onclick="courseReport(this);"><h6 style="display: inline;">反馈</h6></a>'+
-											  '</div></div>';
-									$("#searchresult").append(item);//内容添加到页面上。
-								}
-							},
-							error: function(result){						
-							    alert("查询失败");
-							}
-						});	
+				$("#info").focus();
+				$("#displayArea").empty();
+				var name = $.query.get("name");
+				var JSONObject= {
+					"name":name
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/infoShow/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					    var length=result.length;
+						for(var i = 0, l =length; i < l; i++){
+							var item ='<div class="row m-b-5"><div class="col-md-8">'+
+				                      '<h4>用户名：'+result[i].fields.username'</h4>'+
+					                  '<h4>用户名：'+result[i].fields.phone'</h4>'+
+									  '<h4>用户名：'+result[i].fields.email'</h4>'+
+									  '</div></div>';
+							$("#searchresult").append(item);//内容添加到页面上。
+						}
+					},
+					error: function(result){						
+						alert("查询失败");
 					}
-					else{
-						$.ajax({
-							type: "POST",
-							url:"http://123.56.26.95/keysearch/",
-							data: JSONObject,
-							dataType: "json",
-							jsonp: "callback",
-							success: function(result){
-								var length=result.length;
-								for(var i = 0, l =length; i < l; i++){
-									var item ='<div class="row m-b-5"><div class="col-md-8">'+
-					                          '<a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
-				                              '<h6>用户 '+result[i].fields.uploader+' 上传于'+result[i].fields.uploadtime+'</h6>'+
-					                          '<p>'+result[i].fields.content+'</p>'+
-											  '<a id='+result[i].fields.id+' onclick="resourceCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
-											  '<a id='+result[i].fields.id+' onclick="resourceReport(this);"><h6 style="display: inline;">反馈</h6></a>'+
-											  '</div></div>';
-									$("#searchresult").append(item);//内容添加到页面上。
-								}
-							},
-							error: function(result){						
-							    alert("查询失败");
-							}
-						});	
-					}
-			    }
+				});
 			});
 			
 			function getUsername(){
@@ -239,12 +204,8 @@
 			    var name = $.query.get("name");
 				var rNum = $.query.get("r");
 				var seed = $.query.get("s");
-				$("#login_btn").click(function() {
-					var url="../jike_login?ref=jike_search";
-					window.location.href = url;
-				});
 				$("#logout_btn").click(function() {
-					var url="../jike_search";
+					var url="../jike_index?name=&r=&s=";
 					window.location.href = url;
 				});
 				$("#index").click(function() {
@@ -267,24 +228,115 @@
 					var url="../jike_learningTips?name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
 				});
+				$("#userName").click(function() {
+					var url="../jike_info?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;
+				});
 			});
 		</script>
 		
 		<script type="text/javascript">
-			$(document).ready(function(){
-				$("#search_btn").click(function(){
-					var name = $.query.get("name");
-					var rNum = $.query.get("r");
-					var seed = $.query.get("s");
-					var myselect=document.getElementById("searchID");
-					var index=myselect.selectedIndex;
-					var cID=myselect.options[index].value;
-					var keyword=$('#searchText').val();
-					keyword=encodeURIComponent(keyword);
-					var url="../jike_search?cID="+cID+"&keyword="+keyword+"&name="+name+"&r="+rNum+"&s="+seed;
-					window.location.href = url;
+			$("#moocCollect").click(function(){
+				$("#moocCollect").focus();
+				$("#displayArea").empty();
+				var name = $.query.get("name");
+				var JSONObject= {
+					"name":name
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/moocShow/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					    var length=result.length;
+						for(var i = 0, l =length; i < l; i++){
+							var item ='<div class="row m-b-5"><div class="col-md-4">'+
+									  '<img src="'+result[i].fields.img+'"/></div><div class="col-md-8">'+
+					                  '<a id='+result[i].fields.id+' href='+result[i].fields.link+' onclick="courseCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
+				                      '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
+					                  '<p>'+result[i].fields.content+'</p>'+
+									  '<a id='+result[i].fields.id+' onclick="courseCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
+									  '<a id='+result[i].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
+									  '</div></div>';
+							$("#displayArea").append(item);//内容添加到页面上。
+						}
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
 				});
-			})
+			
+			});
+		</script>
+		
+		<script type="text/javascript">
+			$("#resourceCollect").click(function(){
+				$("#resourceCollects").focus();
+				$("#displayArea").empty();
+				var name = $.query.get("name");
+				var JSONObject= {
+					"name":name
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/otherShow/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					    var length=result.length;
+						for(var i = 0, l =length; i < l; i++){
+							var item ='<div class="row m-b-5"><div class="col-md-8">'+
+					                  '<a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
+				                      '<h6>用户 '+result[i].fields.uploader+' 上传于'+result[i].fields.uploadtime+'</h6>'+
+					                  '<p>'+result[i].fields.content+'</p>'+
+									  '<a id='+result[i].fields.id+' onclick="resourceCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
+									  '<a id='+result[i].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
+									  '</div></div>';
+							$("#searchresult").append(item);//内容添加到页面上。
+						}
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
+				});
+			
+			});
+		</script>
+		
+		<script type="text/javascript">
+			$("#info").click(function(){
+				$("#info").focus();
+				$("#displayArea").empty();
+				var name = $.query.get("name");
+				var JSONObject= {
+					"name":name
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/infoShow/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					    var length=result.length;
+						for(var i = 0, l =length; i < l; i++){
+							var item ='<div class="row m-b-5"><div class="col-md-8">'+
+				                      '<h4>用户名：'+result[i].fields.username'</h4>'+
+					                  '<h4>用户名：'+result[i].fields.phone'</h4>'+
+									  '<h4>用户名：'+result[i].fields.email'</h4>'+
+									  '</div></div>';
+							$("#searchresult").append(item);//内容添加到页面上。
+						}
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
+				});
+			
+			});
 		</script>
 
     </head>
@@ -305,9 +357,6 @@
 							<li><a id="discussion">主题讨论</a></li>
 						</ul>
 					</div>
-					<div id="login_div" class="nav navbar-nav navbar-right">
-						<li><a id="login_btn" class="navbar-link">登录/注册</a></li>
-				    </div>
 					<div id="logout_div" class="nav navbar-nav navbar-right">
 						<li><a id="logout_btn" class="navbar-link">退出</a></li>
 				    </div>
@@ -337,6 +386,11 @@
                                     <div class="row">
 										<div class="col-md-8">
 											<ul class="list-inline" style="margin-left:15%;">
+											    <li class="inline-block">            
+													<a href="javascript:void(0)" id="info">
+														个人资料
+													</a>                             
+												</li> 	
 												<li class="inline-block">
 													<a href="javascript:void(0)" id="moocCollect">
 														慕课收藏
@@ -348,15 +402,10 @@
 													</a>                             
 												</li>
 												<li class="inline-block">            
-													<a href="javascript:void(0)" id="info">
+													<a href="javascript:void(0)" id="interestSetting">
 														兴趣设置
 													</a>                             
-												</li> 
-												<li class="inline-block">            
-													<a href="javascript:void(0)" id="info">
-														个人资料
-													</a>                             
-												</li> 												
+												</li> 											
 											</ul> 
 										</div>
 								    </div>
@@ -365,6 +414,10 @@
                             </div><!-- End of main service area -->			
                         </div><!-- End of col-md-12 -->
                     </div><!-- End of row -->
+					
+					<div id="displayArea">
+					
+					</div>
                 </div><!-- End of container -->
             </section><!-- End of Service Section -->
 			
