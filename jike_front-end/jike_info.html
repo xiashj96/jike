@@ -217,38 +217,7 @@
 					var url="../jike_info?name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
 				});
-				$("#userInfo").click(function(){
-			    alert("hello");
-				$("#userInfo").focus();
-				$("#displayArea").empty();
-				var name = $.query.get("name");
-				var JSONObject= {
-					"name":name
-				};
-				alert("world");
-				$.ajax({
-					type: "POST",
-					url:"http://123.56.26.95/infoShow/",
-					data: JSONObject,
-					dataType: "json",
-					jsonp: "callback",
-					success: function(result){
-						var length=result.length;
-						for(var i = 0, l =length; i < l; i++){
-							var item ='<div class="row m-b-5"><div class="col-md-8">'+
-									'<h4>用户名：'+result[i].fields.username'</h4>'+
-									'<h4>电话：'+result[i].fields.phone'</h4>'+
-									'<h4>邮箱：'+result[i].fields.email'</h4>'+
-									'</div></div>';
-							$("#displayArea").append(item);//内容添加到页面上。
-						}
-					},
-					error: function(result){						
-						alert("查询失败");
-					}
-				});			
-			    });
-			    });
+			});
 		</script>
 		
 		<script type="text/javascript">
@@ -366,7 +335,38 @@
 		
 		<script type="text/javascript">
 		$(function(){
-			
+		    var name = $.query.get("name");
+			alert("userinfo");
+			$("#userInfo").click(function(){
+			    alert("hello");
+				$("#userInfo").focus();
+				$("#displayArea").empty();
+				var JSONObject= {
+					"name":name
+				};
+				alert("world");
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/infoShow/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+						var length=result.length;
+						for(var i = 0, l =length; i < l; i++){
+							var item ='<div class="row m-b-5"><div class="col-md-8">'+
+									'<h4>用户名：'+result[i].fields.username'</h4>'+
+									'<h4>电话：'+result[i].fields.phone'</h4>'+
+									'<h4>邮箱：'+result[i].fields.email'</h4>'+
+									'</div></div>';
+							$("#displayArea").append(item);//内容添加到页面上。
+						}
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
+				});			
+			});
 		});			
 		</script>
 
