@@ -151,112 +151,133 @@
 		</script>
 		
 		<script type="text/javascript">
-		$(function() {
-		    $("#moocCollect").click(function(){
-				$("#moocCollect").focus();
-				$("#displayArea").empty();
-				var name = $.query.get("name");
-				var JSONObject= {
-					"name":name
-				};
-				$.ajax({
-					type: "POST",
-					url:"http://123.56.26.95/moocShow/",
-					data: JSONObject,
-					dataType: "json",
-					jsonp: "callback",
-					success: function(result){
-					    var length=result.length;
-						for(var i = 0, l =length; i < l; i++){
-							var item ='<div class="row m-b-5"><div class="col-md-4">'+
-									  '<img src="'+result[i].fields.img+'"/></div><div class="col-md-8">'+
-					                  '<a id='+result[i].fields.id+' href='+result[i].fields.link+' onclick="courseCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
-				                      '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
-					                  '<p>'+result[i].fields.content+'</p>'+
-									  '<a id='+result[i].fields.id+' onclick="courseCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
-									  '<a id='+result[i].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
-									  '</div></div>';
-							$("#displayArea").append(item);//内容添加到页面上。
+			$(function() {
+				$("#moocCollect").click(function(){
+					$("#moocCollect").focus();
+					$("#displayArea").empty();
+					var name = $.query.get("name");
+					var JSONObject= {
+						"name":name
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/moocShow/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							var length=result.length;
+							for(var i = 0, l =length; i < l; i++){
+							    var courseid=result[i].fields.courseid;
+								var JSONObject2= {
+									"cID":courseid
+								};
+								
+								$.ajax({
+									type: "POST",
+									url:"http://123.56.26.95/moocShow2/",
+									data: JSONObject2,
+									dataType: "json",
+									jsonp: "callback",
+									success: function(result){
+										var length=result.length;
+										for(var j = 0, l =length; j < l; j++){
+											var item ='<div class="row m-b-5"><div class="col-md-4">'+
+										  '<img src="'+result[j].fields.img+'"/></div><div class="col-md-8">'+
+										  '<a id='+result[j].fields.id+' href='+result[j].fields.link+' onclick="courseCount(this);"><h4>'+result[j].fields.name+'</h4></a>'+
+										  '<h6>'+result[j].fields.school+' '+result[j].fields.teacher+'</h6>'+
+										  '<p>'+result[j].fields.content+'</p>'+
+										  '<a id='+result[j].fields.id+' onclick="courseCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
+										  '<a id='+result[j].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
+										  '</div></div>';
+								          $("#displayArea").append(item);//内容添加到页面上。
+										}
+									},
+									error: function(result){						
+										alert("查询失败");
+									}
+								});
+
+							}
+						},
+						error: function(result){						
+							alert("查询失败");
 						}
-					},
-					error: function(result){						
-						alert("查询失败");
-					}
-				});		
-			});	
-		});			
+					});		
+				});	
+			});			
 		</script>
 		
 		<script type="text/javascript">
-		$(function() {
-			$("#resourceCollect").click(function(){
-				$("#resourceCollects").focus();
-				$("#displayArea").empty();
-				var name = $.query.get("name");
-				var JSONObject= {
-					"name":name
-				};
-				$.ajax({
-					type: "POST",
-					url:"http://123.56.26.95/otherShow/",
-					data: JSONObject,
-					dataType: "json",
-					jsonp: "callback",
-					success: function(result){
-					    var length=result.length;
-						for(var i = 0, l =length; i < l; i++){
-							var item ='<div class="row m-b-5"><div class="col-md-8">'+
-					                  '<a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
-				                      '<h6>用户 '+result[i].fields.uploader+' 上传于'+result[i].fields.uploadtime+'</h6>'+
-					                  '<p>'+result[i].fields.content+'</p>'+
-									  '<a id='+result[i].fields.id+' onclick="resourceCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
-									  '<a id='+result[i].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
-									  '</div></div>';
-							$("#searchresult").append(item);//内容添加到页面上。
+			$(function() {
+				$("#resourceCollect").click(function(){
+					$("#resourceCollects").focus();
+					$("#displayArea").empty();
+					var name = $.query.get("name");
+					var JSONObject= {
+						"name":name
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/otherShow/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							var length=result.length;
+							for(var i = 0, l =length; i < l; i++){
+								var item ='<div class="row m-b-5"><div class="col-md-8">'+
+										  '<a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
+										  '<h6>用户 '+result[i].fields.uploader+' 上传于'+result[i].fields.uploadtime+'</h6>'+
+										  '<p>'+result[i].fields.content+'</p>'+
+										  '<a id='+result[i].fields.id+' onclick="resourceCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
+										  '<a id='+result[i].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
+										  '</div></div>';
+								$("#searchresult").append(item);//内容添加到页面上。
+							}
+						},
+						error: function(result){						
+							alert("查询失败");
 						}
-					},
-					error: function(result){						
-						alert("查询失败");
-					}
+					});
+				
 				});
-			
 			});
-		});
 		</script>
 		
 		<script type="text/javascript">
-		$(function(){
-			$("#info").click(function(){
-				$("#info").focus();
-				$("#displayArea").empty();
-				var name = $.query.get("name");
-				var JSONObject= {
-					"name":name
-				};
-				$.ajax({
-					type: "POST",
-					url:"http://123.56.26.95/infoShow/",
-					data: JSONObject,
-					dataType: "json",
-					jsonp: "callback",
-					success: function(result){
-					    var length=result.length;
-						for(var i = 0, l =length; i < l; i++){
-							var item ='<div class="row m-b-5"><div class="col-md-8">'+
-				                      '<h4>用户名：'+result[i].fields.username'</h4>'+
-					                  '<h4>用户名：'+result[i].fields.phone'</h4>'+
-									  '<h4>用户名：'+result[i].fields.email'</h4>'+
-									  '</div></div>';
-							$("#displayArea").append(item);//内容添加到页面上。
+			$(function(){
+				$("#info").click(function(){
+					$("#info").focus();
+					$("#displayArea").empty();
+					var name = $.query.get("name");
+					var JSONObject= {
+						"name":name
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/infoShow/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							var length=result.length;
+							for(var i = 0, l =length; i < l; i++){
+								var item ='<div class="row m-b-5"><div class="col-md-8">'+
+										  '<h4>用户名：'+result[i].fields.username'</h4>'+
+										  '<h4>用户名：'+result[i].fields.phone'</h4>'+
+										  '<h4>用户名：'+result[i].fields.email'</h4>'+
+										  '</div></div>';
+								$("#displayArea").append(item);//内容添加到页面上。
+							}
+						},
+						error: function(result){						
+							alert("查询失败");
 						}
-					},
-					error: function(result){						
-						alert("查询失败");
-					}
+					});
+				
 				});
-			
 			});
-		});
 		</script>
 
     </head>
