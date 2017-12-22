@@ -172,23 +172,23 @@
 								var JSONObject2= {
 									"cID":courseid
 								};
-								
+								alert(courseid);
 								$.ajax({
 									type: "POST",
 									url:"http://123.56.26.95/moocShow2/",
 									data: JSONObject2,
 									dataType: "json",
 									jsonp: "callback",
-									success: function(result){
-										var length=result.length;
+									success: function(result2){
+										var length2=result2.length;
 										for(var j = 0, l =length; j < l; j++){
 											var item ='<div class="row m-b-5"><div class="col-md-4">'+
-										  '<img src="'+result[j].fields.img+'"/></div><div class="col-md-8">'+
-										  '<a id='+result[j].fields.id+' href='+result[j].fields.link+' onclick="courseCount(this);"><h4>'+result[j].fields.name+'</h4></a>'+
-										  '<h6>'+result[j].fields.school+' '+result[j].fields.teacher+'</h6>'+
-										  '<p>'+result[j].fields.content+'</p>'+
-										  '<a id='+result[j].fields.id+' onclick="courseCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
-										  '<a id='+result[j].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
+										  '<img src="'+result2[j].fields.img+'"/></div><div class="col-md-8">'+
+										  '<a id='+result2[j].fields.id+' href='+result2[j].fields.link+' onclick="courseCount(this);"><h4>'+result2[j].fields.name+'</h4></a>'+
+										  '<h6>'+result2[j].fields.school+' '+result2[j].fields.teacher+'</h6>'+
+										  '<p>'+result2[j].fields.content+'</p>'+
+										  '<a id='+result2[j].fields.id+' onclick="courseCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
+										  '<a id='+result2[j].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
 										  '</div></div>';
 								          $("#displayArea").append(item);//内容添加到页面上。
 										}
