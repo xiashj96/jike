@@ -283,8 +283,8 @@
 						for(var i = 0, l =length; i < l; i++){
 							var item ='<div class="row m-b-5"><div class="col-md-8">'+
 									'<h4>用户名：'+result[i].fields.username'</h4>'+
-									'<h4>用户名：'+result[i].fields.phone'</h4>'+
-									'<h4>用户名：'+result[i].fields.email'</h4>'+
+									'<h4>电话：'+result[i].fields.phone'</h4>'+
+									'<h4>邮箱：'+result[i].fields.email'</h4>'+
 									'</div></div>';
 							$("#displayArea").append(item);//内容添加到页面上。
 						}
@@ -292,10 +292,9 @@
 					error: function(result){						
 						alert("查询失败");
 					}
-				});
-			
+				});			
 			});
-		});
+		});			
 		</script>
 
     </head>
