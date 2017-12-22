@@ -169,14 +169,13 @@
 							var length=result.length;
 							for(var i = 0, l =length; i < l; i++){
 							    var courseid=result[i].fields.courseID;
-								var JSONObject2= {
+								var Json_Object= {
 									"cID":courseid
 								};
-								alert(courseid);
 								$.ajax({
 									type: "POST",
 									url:"http://123.56.26.95/moocShow2/",
-									data: JSONObject2,
+									data: Json_Object,
 									dataType: "json",
 									jsonp: "callback",
 									success: function(result2){
