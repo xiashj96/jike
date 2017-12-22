@@ -225,7 +225,7 @@
 		</script>
 		
 		<script type="text/javascript">
-		$(function() {
+		$(function(){
 			$("#info").click(function(){
 				$("#info").focus();
 				$("#displayArea").empty();
@@ -247,7 +247,7 @@
 					                  '<h4>用户名：'+result[i].fields.phone'</h4>'+
 									  '<h4>用户名：'+result[i].fields.email'</h4>'+
 									  '</div></div>';
-							$("#searchresult").append(item);//内容添加到页面上。
+							$("#displayArea").append(item);//内容添加到页面上。
 						}
 					},
 					error: function(result){						
