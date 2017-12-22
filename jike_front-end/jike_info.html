@@ -151,7 +151,8 @@
 		</script>
 		
 		<script type="text/javascript">
-			$("#moocCollect").click(function(){
+		$(function() {
+		    $("#moocCollect").click(function(){
 				$("#moocCollect").focus();
 				$("#displayArea").empty();
 				var name = $.query.get("name");
@@ -181,12 +182,13 @@
 					error: function(result){						
 						alert("查询失败");
 					}
-				});
-			
-			});
+				});		
+			});	
+		});			
 		</script>
 		
 		<script type="text/javascript">
+		$(function() {
 			$("#resourceCollect").click(function(){
 				$("#resourceCollects").focus();
 				$("#displayArea").empty();
@@ -219,9 +221,11 @@
 				});
 			
 			});
+		});
 		</script>
 		
 		<script type="text/javascript">
+		$(function() {
 			$("#info").click(function(){
 				$("#info").focus();
 				$("#displayArea").empty();
@@ -252,6 +256,7 @@
 				});
 			
 			});
+		});
 		</script>
 
     </head>
