@@ -336,14 +336,12 @@
 		<script type="text/javascript">
 		$(function(){
 			$("#userInfo").click(function(){
-			    alert("hello");
 				$("#userInfo").focus();
 				$("#displayArea").empty();
 				var name = $.query.get("name");
 				var JSONObject= {
 					"name":name
 				};
-				alert("world");
 				$.ajax({
 					type: "POST",
 					url:"http://123.56.26.95/infoShow/",
@@ -444,10 +442,9 @@
 								    </div>
                                 </div><!-- End of main service content -->
 								<hr />
-								<div id="displayArea">
+								<div class="main_service_content" id="displayArea">
 					
-					            </div>
-								
+					            </div>						
                             </div><!-- End of main service area -->			
                         </div><!-- End of col-md-12 -->
                     </div><!-- End of row -->
