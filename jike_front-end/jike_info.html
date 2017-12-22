@@ -84,70 +84,6 @@
 		</script>
 		
 		<script type="text/javascript">
-			function courseCollect(obj){
-			   var cid= obj.id;
-			   var name = $.query.get("name");
-			   if(name!=""){
-				   var JSONObject= {
-						"cID":cid,
-						"name":name
-					};
-				   $.ajax({
-						type: "POST",
-						url:"http://123.56.26.95/coursecollect/",
-						data: rid,
-						dataType: "json",
-						jsonp: "callback",
-						success: function(result){
-							if(result=="1")
-								alert("收藏成功");
-							else if(result=="2")
-							    alert("此课程已经在您的收藏中")；
-						},
-						error: function(result){	
-							alert("收藏失败");
-						}
-					});
-				}
-				else{
-					alert("请先登录！");
-				}
-			}
-		</script>
-		
-		<script type="text/javascript">
-			function resourceCollect(obj){
-			   var rid= obj.id;
-			   var name = $.query.get("name");
-			   if(name!=""){
-				   var JSONObject= {
-						"rID":rid,
-						"name":name
-					};
-				   $.ajax({
-						type: "POST",
-						url:"http://123.56.26.95/resourcecollect/",
-						data: rid,
-						dataType: "json",
-						jsonp: "callback",
-						success: function(result){
-							if(result=="1")
-								alert("收藏成功");
-							else if(result=="2")
-							    alert("此资源已经在您的收藏中")；
-						},
-						error: function(result){	
-							alert("收藏失败");
-						}
-					});
-				}
-				else{
-					alert("请先登录！");
-				}
-			}
-		</script>
-		
-		<script type="text/javascript">
 			$(function(){
 			    getUsername();
 				$("#info").focus();
@@ -188,13 +124,6 @@
 				    $("#welcome_div").css("display","block");
 					document.getElementById("userName").innerHTML = "您好，"+name;
 					$("#logout_div").css("display", "block");
-					$("#login_div").css("display", "none");
-				}
-				else{
-					document.getElementById("userName").innerHTML = "";
-					$("#welcome_div").css("display","none");
-					$("#logout_div").css("display", "none");
-					$("#login_div").css("display", "block");
 				}
 			}
 		</script>
