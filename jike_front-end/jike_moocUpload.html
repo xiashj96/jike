@@ -137,11 +137,13 @@
 					cache: false,
 					data: formData,
 					processData: false,
-					contentType: false
-				}).done(function(res) {
-					alert("上传成功");
-				}).fail(function(res) {
-				    alert("上传失败，请重新上传");
+					contentType: false,
+					success: function(response,status,xhr){
+						alert("上传成功")；
+					},
+					error: function(response,status,xhr){
+						alert("上传失败，请重试")；
+					}
 				});
 			}
 			else{
