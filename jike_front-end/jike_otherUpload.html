@@ -131,23 +131,16 @@
 				formData.append("introduction", $('#introduction').value);
 				formData.append("file", $('#inputfile')[0].files[0]);
 				var request = new XMLHttpRequest();
-				request.onreadystatechange=state_Change;
+				request.onreadystatechange=function(){
+					if(request.readyState==4){
+						if(request.status==200){
+							alert("上传成功！")
+						}
+					}
+				}			
 				request.open("POST", "http://123.56.26.95/otherupload/");
 				request.send(formData);
-				alert("发送中，点击“确认”以继续……");
-				alert("上传成功");
-				function state_Change()
-				{
-				if (xmlhttp.readyState==4)
-				  {// 4 = "loaded"
-				  if (xmlhttp.status==200)
-					{// 200 = "OK"
-						alert("上传成功");
-					}
-				  else
-					{ alert("上传失败，请重新上传"); }
-				  }
-				}
+				return false;
 			}
 			else{
 				alert("请先登录！");
