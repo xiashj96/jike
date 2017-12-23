@@ -257,7 +257,7 @@
 										  '<h6>'+result2[j].fields.school+' '+result2[j].fields.teacher+'</h6>'+
 										  '<p>'+result2[j].fields.content+'</p>'+
 										  '<a id='+result2[j].fields.id+' onclick="courseCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
-										  '<a data-toggle="modal" id='+result2[j].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
+										  '<a data-toggle="modal" data-target="#report" id='+result2[j].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
 										  '</div></div>';
 								          $("#displayArea").append(item);//内容添加到页面上。
 										}
@@ -313,7 +313,7 @@
 									  '<h6>用户 '+result2[j].fields.uploader+' 上传于'+result2[j].fields.uploadtime+'</h6>'+
 									  '<p>'+result2[j].fields.content+'</p>'+
 									  '<a id='+result2[j].fields.id+' onclick="resourceCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
-									  '<a data-toggle="modal" id='+result2[j].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
+									  '<a data-toggle="modal" data-target="#report" id='+result2[j].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
 									  '</div></div>';
 							          $("#displayArea").append(item);//内容添加到页面上。
 									}
@@ -453,7 +453,7 @@
                 </div><!-- End of container -->
             </section><!-- End of Service Section -->
 			
-			<div id="example" class="modal" style="display: none; ">
+			<div id="report" class="modal" style="display: none; ">
 				<div class="modal-header">
 					<a class="close" data-dismiss="modal">×</a>
 					<h3>这是一个模态框标题</h3>
