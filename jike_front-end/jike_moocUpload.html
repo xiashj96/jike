@@ -131,24 +131,18 @@
 				formData.append("teacher", $('#teacher').val());
 				formData.append("uploader",name);
 				formData.append("introduction", $('#introduction').value);
-				var request = new XMLHttpRequest();
-				request.onreadystatechange=state_Change;
-				request.open("POST", "http://123.56.26.95/moocupload/");
-				request.send(formData);
-				alert("发送中，点击“确认”以继续……");
-				alert("上传成功");
-				function state_Change()
-				{
-				if (xmlhttp.readyState==4)
-				  {// 4 = "loaded"
-				  if (xmlhttp.status==200)
-					{// 200 = "OK"
-						alert("上传成功");
-					}
-				  else
-					{ alert("上传失败，请重新上传"); }
-				  }
-				}
+				$.ajax({
+					url: "http://123.56.26.95/moocupload/",
+					type: 'POST',
+					cache: false,
+					data: formData,
+					processData: false,
+					contentType: false
+				}).done(function(res) {
+					alert("上传成功");
+				}).fail(function(res) {
+				    alert("上传失败，请重新上传");
+				});
 			}
 			else{
 				alert("请先登录！");
