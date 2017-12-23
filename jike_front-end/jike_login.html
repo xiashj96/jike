@@ -146,6 +146,61 @@
 				});
 			});
 		</script>
+		
+		<script>
+		$(document).ready(function() {
+				$("#reset").click(function() {
+				//点击注册按钮时进行的判断
+					if ($("#fname").val()== "") {
+						alert("用户名不能为空！");
+					} 
+					else if($("#fpwd").val()==""){
+					    alert("新密码不能为空！");
+					}
+					else if($("#frpwd").val()!=$("#fwpd").val()){
+						alert("两次输入的新密码不相同，请重新输入！");
+					}
+					else if($("#femail").val()== ""){
+						alert("邮箱不能为空！");
+					}
+					else if($("#fphone").val()== ""){
+						alert("联系电话不能为空！");
+					}
+					else {
+					    var JSONObject= {
+							"username":document.getElementById("fname").value,
+							"password":document.getElementById("fpwd").value,
+							"email":document.getElementById("femail").value,
+							"phone":document.getElementById("fphone").value,
+						};
+						$.ajax({
+							type: "POST",
+							url: "http://123.56.26.95/forgetpwd/",
+							data: JSONObject,
+							dataType:"text",
+							success: function (result) {
+								if(result=="0"){
+									alert("用户名不存在！");
+								}
+								else if (result == "2") {
+									alert("邮箱或电话信息不正确！");
+								}
+								else{
+									alert("密码修改成功，请重新登录！");
+									$("#register_form").css("display", "none");
+									$("#login_form").css("display", "block");
+									$('#identifier').modal('hide');
+								}
+							},
+							error: function () {
+								alert("向服务器请求失败，注册失败！");
+							}
+						});
+					}
+				});
+			});
+	
+		</script>
 						
 		</head>
 		
@@ -248,7 +303,7 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 							</button>
-							<button type="button" class="btn btn-primary">修改密码
+							<button id="reset" type="button" class="btn btn-primary">修改密码
 							</button>
 						</div>
 					</div><!-- /.modal-content -->
