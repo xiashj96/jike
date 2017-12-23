@@ -257,7 +257,7 @@
 										  '<h6>'+result2[j].fields.school+' '+result2[j].fields.teacher+'</h6>'+
 										  '<p>'+result2[j].fields.content+'</p>'+
 										  '<a id='+result2[j].fields.id+' onclick="courseCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
-										  '<h6 style="display: inline;"><a style="display: inline;" data-toggle="modal" id='+result2[j].fields.id+'>反馈</a></h6>'+
+										  '<a data-toggle="modal" id='+result2[j].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
 										  '</div></div>';
 								          $("#displayArea").append(item);//内容添加到页面上。
 										}
@@ -313,7 +313,7 @@
 									  '<h6>用户 '+result2[j].fields.uploader+' 上传于'+result2[j].fields.uploadtime+'</h6>'+
 									  '<p>'+result2[j].fields.content+'</p>'+
 									  '<a id='+result2[j].fields.id+' onclick="resourceCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
-									  '<h6 style="display: inline;"><a data-toggle="modal" id='+result2[j].fields.id+' style="display: inline;">反馈</a></h6>'+
+									  '<a data-toggle="modal" id='+result2[j].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
 									  '</div></div>';
 							          $("#displayArea").append(item);//内容添加到页面上。
 									}
@@ -467,6 +467,7 @@
 					<a href="#" class="btn" data-dismiss="modal">关闭</a>
 				</div>
 			</div>
+		</div>
 			
 	</body>
 </html>           
