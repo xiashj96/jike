@@ -277,9 +277,9 @@
 			   var name = $.query.get("name");
 			   if(name!=""){
 				   textID='<h6 id="reportID">资料编号：'+cid+'</h6>';
-				   $(#Resourceid).append(textID);
+				   $("#Resourceid").append(textID);
 				   textTitle='<h6 id="reportTitle">资料标题：'+title+'</h6>';
-				   $(#Resourcetitle).append(textID);
+				   $("#Resourcetitle").append(textID);
 				   $('#report').modal('show');
 			   }
 			   else{
@@ -289,12 +289,13 @@
 		</script>
 		
 		<script type="text/javascript">
-			function ResourceReport(){
-			   var cid= $("#reportID").val();
-			   var title= $("#reportTitle").val();
-			   var txt=$("#reportArea").val();
-			   var name = $.query.get("name");
-			   if(name!=""){
+		$(function() {
+			$("#reportbtn").click(function() {
+				var cid= $("#reportID").val();
+			    var title= $("#reportTitle").val();
+			    var txt=$("#reportArea").val();
+			    var name = $.query.get("name");
+			    if(name!=""){
 				   var JSONObject= {
 						"cID":cid,
 						"title":title,
@@ -323,7 +324,9 @@
 				else{
 					alert("请先登录！");
 				}
-			}
+			});
+				
+		});
 		</script>
 		
 		<script type="text/javascript">
@@ -596,7 +599,7 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 							</button>
-							<button id="resetbtn" type="button" class="btn btn-primary">修改密码
+							<button id="reportbtn" type="button" class="btn btn-primary">发送
 							</button>
 						</div>
 					</div><!-- /.modal-content -->
