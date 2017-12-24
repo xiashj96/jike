@@ -291,20 +291,20 @@
 		</script>
 		
 		<script type="text/javascript">
-		$(function() {
+		$(document).ready(function() {
 			$("#reportbtn").click(function() {
 				var cid= $("#reportID").text();
 			    var title= $("#reportTitle").text();
 			    var txt=$("#reportArea").val();
 			    var name = $.query.get("name");
 			    if(name!=""){
-				   var JSONObject= {
+				    var JSONObject= {
 						"cID":cid,
 						"title":title,
 						"text":txt,
 						"name":name
 					};
-				   $.ajax({
+				    $.ajax({
 						type: "POST",
 						url:"http://123.56.26.95/report/",
 						data: JSONObject,
@@ -326,8 +326,7 @@
 				else{
 					alert("请先登录！");
 				}
-			});
-				
+			});				
 		});
 		</script>
 		
