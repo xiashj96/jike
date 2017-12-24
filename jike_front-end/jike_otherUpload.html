@@ -128,7 +128,7 @@
 				formData.append("cname", $('#name').val());
 				formData.append("link", $('#link').val());
 				formData.append("uploader",name);
-				formData.append("introduction", $('#introduction').value);
+				formData.append("introduction", $('#introduction').val());
 				formData.append("file", $('#inputfile')[0].files[0]);
 				var request = new XMLHttpRequest();
 				request.onreadystatechange=function(){
