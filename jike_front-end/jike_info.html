@@ -529,11 +529,14 @@
 			var seed = $.query.get("s");
 			var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);
 			var myselect1=document.getElementById("cID1");
-			var interest1= myselect1.options[index].value;
+			var index1=myselect1.selectedIndex;
+			var interest1= myselect1.options[index1].value;
 			var myselect2=document.getElementById("cID2");
-			var interest2= myselect2.options[index].value;
+			var index2=myselect2.selectedIndex;
+			var interest2= myselect2.options[index2].value;
 			var myselect3=document.getElementById("cID3");
-			var interest3= myselect3.options[index].value;
+			var index3=myselect3.selectedIndex;
+			var interest3= myselect3.options[index3].value;
 			if(name!=""&&rNum==rNum2){
 				var JSONObject= {
 					"name":name,
