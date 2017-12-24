@@ -202,10 +202,6 @@
 					var url="../jike_otherUpload?name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
 				});
-				$("#learningTips").click(function() {
-					var url="../jike_learningTips?name="+name+"&r="+rNum+"&s="+seed;
-					window.location.href = url;
-				});
 				$("#userName").click(function() {
 					var url="../jike_info?name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
@@ -467,6 +463,41 @@
 	
 		</script>
 
+		<script type="text/javascript">
+		$(function(){
+			$("#interestSetting").click(function(){
+				$("#interestSetting").focus();
+				$("#displayArea").empty();
+				var name = $.query.get("name");
+				var JSONObject= {
+					"name":name
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/otherShow/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+						var length=result.length;
+						
+						for(var i = 0, l =length; i < l; i++){
+							var item ='<div class="row m-b-5"><div class="col-md-8">'+
+									'<h4>用户名：'+result[i].fields.username+'</h4>'+
+									'<h4>电话：'+result[i].fields.phone+'</h4>'+
+									'<h4>邮箱：'+result[i].fields.email+'</h4>'+
+									'<h4><a data-toggle="modal" data-target="#reset">修改密码</a></h4>'+
+									'</div></div>';
+							$("#displayArea").append(item);//内容添加到页面上。
+						}
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
+				});		
+			});	
+		});			
+		</script>
     </head>
 
     <body data-spy="scroll" data-target="#scrollspy">
@@ -481,7 +512,6 @@
 							<li><a id="searchPage">搜索</a></li>
 							<li><a id="moocShare" >慕课分享</a></li>
 							<li><a id="resourceShare">资料上传</a></li>
-							<li><a id="learningTips">学习建议</a></li>
 							<li><a id="discussion">主题讨论</a></li>
 						</ul>
 					</div>
@@ -501,57 +531,39 @@
 				<br><br><br><br><br>
 			</div>
 			
-            <section id="resource" class="service colorsbg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="main_service_area">
-                                <div class="head_title m-y-3 p-t-3 wow fadeInUp">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <h2>个人空间</h2>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main_service_content">
-                                    <div class="row">
-										<div class="col-md-8">
-											<ul class="list-inline" style="margin-left:15%;">
-											    <li class="inline-block">            
-													<a href="javascript:void(0)" id="userInfo">
-														个人资料
-													</a>                             
-												</li> 	
-												<li class="inline-block">
-													<a href="javascript:void(0)" id="moocCollect">
-														慕课收藏
-													</a>                             
-												</li>                                
-												<li class="inline-block">            
-													<a href="javascript:void(0)" id="resourceCollect">
-														资源收藏
-													</a>                             
-												</li>
-												<li class="inline-block">            
-													<a href="javascript:void(0)" id="interestSetting">
-														兴趣设置
-													</a>                             
-												</li> 											
-											</ul> 
-										</div>
-								    </div>
-                                </div><!-- End of main service content -->
-								<hr />
-								<div class="main_service_content" id="displayArea">
-					
-					            </div>						
-                            </div><!-- End of main service area -->			
-                        </div><!-- End of col-md-12 -->
-                    </div><!-- End of row -->
-					
-					
-                </div><!-- End of container -->
-            </section><!-- End of Service Section -->
+			<div class="row m-t-6">
+			    <div class="col-md-12">
+                    <h2>个人空间</h2>
+                </div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-8">
+					<ul class="list-inline" style="margin-left:15%;">
+					    <li class="inline-block">            
+							<a href="javascript:void(0)" id="userInfo">
+								个人资料
+							</a>                             
+						</li> 	
+						<li class="inline-block">
+							<a href="javascript:void(0)" id="moocCollect">
+								慕课收藏
+							</a>                             
+						</li>                                
+						<li class="inline-block">            
+							<a href="javascript:void(0)" id="resourceCollect">
+								资源收藏
+							</a>                             
+						</li>
+						<li class="inline-block">            
+							<a href="javascript:void(0)" id="interestSetting">
+								兴趣设置
+							</a>                             
+						</li> 											
+					</ul> 
+				</div>
+			</div>
+
 			
 			<div class="modal fade" id="reset" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
