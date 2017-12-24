@@ -327,7 +327,7 @@
 										var setID=0;
 										for(var j = 0, len = length1; j < len; j=j+3){
 										    setID=setID+1;
-											var item='<div id="'+setID+'" style="display:none;">'+
+											var item=
 													'<div class="row">'+
 													'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 														'<img src="'+result1[j].fields.img+'" alt="" />'+
@@ -365,9 +365,9 @@
 															'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result1[j+2].fields.id+' name='+result1[j+2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
 														'</div>'+
 													'</div>'+
-													 '</div>'+
 													 '</div>';
-											$("#recommendcarousel").append(item);
+												var theID=String(setID);
+												document.getElementById("theID").append(item);
 										}
 									},
 									error: function(result1){					
@@ -391,8 +391,10 @@
 										jsonp: "callback",
 										success: function(result1){
 											var length1=result1.length;
+											var setID=0;
 											for(var j = 0, len = length1; j < len; j=j+3){
-												var item='<div id="'+setID+'" style="display:none;">'+
+											    setID=setID+1;
+												var item=
 													'<div class="row">'+
 													'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 														'<img src="'+result1[j].fields.img+'" alt="" />'+
@@ -430,9 +432,9 @@
 															'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result1[j+2].fields.id+' name='+result1[j+2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
 														'</div>'+
 													'</div>'+
-													 '</div>'+
 													 '</div>';
-												$("#recommendcarousel").append(item);
+												var theID=String(setID);
+												document.getElementById("theID").append(item);
 											}
 										},
 										error: function(result){						
@@ -457,8 +459,10 @@
 										jsonp: "callback",
 										success: function(result1){
 											var length1=result1.length;
+											var setID=0;
 											for(var j = 0, len = length1; j < len; j=j+3){
-												var item='<div id="'+setID+'" style="display:none;">'+
+											    setID=setID+1;
+												var item=
 													'<div class="row">'+
 													'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 														'<img src="'+result1[j].fields.img+'" alt="" />'+
@@ -496,9 +500,9 @@
 															'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result1[j+2].fields.id+' name='+result1[j+2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
 														'</div>'+
 													'</div>'+
-													 '</div>'+
 													 '</div>';
-												$("#recommendcarousel").append(item);
+											    var theID=String(setID);
+												document.getElementById("theID").append(item);
 											}
 										},
 										error: function(result){						
@@ -918,7 +922,12 @@
                                     </div>
                                 </div>
                                 <div id="recommendcarousel" style="display:none;">
-										
+									<div id="1" style="display:none;"></div>
+									<div id="2" style="display:none;"></div>
+									<div id="3" style="display:none;"></div>
+									<div id="4" style="display:none;"></div>
+									<div id="5" style="display:none;"></div>
+									<div id="6" style="display:none;"></div>
                                 </div>
 								<div id="noRecommend" class="main_service_content" style="display:none;">
 									<div class="row">
