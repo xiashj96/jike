@@ -491,25 +491,31 @@
 						    $("#cID3").options[0].selected = true;
 						}
 						else if(length==1){
-						    var result1=parseInt(result[0].fields.interest);
-							$("#cID1").options[(result1-100)].selected = true;
+						    var result1=parseInt(result[0].fields.interest)-100;
+							$("#cID1").options[result1].selected = true;
 							$("#cID2").options[0].selected = true;
 						    $("#cID3").options[0].selected = true;
 						}
 						else if(length==2){
-							var result1=parseInt(result[0].fields.interest);
-							$("#cID1").options[(result1-100)].selected = true;
-							var result2=parseInt(result[1].fields.interest);
-							$("#cID2").options[(result2-100)].selected = true;
+							var result1=parseInt(result[0].fields.interest)-100;
+							$("#cID1").options[result1].selected = true;
+							var result2=parseInt(result[1].fields.interest)-100;
+							$("#cID2").options[result2].selected = true;
 							$("#cID3").options[0].selected = true;
 						}
 						else if(length==3){
-							var result1=parseInt(result[0].fields.interest);
-							$("#cID1").options[(result1-100)].selected = true;
-							var result2=parseInt(result[1].fields.interest);
-							$("#cID2").options[(result2-100)].selected = true;	
-							var result3=parseInt(result[2].fields.interest);
-							$("#cID3").options[(result3-100)].selected = true;	
+							var myselect1=document.getElementById("cID1");
+							var result1=parseInt(result[0].fields.interest)-100;
+							alert(result1);
+							myselect1.options[result1].selected = true;
+							
+							var myselect2=document.getElementById("cID2");
+							var result2=parseInt(result[1].fields.interest)-100;
+							myselect2.options[result2].selected = true;
+							
+							var myselect3=document.getElementById("cID3");
+							var result3=parseInt(result[2].fields.interest)-100;
+							myselect3.options[result3].selected = true;	
 						}
 						$("#selectiList").css("display", "block");
 					},
