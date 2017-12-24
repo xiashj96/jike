@@ -180,8 +180,8 @@
 					                          '<a id='+result[i].fields.id+' href='+result[i].fields.link+' onclick="courseCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
 				                              '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
 					                          '<p>'+result[i].fields.content+'</p>'+
-											  '<a id='+result[i].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
-											  '<a onclick="reportShow(this);" id='+result[i].fields.id+' name='+result[i].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+											  '<a href="javascript:void(0)" id='+result[i].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+											  '<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[i].fields.id+' name='+result[i].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
 											  '</div></div>';
 									$("#searchresult").append(item);//内容添加到页面上。
 								}
@@ -205,8 +205,8 @@
 					                          '<a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
 				                              '<h6>用户 '+result[i].fields.uploader+' 上传于'+result[i].fields.uploadtime+'</h6>'+
 					                          '<p>'+result[i].fields.content+'</p>'+
-											  '<a id='+result[i].fields.id+' onclick="resourceCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
-											  '<a onclick="reportShow(this);" id='+result[i].fields.id+' name='+result[i].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+											  '<a href="javascript:void(0)" id='+result[i].fields.id+' onclick="resourceCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+											  '<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[i].fields.id+' name='+result[i].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
 											  '</div></div>';
 									$("#searchresult").append(item);//内容添加到页面上。
 								}
