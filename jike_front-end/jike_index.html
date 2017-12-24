@@ -312,6 +312,9 @@
 								$("#noRecommend").css("display", "block");
 							}
 							else if(length==1){
+								$("#1").css("display", "block");
+								$("#recommendcarousel").css("display", "block");
+								$("#noRecommend").css("display", "none");
 								var JSONObject1= {
 									"typeID":result[0].fields.interest,
 									"length":"1"
@@ -373,11 +376,11 @@
 									error: function(result1){					
 									}
 								});
+							}
+							else if(length==2){
 								$("#1").css("display", "block");
 								$("#recommendcarousel").css("display", "block");
 								$("#noRecommend").css("display", "none");
-							}
-							else if(length==2){
 								for(var i = 0, l =length; i < l; i++){
 									var JSONObject2= {
 										"typeID":result[i].fields.interest,
@@ -391,7 +394,7 @@
 										jsonp: "callback",
 										success: function(result1){
 											var length1=result1.length;
-											var setID=0;
+											var setID=i;
 											for(var j = 0, len = length1; j < len; j=j+3){
 											    setID=setID+1;
 												var item=
@@ -441,11 +444,11 @@
 										}
 									});
 								}
+							}
+							else if(length==3){
 								$("#1").css("display", "block");
 								$("#recommendcarousel").css("display", "block");
 								$("#noRecommend").css("display", "none");
-							}
-							else if(length==3){
 								for(var i = 0, l =length; i < l; i++){
 									var JSONObject3= {
 										"typeID":result[i].fields.interest,
@@ -459,7 +462,7 @@
 										jsonp: "callback",
 										success: function(result1){
 											var length1=result1.length;
-											var setID=0;
+											var setID=i;
 											for(var j = 0, len = length1; j < len; j=j+3){
 											    setID=setID+1;
 												var item=
@@ -509,9 +512,6 @@
 										}
 									});
 								}
-								$("#1").css("display", "block");
-								$("#recommendcarousel").css("display", "block");
-								$("#noRecommend").css("display", "none");
 							}
 						},
 						error: function(result){						
