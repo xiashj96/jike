@@ -382,7 +382,7 @@
 									};
 									$.ajax({
 										type: "POST",
-										url:"http://123.56.26.95/interestShow/",
+										url:"http://123.56.26.95/recommendGet/",
 										data: JSONObject2,
 										dataType: "json",
 										jsonp: "callback",
@@ -447,7 +447,7 @@
 									};
 									$.ajax({
 										type: "POST",
-										url:"http://123.56.26.95/interestShow/",
+										url:"http://123.56.26.95/recommendGet/",
 										data: JSONObject3,
 										dataType: "json",
 										jsonp: "callback",
@@ -547,6 +547,10 @@
 				var seed = $.query.get("s");
 				$("#moreRecommend").click(function(){
 					$("#recommendcarousel").carousel('next');
+				});
+				$("#userName2").click(function() {
+					var url="../jike_info?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;
 				});
 				$("#userName").click(function() {
 					var url="../jike_info?name="+name+"&r="+rNum+"&s="+seed;
@@ -917,9 +921,10 @@
                                 </div>
 								<div id="noRecommend" class="main_service_content" style="display:none;">
 									<div class="row">
-										<div class="col-md-12" style="margin-left:15%;">
+										<div class="col-md-12">
 											<h4>暂无推荐</h4>
-											<p><a id="userName" href="javascript:void(0)">点击这里</a>，前往个人中心设置兴趣标签，获得更多推荐吧！</p>
+											<a id="userName2" href="javascript:void(0)"><p>点击这里</p></a>
+											<p>前往个人中心设置兴趣标签，获得更多推荐吧！</p>
 										</div>
 								    </div>
                                 </div><!-- End of main service content -->
