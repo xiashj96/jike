@@ -306,6 +306,7 @@
 						jsonp: "callback",
 						success: function(result){
 							var length=result.length;
+							alert(length);
 							if(length==0){
 								$("#recommendcarousel").css("display", "none");
 								$("#noRecommend").css("display", "block");
