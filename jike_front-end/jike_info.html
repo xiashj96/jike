@@ -240,7 +240,7 @@
 									success: function(result2){
 										var length2=result2.length;
 										for(var j = 0, l =length; j < l; j++){
-											var item ='<div class="row m-b-5"><div class="col-md-4">'+
+											var item ='<div class="row m-b-5" style="margin-left:15%;"><div class="col-md-4">'+
 										  '<img src="'+result2[j].fields.img+'"/></div><div class="col-md-8">'+
 										  '<a id='+result2[j].fields.id+' href='+result2[j].fields.link+' onclick="courseCount(this);"><h4>'+result2[j].fields.name+'</h4></a>'+
 										  '<h6>'+result2[j].fields.school+' '+result2[j].fields.teacher+'</h6>'+
@@ -359,7 +359,7 @@
 								success: function(result2){
 									var length2=result2.length;
 									for(var j = 0, l =length; j < l; j++){
-										var item ='<div class="row m-b-5"><div class="col-md-8">'+
+										var item ='<div class="row m-b-5"><div class="col-md-8" style="margin-left:15%;">'+
 									  '<a id='+result2[j].fields.id+' href='+result2[j].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result2[j].fields.name+'</h4></a>'+
 									  '<h6>用户 '+result2[j].fields.uploader+' 上传于'+result2[j].fields.uploadtime+'</h6>'+
 									  '<p>'+result2[j].fields.content+'</p>'+
@@ -403,10 +403,10 @@
 						var length=result.length;
 						for(var i = 0, l =length; i < l; i++){
 							var item ='<div class="row m-b-5"><div class="col-md-8">'+
-									'<h4>用户名：'+result[i].fields.username+'</h4>'+
-									'<h4>电话：'+result[i].fields.phone+'</h4>'+
-									'<h4>邮箱：'+result[i].fields.email+'</h4>'+
-									'<h4><a data-toggle="modal" data-target="#reset">修改密码</a></h4>'+
+									'<h4 style="margin-left:15%;">用户名：'+result[i].fields.username+'</h4>'+
+									'<h4 style="margin-left:15%;">电话：'+result[i].fields.phone+'</h4>'+
+									'<h4 style="margin-left:15%;">邮箱：'+result[i].fields.email+'</h4>'+
+									'<h4 style="margin-left:15%;"><a data-toggle="modal" data-target="#reset">修改密码</a></h4>'+
 									'</div></div>';
 							$("#displayArea").append(item);//内容添加到页面上。
 						}
@@ -483,10 +483,10 @@
 						
 						for(var i = 0, l =length; i < l; i++){
 							var item ='<div class="row m-b-5"><div class="col-md-8">'+
-									'<h4>用户名：'+result[i].fields.username+'</h4>'+
-									'<h4>电话：'+result[i].fields.phone+'</h4>'+
-									'<h4>邮箱：'+result[i].fields.email+'</h4>'+
-									'<h4><a data-toggle="modal" data-target="#reset">修改密码</a></h4>'+
+									'<h4 style="margin-left:15%;">用户名：'+result[i].fields.username+'</h4>'+
+									'<h4 style="margin-left:15%;">电话：'+result[i].fields.phone+'</h4>'+
+									'<h4 style="margin-left:15%;">邮箱：'+result[i].fields.email+'</h4>'+
+									'<h4 style="margin-left:15%;"><a data-toggle="modal" data-target="#reset">修改密码</a></h4>'+
 									'</div></div>';
 							$("#displayArea").append(item);//内容添加到页面上。
 						}
