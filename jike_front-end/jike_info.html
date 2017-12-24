@@ -279,7 +279,7 @@
 				   textID='<h6 id="reportID">资料编号：'+cid+'</h6>';
 				   $("#Resourceid").append(textID);
 				   textTitle='<h6 id="reportTitle">资料标题：'+title+'</h6>';
-				   $("#Resourcetitle").append(textID);
+				   $("#Resourcetitle").append(textTitle);
 				   $('#report').modal('show');
 			   }
 			   else{
@@ -365,7 +365,7 @@
 									  '<h6>用户 '+result2[j].fields.uploader+' 上传于'+result2[j].fields.uploadtime+'</h6>'+
 									  '<p>'+result2[j].fields.content+'</p>'+
 									  '<a id='+result2[j].fields.id+' onclick="resourceCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
-									  '<a data-toggle="modal" data-target="#report" id='+result2[j].fields.id+'><h6 style="display: inline;">反馈</h6></a>'+
+									  '<a onclick="reportShow(this);" id='+result2[j].fields.id+' name='+result2[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
 									  '</div></div>';
 							          $("#displayArea").append(item);//内容添加到页面上。
 									}
