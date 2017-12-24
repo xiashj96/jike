@@ -372,6 +372,7 @@
 									}
 								});
 								$("#recommendcarousel").css("display", "block");
+								$("#recommendcarousel").carousel(0);
 								$("#noRecommend").css("display", "none");
 							}
 							else if(length==2){
@@ -437,6 +438,7 @@
 									});
 								}
 								$("#recommendcarousel").css("display", "block");
+								$("#recommendcarousel").carousel(0);
 								$("#noRecommend").css("display", "none");
 							}
 							else if(length==3){
@@ -456,9 +458,43 @@
 											for(var j = 0, len = length1; j < len; j=j+3){
 												var item='<div class="item">'+
 													'<div class="row">'+
-													
+													'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 														'<img src="'+result1[j].fields.img+'" alt="" />'+
 													'</div>'+
+													'<div class="col-md-3" style="margin-top:5%;">'+
+														'<img src="'+result1[j+1].fields.img+'" alt="" />'+
+													'</div>'+
+													'<div class="col-md-3" style="margin-top:5%;">'+
+														'<img src="'+result1[j+2].fields.img+'" alt="" />'+
+													'</div>'+
+													 '</div>'+
+													 
+													 '<div class="row">'+
+													 '<div class="col-md-3" style="margin-left:10%;">'+
+														'<div class="single_team_text text-center">'+
+															'<a id='+result1[j].fields.id+' href='+result1[j].fields.link+' onclick="courseCount(this);"><h6>'+result1[j].fields.name+'</h6></a>'+
+															'<h6>'+result1[j].fields.school+' '+result1[j].fields.teacher+'</h6>'+
+															'<a href="javascript:void(0)" id='+result1[j].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+															'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result1[j].fields.id+' name='+result1[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+														'</div>'+
+													'</div>'+
+													'<div class="col-md-3">'+
+														'<div class="single_team_text text-center">'+
+															'<a id='+result1[j+1].fields.id+' href='+result1[j+1].fields.link+' onclick="courseCount(this);"><h6>'+result1[j+1].fields.name+'</h6></a>'+
+															'<h6>'+result1[j+1].fields.school+' '+result1[j+1].fields.teacher+'</h6>'+
+															'<a href="javascript:void(0)" id='+result1[j+1].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+															'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result1[j+1].fields.id+' name='+result1[j+1].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+														'</div>'+
+													'</div>'+
+													'<div class="col-md-3">'+
+														'<div class="single_team_text text-center">'+
+															'<a id='+result1[j+2].fields.id+' href='+result1[j+2].fields.link+' onclick="courseCount(this);"><h6>'+result1[j+2].fields.name+'</h6></a>'+
+															'<h6>'+result1[j+2].fields.school+' '+result1[j+2].fields.teacher+'</h6>'+
+															'<a href="javascript:void(0)" id='+result1[j+2].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+															'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result1[j+2].fields.id+' name='+result1[j+2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+														'</div>'+
+													'</div>'+
+													 '</div>'+
 													 '</div>';
 												$("#mainRecommend").append(item);
 											}
@@ -468,6 +504,7 @@
 									});
 								}
 								$("#recommendcarousel").css("display", "block");
+								$("#recommendcarousel").carousel(0);
 								$("#noRecommend").css("display", "none");
 							}
 						},
@@ -878,12 +915,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="recommendcarousel" class="main_service_content" style="display:none;">
-                                    <div class="carousel slide">  
+                                <div id="recommendcarousel" class="carousel slide" style="display:none;">
 										<div id="mainRecommend" class="carousel-inner">
 											
 										</div>
-									</div> 
                                 </div>
 								<div id="noRecommend" class="main_service_content" style="display:none;">
 									<div class="row">
