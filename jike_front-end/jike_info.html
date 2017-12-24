@@ -240,7 +240,7 @@
 									success: function(result2){
 										var length2=result2.length;
 										for(var j = 0, l =length; j < l; j++){
-											var item ='<div class="row m-b-5" style="margin-left:15%;"><div class="col-md-4">'+
+											var item ='<div class="row m-b-5" style="margin-left:10%;"><div class="col-md-4">'+
 										  '<img src="'+result2[j].fields.img+'"/></div><div class="col-md-8">'+
 										  '<a id='+result2[j].fields.id+' href='+result2[j].fields.link+' onclick="courseCount(this);"><h4>'+result2[j].fields.name+'</h4></a>'+
 										  '<h6>'+result2[j].fields.school+' '+result2[j].fields.teacher+'</h6>'+
@@ -359,7 +359,7 @@
 								success: function(result2){
 									var length2=result2.length;
 									for(var j = 0, l =length; j < l; j++){
-										var item ='<div class="row m-b-5"><div class="col-md-8" style="margin-left:15%;">'+
+										var item ='<div class="row m-b-5"><div class="col-md-8" style="margin-left:10%;">'+
 									  '<a id='+result2[j].fields.id+' href='+result2[j].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result2[j].fields.name+'</h4></a>'+
 									  '<h6>用户 '+result2[j].fields.uploader+' 上传于'+result2[j].fields.uploadtime+'</h6>'+
 									  '<p>'+result2[j].fields.content+'</p>'+
