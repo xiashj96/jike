@@ -214,6 +214,7 @@
 				$("#moocCollect").click(function(){
 					$("#moocCollect").focus();
 					$("#displayArea").empty();
+					$("#selectiList").css("display", "none");
 					var name = $.query.get("name");
 					var JSONObject= {
 						"name":name
@@ -333,6 +334,7 @@
 			$("#resourceCollect").click(function(){
 				$("#resourceCollect").focus();
 				$("#displayArea").empty();
+				$("#selectiList").css("display", "none");
 				var name = $.query.get("name");
 				var JSONObject= {
 					"name":name
@@ -389,6 +391,7 @@
 			$("#userInfo").click(function(){
 				$("#userInfo").focus();
 				$("#displayArea").empty();
+				$("#selectiList").css("display", "none");
 				var name = $.query.get("name");
 				var JSONObject= {
 					"name":name
@@ -468,28 +471,23 @@
 			$("#interestSetting").click(function(){
 				$("#interestSetting").focus();
 				$("#displayArea").empty();
+				$("#selectiList").css("display", "block");
 				var name = $.query.get("name");
 				var JSONObject= {
 					"name":name
 				};
 				$.ajax({
 					type: "POST",
-					url:"http://123.56.26.95/otherShow/",
+					url:"http://123.56.26.95/interestShow/",
 					data: JSONObject,
 					dataType: "json",
 					jsonp: "callback",
 					success: function(result){
-						var length=result.length;
-						
+						var length=result.length;				
 						for(var i = 0, l =length; i < l; i++){
-							var item ='<div class="row m-b-5"><div class="col-md-8">'+
-									'<h4 style="margin-left:15%;">用户名：'+result[i].fields.username+'</h4>'+
-									'<h4 style="margin-left:15%;">电话：'+result[i].fields.phone+'</h4>'+
-									'<h4 style="margin-left:15%;">邮箱：'+result[i].fields.email+'</h4>'+
-									'<h4 style="margin-left:15%;"><a data-toggle="modal" data-target="#reset">修改密码</a></h4>'+
-									'</div></div>';
-							$("#displayArea").append(item);//内容添加到页面上。
+							
 						}
+						$("#selectiList").css("display", "block");
 					},
 					error: function(result){						
 						alert("查询失败");
@@ -498,6 +496,7 @@
 			});	
 		});			
 		</script>
+
     </head>
 
     <body data-spy="scroll" data-target="#scrollspy">
@@ -574,7 +573,99 @@
 								<hr />
 								<div class="main_service_content" id="displayArea">
 					
-					            </div>						
+					            </div>
+								<div class="main_service_content" id="selectiList" style="display:none;">
+									<div class="form-group">
+										<label for="tag1">标签1</label>
+										<select class="form-control" id = "cID1">
+											<option value="100">请选择......</option>
+											<option value="101">计算机</option>
+											<option value="102">经管</option>
+											<option value="103">创业</option>
+											<option value="104">电子</option>
+											<option value="105">工程</option>
+											<option value="106">环境·地球</option>
+											<option value="107">医学·健康</option>
+											<option value="108">生命科学</option>
+											<option value="109">数学</option>
+											<option value="110">物理</option>
+											<option value="111">化学</option>
+											<option value="112">社科·法律</option>
+											<option value="113">文学</option>
+											<option value="114">历史</option>
+											<option value="115">哲学</option>
+											<option value="116">建筑</option>
+											<option value="117">外语</option>
+											<option value="118">教育</option>
+											<option value="119">艺术·设计</option>
+											<option value="120">公共管理</option>
+											<option value="121">职场</option>
+											<option value="122">大学先修课</option>
+											<option value="199">其他</option>
+										</select>
+									</div>
+									
+									<div class="form-group">
+										<label for="tag2">标签2</label>
+										<select class="form-control" id = "cID2">
+											<option value="100">请选择......</option>
+											<option value="101">计算机</option>
+											<option value="102">经管</option>
+											<option value="103">创业</option>
+											<option value="104">电子</option>
+											<option value="105">工程</option>
+											<option value="106">环境·地球</option>
+											<option value="107">医学·健康</option>
+											<option value="108">生命科学</option>
+											<option value="109">数学</option>
+											<option value="110">物理</option>
+											<option value="111">化学</option>
+											<option value="112">社科·法律</option>
+											<option value="113">文学</option>
+											<option value="114">历史</option>
+											<option value="115">哲学</option>
+											<option value="116">建筑</option>
+											<option value="117">外语</option>
+											<option value="118">教育</option>
+											<option value="119">艺术·设计</option>
+											<option value="120">公共管理</option>
+											<option value="121">职场</option>
+											<option value="122">大学先修课</option>
+											<option value="199">其他</option>
+										</select>
+									</div>
+									
+									<div class="form-group">
+										<label for="tag3">标签3</label>
+										<select class="form-control" id = "cID3">
+											<option value="100">请选择......</option>
+											<option value="101">计算机</option>
+											<option value="102">经管</option>
+											<option value="103">创业</option>
+											<option value="104">电子</option>
+											<option value="105">工程</option>
+											<option value="106">环境·地球</option>
+											<option value="107">医学·健康</option>
+											<option value="108">生命科学</option>
+											<option value="109">数学</option>
+											<option value="110">物理</option>
+											<option value="111">化学</option>
+											<option value="112">社科·法律</option>
+											<option value="113">文学</option>
+											<option value="114">历史</option>
+											<option value="115">哲学</option>
+											<option value="116">建筑</option>
+											<option value="117">外语</option>
+											<option value="118">教育</option>
+											<option value="119">艺术·设计</option>
+											<option value="120">公共管理</option>
+											<option value="121">职场</option>
+											<option value="122">大学先修课</option>
+											<option value="199">其他</option>
+										</select>
+									</div>
+								</div>
+								<button type="submit" class="btn btn-default" id="save_btn">保存</button>
                             </div><!-- End of main service area -->			
                         </div><!-- End of col-md-12 -->
                     </div><!-- End of row -->
