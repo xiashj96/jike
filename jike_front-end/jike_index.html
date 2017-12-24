@@ -484,9 +484,9 @@
 			   $("#Resourceid").empty();
 			   $("#Resourcetitle").empty();
 			   if(name!=""){
-				   textID='<h6 id="reportID">资料编号：'+cid+'</h6>';
+				   textID='<h6>资料编号：</h6><p id="reportID">'+cid+'</p>';
 				   $("#Resourceid").append(textID);
-				   textTitle='<h6 id="reportTitle">资料标题：'+title+'</h6>';
+				   textTitle='<h6>资料标题：</h6><p id="reportTitle">'+title+'</p>';
 				   $("#Resourcetitle").append(textTitle);
 				   $('#report').modal('show');
 			   }
@@ -495,6 +495,47 @@
 			   }
 			}
 		</script>	
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$("#reportbtn").click(function() {
+				var cid= $("#reportID").text();
+			    var title= $("#reportTitle").text();
+			    var txt=$("#reportArea").val();
+			    var name = $.query.get("name");
+			    if(name!=""){
+				    var JSONObject= {
+						"cID":cid,
+						"title":title,
+						"text":txt,
+						"name":name
+					};
+				    $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/report/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							if(result=="1"){
+								alert("反馈成功");
+								$('#report').modal('hide');
+							}
+							else{
+								alert("反馈失败");
+							}
+						},
+						error: function(result){	
+							alert("连接服务器失败，反馈失败");
+						}
+					});
+				}
+				else{
+					alert("请先登录！");
+				}
+			});				
+		});
+		</script>
 		
     </head>
 
