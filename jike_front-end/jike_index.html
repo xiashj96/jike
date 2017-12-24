@@ -293,6 +293,7 @@
 				var name = $.query.get("name");
 				var rNum = $.query.get("r");
 				var seed = $.query.get("s");
+				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
 				$("#mainRecommend").empty();
 				if(name!=""&&rNum==rNum2){
 					var JSONObject= {
