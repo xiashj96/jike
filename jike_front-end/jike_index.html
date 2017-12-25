@@ -254,7 +254,7 @@
 					jsonp: "callback",
 					success: function(result){
 						var x=document.getElementsByName(result[0].fields.interest+"0");
-						x[0].css("display","none");
+						x[0].style.display="none";
 					},
 					error: function(result){						
 						alert("查询失败");
