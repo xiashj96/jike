@@ -241,6 +241,97 @@
 		</script>
 		
 		<script type="text/javascript">
+			function recommendChange(){
+			  var name = $.query.get("name");
+				var JSONObject= {
+					"name":name
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/interestShow/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					    var length=result.length;
+						if(length==1){
+						    var t=parseInt(5.9*Math.random());
+							var xCheck=document.getElementsByName(result[0].fields.interest+String(t));
+							while(xCheck[0].style.display=="block"){
+								t=parseInt(5.9*Math.random());
+							    xCheck=document.getElementsByName(result[0].fields.interest+String(t));
+							}
+							var x1=document.getElementsByName(result[0].fields.interest+"0");
+							x1[0].style.display="none";
+							var x2=document.getElementsByName(result[0].fields.interest+"1");
+							x2[0].style.display="none";
+							var x3=document.getElementsByName(result[0].fields.interest+"2");
+							x3[0].style.display="none";
+							var x4=document.getElementsByName(result[0].fields.interest+"3");
+							x4[0].style.display="none";
+							var x5=document.getElementsByName(result[0].fields.interest+"4");
+							x5[0].style.display="none";
+							var x6=document.getElementsByName(result[0].fields.interest+"5");
+							x6[0].style.display="none";
+							
+							var xShow=document.getElementsByName(result[0].fields.interest+String(t));
+							xShow[0].style.display="block";							
+						}
+						else if(length==2){
+							var t=parseInt(2.9*Math.random());
+							var s=parseInt(1.9*Math.random());
+							var xCheck=document.getElementsByName(result[s].fields.interest+String(t));
+							while(xCheck[0].style.display=="block"){
+								t=parseInt(2.9*Math.random());
+							    s=parseInt(1.9*Math.random());
+							    xCheck=document.getElementsByName(result[s].fields.interest+String(t));
+							}
+						
+							var x1=document.getElementsByName(result[0].fields.interest+"0");
+							x1[0].style.display="none";
+							var x2=document.getElementsByName(result[0].fields.interest+"1");
+							x2[0].style.display="none";
+							var x3=document.getElementsByName(result[0].fields.interest+"2");
+							x3[0].style.display="none";
+							var x4=document.getElementsByName(result[1].fields.interest+"0");
+							x4[0].style.display="none";
+							var x5=document.getElementsByName(result[1].fields.interest+"1");
+							x5[0].style.display="none";
+							var x6=document.getElementsByName(result[1].fields.interest+"2");
+							x6[0].style.display="none";
+
+							var xShow=document.getElementsByName(result[s].fields.interest+String(t));
+							xShow[0].style.display="block";							
+						}
+						else if(length==3){
+							var x1=document.getElementsByName(result[0].fields.interest+"0");
+							x1[0].style.display="none";
+							var x2=document.getElementsByName(result[0].fields.interest+"1");
+							x2[0].style.display="none";
+							var x3=document.getElementsByName(result[1].fields.interest+"0");
+							x3[0].style.display="none";
+							var x4=document.getElementsByName(result[1].fields.interest+"1");
+							x4[0].style.display="none";
+							var x5=document.getElementsByName(result[2].fields.interest+"0");
+							x5[0].style.display="none";
+							var x6=document.getElementsByName(result[2].fields.interest+"1");
+							x6[0].style.display="none";
+							
+							var t=parseInt(1.9*Math.random());
+							var s=parseInt(2.9*Math.random());
+							var xShow=document.getElementsByName(result[s].fields.interest+String(t));
+							xShow[0].style.display="block";							
+						}
+
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
+				});	
+			}
+		</script>
+		
+		<script type="text/javascript">
 			function recommendShowUp(){
 			  var name = $.query.get("name");
 				var JSONObject= {
@@ -1095,7 +1186,7 @@
                                             <h6></h6>
                                         </div>
 										<div class="col-md-1">
-                                            <h6><a href="javascript:void(0)" id="moreRecommend" style="color:#000;">More</a></h6>
+                                            <h6><a href="javascript:void(0)" id="moreRecommend" onclick="recommendChange();" style="color:#000;">More</a></h6>
                                         </div>
                                     </div>
                                 </div>
