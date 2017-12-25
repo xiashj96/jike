@@ -54,6 +54,33 @@
         <script type="text/javascript" src="../assets/js/main.js"></script>
 		
 		<script type="text/javascript">
+			$(function(){
+			   getUsername();
+			});
+			
+			function getUsername(){
+			    var name = $.query.get("name");
+				var rNum = $.query.get("r");
+				var seed = $.query.get("s");
+				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
+				if(name!=""&&rNum==rNum2){
+				    $("#welcome_div").css("display","block");
+					document.getElementById("userName").innerHTML = "您好，"+name;
+					$("#logout_div").css("display", "block");
+					$("#login_div").css("display", "none");
+					$("#recommend_div").css("display", "block");
+				}
+				else{
+					document.getElementById("userName").innerHTML = "";
+					$("#welcome_div").css("display","none");
+					$("#logout_div").css("display", "none");
+					$("#login_div").css("display", "block");
+					$("#recommend_div").css("display", "none");
+				}
+			}
+		</script>
+		
+		<script type="text/javascript">
 			function courseCount(obj){
 			   var cid= obj.id;
 			   var JSONObject= {
@@ -791,33 +818,6 @@
 			});
 		</script!-->
 		
-		<script type="text/javascript">
-			$(function(){
-			   getUsername();
-			});
-			
-			function getUsername(){
-			    var name = $.query.get("name");
-				var rNum = $.query.get("r");
-				var seed = $.query.get("s");
-				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
-				if(name!=""&&rNum==rNum2){
-				    $("#welcome_div").css("display","block");
-					document.getElementById("userName").innerHTML = "您好，"+name;
-					$("#logout_div").css("display", "block");
-					$("#login_div").css("display", "none");
-					$("#recommend_div").css("display", "block");
-				}
-				else{
-					document.getElementById("userName").innerHTML = "";
-					$("#welcome_div").css("display","none");
-					$("#logout_div").css("display", "none");
-					$("#login_div").css("display", "block");
-					$("#recommend_div").css("display", "none");
-				}
-			}
-		</script>
-
 		<script type="text/javascript">
 			$(function() {
 			    var name = $.query.get("name");
