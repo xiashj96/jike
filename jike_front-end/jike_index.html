@@ -279,7 +279,7 @@
 										jsonp: "callback",
 										success: function(result){
 										    var listlength=result.length;
-											for(var j=0;j<length;j=j+2){
+											for(var j=0;j<listlength;j=j+3){
 										        var item='<div class="row">'+
 												'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 													'<img src="'+result[j].fields.img+'" alt="" />'+
@@ -318,7 +318,13 @@
 													'</div>'+
 												'</div>'+
 											  '</div>';
-											   $("#recommendlist").append(item);
+											  if($("#recommend1").html()==null||$("#recommend1").html().length==0){$("#recommend1").append(item);}
+											  else if($("#recommend2").html()==null||$("#recommend2").html().length==0){$("#recommend2").append(item);}
+											  else if($("#recommend3").html()==null||$("#recommend3").html().length==0){$("#recommend3").append(item);}
+											  else if($("#recommend4").html()==null||$("#recommend4").html().length==0){$("#recommend4").append(item);}
+											  else if($("#recommend5").html()==null||$("#recommend5").html().length==0){$("#recommend5").append(item);}
+											  else if($("#recommend6").html()==null||$("#recommend6").html().length==0){$("#recommend6").append(item);}
+											   
 											}
 										},
 										error: function(result){						
@@ -1021,7 +1027,12 @@
                                 </div>
                                  <div class="main_service_content">
 									<div id="recommendlist">
-										
+										<div id="recommend1"></div>
+										<div id="recommend2"></div>
+										<div id="recommend3"></div>
+										<div id="recommend4"></div>
+										<div id="recommend5"></div>
+										<div id="recommend6"></div>
 									</div>
                                 </div><!-- End of main service content -->
 								
