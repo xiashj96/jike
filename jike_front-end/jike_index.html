@@ -242,6 +242,35 @@
 		
 		<script type="text/javascript">
 			$(function(){
+				var name = $.query.get("name");
+				var rNum = $.query.get("r");
+				var seed = $.query.get("s");
+				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
+				$("#mainRecommend").empty();
+				if(name!=""&&rNum==rNum2){
+					var JSONObject= {
+						"name":name
+				    };
+					
+				    $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/interestGet/",
+						data:JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							
+						},
+						error: function(result){						
+							alert("查询失败");
+						}
+					});
+				}
+			});
+		</script>
+		
+		<script type="text/javascript">
+			$(function(){
 				$("#moocAll").focus();
 				$("#mooclist").empty();
 				var JSONObject= {
@@ -288,7 +317,7 @@
 			});
 		</script>
 		
-		<script type="text/javascript">
+		<!--script type="text/javascript">
 			$(function(){
 				var name = $.query.get("name");
 				var rNum = $.query.get("r");
@@ -520,7 +549,7 @@
 					});
 				}
 			});
-		</script>
+		</script!-->
 		
 		<script type="text/javascript">
 			$(function(){
@@ -921,7 +950,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="recommendcarousel" style="display:none;">
+                                <div id="recommendcarousel" class="main_service_content" style="display:none;">
 									<div id="row1"></div>
 									<div id="row2"></div>
 									<div id="row3"></div>
