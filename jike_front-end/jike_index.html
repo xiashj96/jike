@@ -454,6 +454,7 @@
 										"typeID":result[i].fields.interest,
 										"length":"3"
 									};
+									var setID=i;
 									$.ajax({
 										type: "POST",
 										url:"http://123.56.26.95/recommendGet/",
@@ -462,7 +463,6 @@
 										jsonp: "callback",
 										success: function(result1){
 											var length1=result1.length;
-											var setID=i;
 											for(var j = 0, len = length1; j < len; j=j+3){
 											    setID=setID+1;
 												var item=
@@ -922,12 +922,12 @@
                                     </div>
                                 </div>
                                 <div id="recommendcarousel" style="display:none;">
-									<div id="1" style="display:none;"></div>
-									<div id="2" style="display:none;"></div>
-									<div id="3" style="display:none;"></div>
-									<div id="4" style="display:none;"></div>
-									<div id="5" style="display:none;"></div>
-									<div id="6" style="display:none;"></div>
+									<div id="1"></div>
+									<div id="2"></div>
+									<div id="3"></div>
+									<div id="4"></div>
+									<div id="5"></div>
+									<div id="6"></div>
                                 </div>
 								<div id="noRecommend" class="main_service_content" style="display:none;">
 									<div class="row">
