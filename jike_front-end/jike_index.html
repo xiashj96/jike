@@ -253,7 +253,8 @@
 					dataType: "json",
 					jsonp: "callback",
 					success: function(result){
-						document.getElementsByName(result[0].fields.interest+"0").css("display","none");
+						var x=document.getElementsByName(result[0].fields.interest+"0");
+						x.css("display","none");
 					},
 					error: function(result){						
 						alert("查询失败");
