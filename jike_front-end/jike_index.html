@@ -280,46 +280,46 @@
 										success: function(result){
 										    var listlength=result.length;
 											for(var j=0;j<length;j=j+3){
-										    var item='<div class="row">'+
-														'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-															'<img src="'+result[j].fields.img+'" alt="" />'+
-														'</div>'+
-														'<div class="col-md-3" style="margin-top:5%;">'+
-															'<img src="'+result[j+1].fields.img+'" alt="" />'+
-														'</div>'+
-														'<div class="col-md-3" style="margin-top:5%;">'+
-															'<img src="'+result[j+2].fields.img+'" alt="" />'+
-														'</div>'+
-													   '</div>'+
-													   
-													   '<div class="row">'+
-													   '<div class="col-md-3" style="margin-left:10%;">'+
-															'<div class="single_team_text text-center">'+
-																'<a id='+result[j].fields.id+' href='+result[j].fields.link+' onclick="courseCount(this);"><h6>'+result[j].fields.name+'</h6></a>'+
-																'<h6>'+result[j].fields.school+' '+result[j].fields.teacher+'</h6>'+
-																'<a href="javascript:void(0)" id='+result[j].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
-																'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j].fields.id+' name='+result[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
-															'</div>'+
-														'</div>'+
-														'<div class="col-md-3">'+
-															'<div class="single_team_text text-center">'+
-																'<a id='+result[j+1].fields.id+' href='+result[j+1].fields.link+' onclick="courseCount(this);"><h6>'+result[j+1].fields.name+'</h6></a>'+
-																'<h6>'+result[j+1].fields.school+' '+result[j+1].fields.teacher+'</h6>'+
-																'<a href="javascript:void(0)" id='+result[j+1].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
-																'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j+1].fields.id+' name='+result[j+1].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
-															'</div>'+
-														'</div>'+
-														'<div class="col-md-3">'+
-															'<div class="single_team_text text-center">'+
-																'<a id='+result[j+2].fields.id+' href='+result[j+2].fields.link+' onclick="courseCount(this);"><h6>'+result[j+2].fields.name+'</h6></a>'+
-																'<h6>'+result[j+2].fields.school+' '+result[j+2].fields.teacher+'</h6>'+
-																'<a href="javascript:void(0)" id='+result[j+2].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
-																'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j+2].fields.id+' name='+result[j+2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
-															'</div>'+
-														'</div>'+
-													   '</div>';
-													    $("#recommendlist").append(item);
-														}
+										        var item='<div class="row">'+
+												'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+													'<img src="'+result[j].fields.img+'" alt="" />'+
+												'</div>'+
+												'<div class="col-md-3" style="margin-top:5%;">'+
+													'<img src="'+result[j+1].fields.img+'" alt="" />'+
+												'</div>'+
+												'<div class="col-md-3" style="margin-top:5%;">'+
+													'<img src="'+result[j+2].fields.img+'" alt="" />'+
+												'</div>'+
+											  '</div>'+
+											  
+											  '<div class="row">'+
+											  '<div class="col-md-3" style="margin-left:10%;">'+
+													'<div class="single_team_text text-center">'+
+														'<a id='+result[j].fields.id+' href='+result[j].fields.link+' onclick="courseCount(this);"><h6>'+result[j].fields.name+'</h6></a>'+
+														'<h6>'+result[j].fields.school+' '+result[j].fields.teacher+'</h6>'+
+														'<a href="javascript:void(0)" id='+result[j].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+														'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j].fields.id+' name='+result[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+													'</div>'+
+												'</div>'+
+												'<div class="col-md-3">'+
+													'<div class="single_team_text text-center">'+
+														'<a id='+result[j+1].fields.id+' href='+result[j+1].fields.link+' onclick="courseCount(this);"><h6>'+result[j+1].fields.name+'</h6></a>'+
+														'<h6>'+result[j+1].fields.school+' '+result[j+1].fields.teacher+'</h6>'+
+														'<a href="javascript:void(0)" id='+result[j+1].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+														'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j+1].fields.id+' name='+result[j+1].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+													'</div>'+
+												'</div>'+
+												'<div class="col-md-3">'+
+													'<div class="single_team_text text-center">'+
+														'<a id='+result[j+2].fields.id+' href='+result[j+2].fields.link+' onclick="courseCount(this);"><h6>'+result[j+2].fields.name+'</h6></a>'+
+														'<h6>'+result[j+2].fields.school+' '+result[j+2].fields.teacher+'</h6>'+
+														'<a href="javascript:void(0)" id='+result[j+2].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+														'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j+2].fields.id+' name='+result[j+2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+													'</div>'+
+												'</div>'+
+											  '</div>';
+											   $("#recommendlist").append(item);
+											}
 										},
 										error: function(result){						
 										}
