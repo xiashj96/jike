@@ -280,7 +280,7 @@
 										success: function(result){
 										    var listlength=result.length;
 											for(var j=0;j<listlength;j=j+3){
-										        var item='<div class="row">'+
+										        var item='<div name="'+Str(i)+Str(j)+'><div class="row">'+
 												'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
 													'<img src="'+result[j].fields.img+'" alt="" />'+
 												'</div>'+
@@ -317,14 +317,8 @@
 														'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j+2].fields.id+' name='+result[j+2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
 													'</div>'+
 												'</div>'+
-											  '</div>';
-											  if($("#recommend1").innerHTML==null||$("#recommend1").innerHTML==""){$("#recommend1").append(item);}
-											  else if($("#recommend2").innerHTML==null||$("#recommend2").innerHTML==""){$("#recommend2").append(item);}
-											  else if($("#recommend3").innerHTML==null||$("#recommend3").innerHTML==""){$("#recommend3").append(item);}
-											  else if($("#recommend4").innerHTML==null||$("#recommend4").innerHTML==""){$("#recommend4").append(item);}
-											  else if($("#recommend5").innerHTML==null||$("#recommend5").innerHTML==""){$("#recommend5").append(item);}
-											  else if($("#recommend6").innerHTML==null||$("#recommend6").innerHTML==""){$("#recommend6").append(item);}
-											   
+											  '</div></div>';
+											   $("#recommendlist").append(item);
 											}
 										},
 										error: function(result){						
@@ -1026,26 +1020,14 @@
                                     </div>
                                 </div>
                                  <div class="main_service_content">
-									<!--div id="recommendlist"!-->
-										<div id="recommend1">
-										
-										</div>
-										<div id="recommend2">
-										
-										</div>
-										<div id="recommend3">
-										
-										</div>
-										<div id="recommend4">
-										
-										</div>
-										<div id="recommend5">
-										
-										</div>
-										<div id="recommend6">
-										
-										</div>
-									<!--/div!-->
+									<div id="recommendlist">
+										<div id="recommend1"></div>
+										<div id="recommend2"></div>
+										<div id="recommend3"></div>
+										<div id="recommend4"></div>
+										<div id="recommend5"></div>
+										<div id="recommend6"></div>
+									</div>
                                 </div><!-- End of main service content -->
 								
 								
