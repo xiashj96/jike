@@ -255,19 +255,6 @@
 					success: function(result){
 						var x=document.getElementsByName(result[0].fields.interest+"0");
 						x[0].style.display="none";
-						x=document.getElementsByName(result[0].fields.interest+"3");
-						x[0].style.display="none";
-						x=document.getElementsByName(result[1].fields.interest+"0");
-						x[0].style.display="none";
-						x=document.getElementsByName(result[1].fields.interest+"3");
-						x[0].style.display="none";
-						x=document.getElementsByName(result[2].fields.interest+"0");
-						x[0].style.display="none";
-						x=document.getElementsByName(result[2].fields.interest+"3");
-						x[0].style.display="none";
-						x=document.getElementsByName(result[parseInt(3*Math.random())].fields.interest+"3");
-						x[0].style.display="block";
-						
 					},
 					error: function(result){						
 						alert("查询失败");
