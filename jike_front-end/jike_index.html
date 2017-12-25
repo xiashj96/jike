@@ -823,6 +823,14 @@
 			    var name = $.query.get("name");
 				var rNum = $.query.get("r");
 				var seed = $.query.get("s");
+				$("#moocShare").click(function() {
+					var url="../jike_moocUpload?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;
+				});
+				$("#resourceShare").click(function() {
+					var url="../jike_otherUpload?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;
+				});
 				$("#moreRecommend").click(function(){
 					$("#recommendcarousel").carousel('next');
 				});
@@ -1331,7 +1339,7 @@
                                 <div class="head_title m-y-3 p-t-3 wow fadeInUp">
                                     <div class="row">
                                         <div class="col-md-8">
-                                            <h2>分享</h2>
+                                            <h2>课程·资源·分享</h2>
                                         </div>
                                         <div class="col-md-3">
                                             <h6></h6>
@@ -1341,10 +1349,10 @@
                                 <div class="main_service_content">		
 									<div class = "row">
 										<div class = "col-md-6 col-xs-5">
-											<h3>慕课分享</h3>
+											<a href="javascript:void(0)" id="moocShare"><h3>慕课分享</h3></a>
 										</div>
 										<div class = "col-md-6 col-xs-5">
-											<h3>资料上传</h3>
+											<a href="javascript:void(0)" id="resourceShare"><h3>资源上传</h3></a>
 										</div>
 									</div>
                                 </div><!-- End of main service content -->
