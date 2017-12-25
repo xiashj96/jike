@@ -158,8 +158,16 @@
 			    var cID = $.query.get("cID");
 			    var keyword = $.query.get("keyword");
 				keyword=decodeURIComponent(keyword);
-				$('#searchText').val(keyword);
+				var setID=parseInt(cID)-201;
+				
+				var myselect=document.getElementById("searchID");
+				myselect.options[0].selected = true;	
+							
+				$('#searchText').val("");
+				
 			    if(cID!=""&&keyword!=""){
+					myselect.options[setID].selected = true;	
+				    $('#searchText').val(keyword);
 					var JSONObject= {
 							"cID":cID,
 							"keyword":keyword
