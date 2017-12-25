@@ -246,26 +246,131 @@
 				var rNum = $.query.get("r");
 				var seed = $.query.get("s");
 				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
-				$("#mainRecommend").empty();
+				$("#recommendlist").empty();
 				if(name!=""&&rNum==rNum2){
 					var JSONObject= {
 						"name":name
-				    };
-					
+				    };					
 				    $.ajax({
 						type: "POST",
 						url:"http://123.56.26.95/interestGet/",
 						data:JSONObject,
 						dataType: "json",
 						jsonp: "callback",
-						success: function(result){
+						success: function(resultGet){
+							var length=resultGet.length;
+							if(length==0){
+								$("#recommendlist").css("display", "none");
+								$("#noRecommend").css("display", "block");
+							}
+							else{
+								$("#recommendlist").css("display", "block");
+								$("#noRecommend").css("display", "none");
+								for(var i = 0, l =length; i < l; i++){
+									var JSONObject2= {
+										"typeID":result[i].fields.interest,
+										"length":""+length
+									};
+									$.ajax({
+										type: "POST",
+										url:"http://123.56.26.95/recommendGet/",
+										data: JSONObject2,
+										dataType: "json",
+										jsonp: "callback",
+										success: function(result1{
+										   var item1='<div class="row">'+
+														'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+															'<img src="'+result[0].fields.img+'" alt="" />'+
+														'</div>'+
+														'<div class="col-md-3" style="margin-top:5%;">'+
+															'<img src="'+result[1].fields.img+'" alt="" />'+
+														'</div>'+
+														'<div class="col-md-3" style="margin-top:5%;">'+
+															'<img src="'+result[2].fields.img+'" alt="" />'+
+														'</div>'+
+													   '</div>'+
+													   
+													   '<div class="row">'+
+													   '<div class="col-md-3" style="margin-left:10%;">'+
+															'<div class="single_team_text text-center">'+
+																'<a id='+result[0].fields.id+' href='+result[0].fields.link+' onclick="courseCount(this);"><h6>'+result[0].fields.name+'</h6></a>'+
+																'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
+																'<a href="javascript:void(0)" id='+result[0].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+																'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[0].fields.id+' name='+result[0].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+															'</div>'+
+														'</div>'+
+														'<div class="col-md-3">'+
+															'<div class="single_team_text text-center">'+
+																'<a id='+result[1].fields.id+' href='+result[1].fields.link+' onclick="courseCount(this);"><h6>'+result[1].fields.name+'</h6></a>'+
+																'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
+																'<a href="javascript:void(0)" id='+result[1].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+																'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[1].fields.id+' name='+result[1].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+															'</div>'+
+														'</div>'+
+														'<div class="col-md-3">'+
+															'<div class="single_team_text text-center">'+
+																'<a id='+result[2].fields.id+' href='+result[2].fields.link+' onclick="courseCount(this);"><h6>'+result[2].fields.name+'</h6></a>'+
+																'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
+																'<a href="javascript:void(0)" id='+result[2].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+																'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[2].fields.id+' name='+result[2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+															'</div>'+
+														'</div>'+
+													   '</div>'+
+													   
+													   '<div class="row">'+
+														'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+															'<img src="'+result[3].fields.img+'" alt="" />'+
+														'</div>'+
+														'<div class="col-md-3" style="margin-top:5%;">'+
+															'<img src="'+result[4].fields.img+'" alt="" />'+
+														'</div>'+
+														'<div class="col-md-3" style="margin-top:5%;">'+
+															'<img src="'+result[5].fields.img+'" alt="" />'+
+														'</div>'+
+													   '</div>'+
+													   
+													   '<div class="row">'+
+													   '<div class="col-md-3" style="margin-left:10%;">'+
+															'<div class="single_team_text text-center">'+
+																'<a id='+result[3].fields.id+' href='+result[3].fields.link+' onclick="courseCount(this);"><h6>'+result[3].fields.name+'</h6></a>'+
+																'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
+																'<a href="javascript:void(0)" id='+result[3].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+																'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[3].fields.id+' name='+result[3].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+															'</div>'+
+														'</div>'+
+														'<div class="col-md-3">'+
+															'<div class="single_team_text text-center">'+
+																'<a id='+result[4].fields.id+' href='+result[4].fields.link+' onclick="courseCount(this);"><h6>'+result[4].fields.name+'</h6></a>'+
+																'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
+																'<a href="javascript:void(0)" id='+result[4].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+																'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[4].fields.id+' name='+result[4].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+															'</div>'+
+														'</div>'+
+														'<div class="col-md-3">'+
+															'<div class="single_team_text text-center">'+
+																'<a id='+result[5].fields.id+' href='+result[5].fields.link+' onclick="courseCount(this);"><h6>'+result[5].fields.name+'</h6></a>'+
+																'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
+																'<a href="javascript:void(0)" id='+result[5].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+																'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[5].fields.id+' name='+result[5].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+															'</div>'+
+														'</div>'+
+													   '</div>';
+													    $("#recommendlist").append(item1);
+										},
+										error: function(result){						
+										}
+									});
+								}
 							
+							
+							}
 						},
-						error: function(result){						
-							alert("查询失败");
+						error: function(result){					
+					    
 						}
-					});
+					});						
 				}
+
 			});
 		</script>
 		
@@ -950,14 +1055,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="recommendcarousel" class="main_service_content" style="display:none;">
-									<div id="row1"></div>
-									<div id="row2"></div>
-									<div id="row3"></div>
-									<div id="row4"></div>
-									<div id="row5"></div>
-									<div id="row6"></div>
-                                </div>
+                                 <div class="main_service_content">
+									<div id="recommendlist">
+										
+									</div>
+                                </div><!-- End of main service content -->
+								
+								
 								<div id="noRecommend" class="main_service_content" style="display:none;">
 									<div class="row">
 										<div class="col-md-12">
