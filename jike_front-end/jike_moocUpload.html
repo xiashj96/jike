@@ -48,6 +48,12 @@
 		<script type="text/javascript" src="../assets/js/vendor/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../assets/js/Jquery.Query.js"></script>
 		<script type="text/javascript">
+			window.onbeforeunload = function(){
+				return confirm("确定离开此页面吗？\n未保存的内容将会丢失");
+			}
+		</script>
+		
+		<script type="text/javascript">
 			$(function(){
 			   getUsername();
 			});
