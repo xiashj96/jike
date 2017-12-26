@@ -124,8 +124,11 @@
 		<script type="text/javascript">
 			function courseCollect(obj){
 			   var cid= obj.id;
-			   var name = $.query.get("name");
-			   if(name!=""){
+                var name = $.query.get("name");
+				var rNum = $.query.get("r");
+				var seed = $.query.get("s");
+				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
+				if(name!=""&&rNum==rNum2){
 				   var JSONObject= {
 						"cID":cid,
 						"name":name
@@ -156,8 +159,11 @@
 		<script type="text/javascript">
 			function resourceCollect(obj){
 			   var rid= obj.id;
-			   var name = $.query.get("name");
-			   if(name!=""){
+				var name = $.query.get("name");
+				var rNum = $.query.get("r");
+				var seed = $.query.get("s");
+				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
+				if(name!=""&&rNum==rNum2){
 				   var JSONObject= {
 						"rID":rid,
 						"name":name
@@ -826,6 +832,10 @@
 			    var name = $.query.get("name");
 				var rNum = $.query.get("r");
 				var seed = $.query.get("s");
+				$("#index").click(function() {
+					var url="../jike_index?name="+name+"&r="+rNum+"&s="+seed+"#home";
+					window.location.href = url;
+				});
 				$("#moocShare").click(function() {
 					var url="../jike_moocUpload?name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
@@ -1002,10 +1012,14 @@
 			   var cid= obj.id;
 			   var title= obj.name;
 			   var name = $.query.get("name");
+				var rNum = $.query.get("r");
+				var seed = $.query.get("s");
+				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
+				
 			   $("#Resourceid").empty();
 			   $("#Resourcetitle").empty();
 			   $("#reportArea").val("");
-			   if(name!=""){
+			   if(name!=""&&rNum==rNum2){
 				   textID='<h6>资料编号：</h6><p id="reportID">'+cid+'</p>';
 				   $("#Resourceid").append(textID);
 				   textTitle='<h6>资料标题：</h6><p id="reportTitle">'+title+'</p>';
@@ -1068,7 +1082,7 @@
 					<div class="row">
 					<div class="col-md-1">
 						<ul class="nav navbar-nav">
-						    <li><a class="navbar-brand"><b>JIKE</b></a></li>
+						    <li><a id="index" class="navbar-brand"><b>JIKE</b></a></li>
 						</ul>
 					</div>
 		            
