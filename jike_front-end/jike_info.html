@@ -65,7 +65,8 @@
 		<script type="text/javascript">
 			window.onbeforeunload = function(){
 				var flag1= $("#selectiList")[0].style.display;
-				return leaveInterest(flag1);
+				if(flag1!="block") return true;
+				else return confirm("确定离开兴趣设置页面吗？\n未保存的设置将会丢失");
 			}
 		</script>
 		
