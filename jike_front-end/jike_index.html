@@ -10,21 +10,20 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="apple-touch-icon" href="../apple-touch-icon.png">
         <link rel="icon" type="image/png" href="../assets/myicon.png">
 
         <!-- Raleway Google fonts  -->
         <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,400italic,500,100italic,700' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="../assets/css/materialize.min.css">
+        <link rel="stylesheet" href="../assets/css/materialize.css">
         <link rel="stylesheet" href="../assets/css/normalize.css">
         <link rel="stylesheet" href="../assets/css/fonticons.css">
         <link rel="stylesheet" href="../assets/css/magnific-popup.css">
         <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../assets/css/bootstrap1.css">
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../assets/css/bootstrap1.css">
-
         <!-- For navmenu css -->
         <link rel="stylesheet" href="../assets/css/navmenu.css" />
 
@@ -46,7 +45,6 @@
 		<script type="text/javascript" src="../assets/js/vendor/jquery-1.11.2.min.js"></script>
 	    <script type="text/javascript" src="../assets/js/jquery.validate.min.js" ></script>
 		<script type="text/javascript" src="../assets/js/vendor/bootstrap.min.js"></script>
-		<script type="text/javascript" src="../assets/js/vendor/bootstrap.js"></script>
 		<script type="text/javascript" src="../assets/js/Jquery.Query.js"></script>
         <script type="text/javascript" src="../assets/js/materialize.min.js"></script>
         <script type="text/javascript" src="../assets/js/jquery.easing.1.3.js"></script>
@@ -55,11 +53,489 @@
         <script type="text/javascript" src="../assets/js/plugins.js"></script>
         <script type="text/javascript" src="../assets/js/main.js"></script>
 		
-		<!--script type="text/javascript">
+		<script type="text/javascript">
 			$(function(){
-			   $("#mooclist").empty();
+			   getUsername();
+			   $("html,body").animate({"scrollTop": "0px"}, 0);
 			});
-		</script-->
+			
+			function getUsername(){
+			    var name = $.query.get("name");
+				var rNum = $.query.get("r");
+				var seed = $.query.get("s");
+				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
+				if(name!=""&&rNum==rNum2){
+				    $("#welcome_div").css("display","block");
+					document.getElementById("userName").innerHTML = "您好，"+name;
+					$("#logout_div").css("display", "block");
+					$("#login_div").css("display", "none");
+					$("#recommend_div").css("display", "block");
+				}
+				else{
+					document.getElementById("userName").innerHTML = "";
+					$("#welcome_div").css("display","none");
+					$("#logout_div").css("display", "none");
+					$("#login_div").css("display", "block");
+					$("#recommend_div").css("display", "none");
+				}
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function courseCount(obj){
+			   var cid= obj.id;
+			   var JSONObject= {
+					"cID":cid
+				};
+			   $.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/courseclick/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					},
+					error: function(result){						
+					}
+				});
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function resourceCount(obj){
+			   var rid= obj.id;
+			   var JSONObject= {
+					"rID":rid
+				};
+			   $.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/resourceclick/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					},
+					error: function(result){						
+					}
+				});
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function courseCollect(obj){
+			   var cid= obj.id;
+			   var name = $.query.get("name");
+			   if(name!=""){
+				   var JSONObject= {
+						"cID":cid,
+						"name":name
+					};
+				   $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/coursecollect/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							if(result=="1")
+								alert("收藏成功");
+							else if(result=="2")
+							    alert("此课程已经在您的收藏中");
+						},
+						error: function(result){	
+							alert("收藏失败");
+						}
+					});
+				}
+				else{
+					alert("请先登录！");
+				}
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function resourceCollect(obj){
+			   var rid= obj.id;
+			   var name = $.query.get("name");
+			   if(name!=""){
+				   var JSONObject= {
+						"rID":rid,
+						"name":name
+					};
+				   $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/resourcecollect/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							if(result=="1")
+								alert("收藏成功");
+							else if(result=="2")
+							    alert("此资源已经在您的收藏中");
+						},
+						error: function(result){	
+							alert("收藏失败");
+						}
+					});
+				}
+				else{
+					alert("请先登录！");
+				}
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function appendCourse(result){
+			   var item1='<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[0].fields.img+'" alt="" />'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[1].fields.img+'" alt="" />'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[2].fields.img+'" alt="" />'+
+							'</div>'+
+						   '</div>'+
+						   
+						   '<div class="row">'+
+						   '<div class="col-md-3" style="margin-left:10%;">'+
+								'<div class="single_team_text text-center">'+
+									'<a id='+result[0].fields.id+' href='+result[0].fields.link+' onclick="courseCount(this);"><h6>'+result[0].fields.name+'</h6></a>'+
+									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
+									'<a href="javascript:void(0)" id='+result[0].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+									'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[0].fields.id+' name='+result[0].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3">'+
+								'<div class="single_team_text text-center">'+
+									'<a id='+result[1].fields.id+' href='+result[1].fields.link+' onclick="courseCount(this);"><h6>'+result[1].fields.name+'</h6></a>'+
+									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
+									'<a href="javascript:void(0)" id='+result[1].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+									'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[1].fields.id+' name='+result[1].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3">'+
+								'<div class="single_team_text text-center">'+
+									'<a id='+result[2].fields.id+' href='+result[2].fields.link+' onclick="courseCount(this);"><h6>'+result[2].fields.name+'</h6></a>'+
+									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
+									'<a href="javascript:void(0)" id='+result[2].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+									'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[2].fields.id+' name='+result[2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+								'</div>'+
+							'</div>'+
+						   '</div>'+
+						   
+						   '<div class="row">'+
+							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+								'<img src="'+result[3].fields.img+'" alt="" />'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[4].fields.img+'" alt="" />'+
+							'</div>'+
+							'<div class="col-md-3" style="margin-top:5%;">'+
+								'<img src="'+result[5].fields.img+'" alt="" />'+
+							'</div>'+
+						   '</div>'+
+						   
+						   '<div class="row">'+
+						   '<div class="col-md-3" style="margin-left:10%;">'+
+								'<div class="single_team_text text-center">'+
+									'<a id='+result[3].fields.id+' href='+result[3].fields.link+' onclick="courseCount(this);"><h6>'+result[3].fields.name+'</h6></a>'+
+									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
+									'<a href="javascript:void(0)" id='+result[3].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+									'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[3].fields.id+' name='+result[3].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3">'+
+								'<div class="single_team_text text-center">'+
+									'<a id='+result[4].fields.id+' href='+result[4].fields.link+' onclick="courseCount(this);"><h6>'+result[4].fields.name+'</h6></a>'+
+									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
+									'<a href="javascript:void(0)" id='+result[4].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+									'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[4].fields.id+' name='+result[4].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+								'</div>'+
+							'</div>'+
+							'<div class="col-md-3">'+
+								'<div class="single_team_text text-center">'+
+									'<a id='+result[5].fields.id+' href='+result[5].fields.link+' onclick="courseCount(this);"><h6>'+result[5].fields.name+'</h6></a>'+
+									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
+									'<a href="javascript:void(0)" id='+result[5].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+									'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[5].fields.id+' name='+result[5].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+								'</div>'+
+							'</div>'+
+						   '</div>';
+				    $("#mooclist").append(item1);
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function recommendChange(){
+			  var name = $.query.get("name");
+				var JSONObject= {
+					"name":name
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/interestShow/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					    var length=result.length;
+						if(length==1){
+						    var t=parseInt(5.9*Math.random());
+							var xCheck=document.getElementsByName(result[0].fields.interest+String(t));
+							while(xCheck[0].style.display=="block"){
+								t=parseInt(5.9*Math.random());
+							    xCheck=document.getElementsByName(result[0].fields.interest+String(t));
+							}
+							var x1=document.getElementsByName(result[0].fields.interest+"0");
+							x1[0].style.display="none";
+							var x2=document.getElementsByName(result[0].fields.interest+"1");
+							x2[0].style.display="none";
+							var x3=document.getElementsByName(result[0].fields.interest+"2");
+							x3[0].style.display="none";
+							var x4=document.getElementsByName(result[0].fields.interest+"3");
+							x4[0].style.display="none";
+							var x5=document.getElementsByName(result[0].fields.interest+"4");
+							x5[0].style.display="none";
+							var x6=document.getElementsByName(result[0].fields.interest+"5");
+							x6[0].style.display="none";
+							
+							var xShow=document.getElementsByName(result[0].fields.interest+String(t));
+							xShow[0].style.display="block";							
+						}
+						else if(length==2){
+							var t=parseInt(2.9*Math.random());
+							var s=parseInt(1.9*Math.random());
+							var xCheck=document.getElementsByName(result[s].fields.interest+String(t));
+							while(xCheck[0].style.display=="block"){
+								t=parseInt(2.9*Math.random());
+							    s=parseInt(1.9*Math.random());
+							    xCheck=document.getElementsByName(result[s].fields.interest+String(t));
+							}
+						
+							var x1=document.getElementsByName(result[0].fields.interest+"0");
+							x1[0].style.display="none";
+							var x2=document.getElementsByName(result[0].fields.interest+"1");
+							x2[0].style.display="none";
+							var x3=document.getElementsByName(result[0].fields.interest+"2");
+							x3[0].style.display="none";
+							var x4=document.getElementsByName(result[1].fields.interest+"0");
+							x4[0].style.display="none";
+							var x5=document.getElementsByName(result[1].fields.interest+"1");
+							x5[0].style.display="none";
+							var x6=document.getElementsByName(result[1].fields.interest+"2");
+							x6[0].style.display="none";
+
+							var xShow=document.getElementsByName(result[s].fields.interest+String(t));
+							xShow[0].style.display="block";							
+						}
+						else if(length==3){
+							var x1=document.getElementsByName(result[0].fields.interest+"0");
+							x1[0].style.display="none";
+							var x2=document.getElementsByName(result[0].fields.interest+"1");
+							x2[0].style.display="none";
+							var x3=document.getElementsByName(result[1].fields.interest+"0");
+							x3[0].style.display="none";
+							var x4=document.getElementsByName(result[1].fields.interest+"1");
+							x4[0].style.display="none";
+							var x5=document.getElementsByName(result[2].fields.interest+"0");
+							x5[0].style.display="none";
+							var x6=document.getElementsByName(result[2].fields.interest+"1");
+							x6[0].style.display="none";
+							
+							var t=parseInt(1.9*Math.random());
+							var s=parseInt(2.9*Math.random());
+							var xShow=document.getElementsByName(result[s].fields.interest+String(t));
+							xShow[0].style.display="block";							
+						}
+
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
+				});	
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function recommendShowUp(){
+			  var name = $.query.get("name");
+				var JSONObject= {
+					"name":name
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/interestShow/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					    var length=result.length;
+						if(length==1){
+							var x1=document.getElementsByName(result[0].fields.interest+"0");
+							x1[0].style.display="none";
+							var x2=document.getElementsByName(result[0].fields.interest+"1");
+							x2[0].style.display="none";
+							var x3=document.getElementsByName(result[0].fields.interest+"2");
+							x3[0].style.display="none";
+							var x4=document.getElementsByName(result[0].fields.interest+"3");
+							x4[0].style.display="none";
+							var x5=document.getElementsByName(result[0].fields.interest+"4");
+							x5[0].style.display="none";
+							var x6=document.getElementsByName(result[0].fields.interest+"5");
+							x6[0].style.display="none";
+							
+							var t=parseInt(5.9*Math.random());
+							var xShow=document.getElementsByName(result[0].fields.interest+String(t));
+							xShow[0].style.display="block";							
+						}
+						else if(length==2){
+							var x1=document.getElementsByName(result[0].fields.interest+"0");
+							x1[0].style.display="none";
+							var x2=document.getElementsByName(result[0].fields.interest+"1");
+							x2[0].style.display="none";
+							var x3=document.getElementsByName(result[0].fields.interest+"2");
+							x3[0].style.display="none";
+							var x4=document.getElementsByName(result[1].fields.interest+"0");
+							x4[0].style.display="none";
+							var x5=document.getElementsByName(result[1].fields.interest+"1");
+							x5[0].style.display="none";
+							var x6=document.getElementsByName(result[1].fields.interest+"2");
+							x6[0].style.display="none";
+							
+							var t=parseInt(2.9*Math.random());
+							var s=parseInt(1.9*Math.random());
+							var xShow=document.getElementsByName(result[s].fields.interest+String(t));
+							xShow[0].style.display="block";							
+						}
+						else if(length==3){
+							var x1=document.getElementsByName(result[0].fields.interest+"0");
+							x1[0].style.display="none";
+							var x2=document.getElementsByName(result[0].fields.interest+"1");
+							x2[0].style.display="none";
+							var x3=document.getElementsByName(result[1].fields.interest+"0");
+							x3[0].style.display="none";
+							var x4=document.getElementsByName(result[1].fields.interest+"1");
+							x4[0].style.display="none";
+							var x5=document.getElementsByName(result[2].fields.interest+"0");
+							x5[0].style.display="none";
+							var x6=document.getElementsByName(result[2].fields.interest+"1");
+							x6[0].style.display="none";
+							
+							var t=parseInt(1.9*Math.random());
+							var s=parseInt(2.9*Math.random());
+							var xShow=document.getElementsByName(result[s].fields.interest+String(t));
+							xShow[0].style.display="block";							
+						}
+
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
+				});	
+			}
+		</script>
+		
+		<script type="text/javascript">
+			$(function(){
+				var name = $.query.get("name");
+				var rNum = $.query.get("r");
+				var seed = $.query.get("s");
+				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
+				$("#recommendlist").empty();
+				if(name!=""&&rNum==rNum2){
+					var JSONObject= {
+						"name":name
+				    };					
+				    $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/interestGet/",
+						data:JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(resultGet){
+							var length=resultGet.length;
+							if(length==0){
+								$("#recommendlist").css("display", "none");
+								$("#noRecommend").css("display", "block");
+							}
+							else{
+								$("#recommendlist").css("display", "block");
+								$("#noRecommend").css("display", "none");
+								for(var i = 0, l =length; i < l; i++){
+									var JSONObject2= {
+										"typeID":resultGet[i].fields.interest,
+										"length":""+length,
+										"i":""+i
+									};
+									$.ajax({
+										type: "POST",
+										url:"http://123.56.26.95/recommendGet/",
+										data: JSONObject2,
+										dataType: "json",
+										jsonp: "callback",
+										success: function(result){
+										    var listlength=result.length;
+											for(var j=0;j<listlength;j=j+3){
+										        var item='<div name="'+result[j].fields.typeID+String(j/3)+'"><div class="row">'+
+												'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+													'<img src="'+result[j].fields.img+'" alt="" />'+
+												'</div>'+
+												'<div class="col-md-3" style="margin-top:5%;">'+
+													'<img src="'+result[j+1].fields.img+'" alt="" />'+
+												'</div>'+
+												'<div class="col-md-3" style="margin-top:5%;">'+
+													'<img src="'+result[j+2].fields.img+'" alt="" />'+
+												'</div>'+
+											  '</div>'+
+											  
+											  '<div class="row">'+
+											  '<div class="col-md-3" style="margin-left:10%;">'+
+													'<div class="single_team_text text-center">'+
+														'<a id='+result[j].fields.id+' href='+result[j].fields.link+' onclick="courseCount(this);"><h6>'+result[j].fields.name+'</h6></a>'+
+														'<h6>'+result[j].fields.school+' '+result[j].fields.teacher+'</h6>'+
+														'<a href="javascript:void(0)" id='+result[j].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+														'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j].fields.id+' name='+result[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+													'</div>'+
+												'</div>'+
+												'<div class="col-md-3">'+
+													'<div class="single_team_text text-center">'+
+														'<a id='+result[j+1].fields.id+' href='+result[j+1].fields.link+' onclick="courseCount(this);"><h6>'+result[j+1].fields.name+'</h6></a>'+
+														'<h6>'+result[j+1].fields.school+' '+result[j+1].fields.teacher+'</h6>'+
+														'<a href="javascript:void(0)" id='+result[j+1].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+														'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j+1].fields.id+' name='+result[j+1].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+													'</div>'+
+												'</div>'+
+												'<div class="col-md-3">'+
+													'<div class="single_team_text text-center">'+
+														'<a id='+result[j+2].fields.id+' href='+result[j+2].fields.link+' onclick="courseCount(this);"><h6>'+result[j+2].fields.name+'</h6></a>'+
+														'<h6>'+result[j+2].fields.school+' '+result[j+2].fields.teacher+'</h6>'+
+														'<a href="javascript:void(0)" id='+result[j+2].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+														'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j+2].fields.id+' name='+result[j+2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+													'</div>'+
+												'</div>'+
+											  '</div></div>';
+											   $("#recommendlist").append(item);
+											}
+											recommendShowUp();
+										},
+										error: function(result){						
+										}
+									});
+								}							
+							}
+						},
+						error: function(result){					
+					    
+						}
+					});	
+					
+				}
+				$("html,body").animate({"scrollTop": "0px"}, 0);
+			});
+		</script>
 		
 		<script type="text/javascript">
 			$(function(){
@@ -75,58 +551,13 @@
 					dataType: "json",
 					jsonp: "callback",
 					success: function(result){
-					var item1='<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[0].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
-									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[1].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
-									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[2].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
-									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>'+
-						  '<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[3].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
-									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[4].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
-									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[5].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
-									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>';
-				    $("#mooclist").append(item1);
+						appendCourse(result);
 					},
 					error: function(result){						
 						alert("查询失败");
 					}
 				});
+				$("html,body").animate({"scrollTop": "0px"}, 0);
 			
 			});
 		</script>
@@ -143,7 +574,7 @@
 						var length=result.length;
 						for(var i = 0, l =length; i < l; i++){
 						    var type=new Array(" ","计算机","经济管理","创业","电子","工程","环境·地球","医学·健康","生命科学","数学","物理","化学","社科·法律","文学","历史","哲学","建筑","外语","教育","艺术设计","公共管理","职场","大学先修","其他");
-							var item = '<tr><td><a href='+result[i].fields.fileAddress+">"+result[i].fields.name+'</a></td><td>'+type[parseInt(result[i].fields.typeID)-100]+"</td><td>"+result[i].fields.uploader+"</td><td>"+result[i].fields.uploadtime+"</td></tr>";//根据后台传递过来的数据生成html内容。
+							var item = '<tr><td><a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+' onclick="resourceCount(this);">'+result[i].fields.name+'</a></td><td>'+type[parseInt(result[i].fields.typeID)-100]+'</td><td>'+result[i].fields.uploader+'</td><td>'+result[i].fields.uploadtime+'</td><td><a href="javascript:void(0)" id='+result[i].fields.id+' style="display:inline;" onclick="resourceCollect(this);">收藏</a>&nbsp&nbsp'+'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[i].fields.id+' name='+result[i].fields.name+'><h6 style="display: inline;">反馈</h6></a></td></tr>';//根据后台传递过来的数据生成html内容。
 							$("table").append(item);//内容添加到页面上。
 						}
 					},
@@ -151,40 +582,269 @@
 						alert("查询失败");
 					}
 				});
+				$("html,body").animate({"scrollTop": "0px"}, 0);
 			
 			});
 		</script>
 		
-		<script type="text/javascript">
+		<!--script type="text/javascript">
 			$(function(){
-			   getUsername();
-			});
-			
-			function getUsername(){
-			    var name = $.query.get("name");
+				var name = $.query.get("name");
 				var rNum = $.query.get("r");
 				var seed = $.query.get("s");
 				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
+				$("#mainRecommend").empty();
 				if(name!=""&&rNum==rNum2){
-				    $("#welcome_div").css("display","block");
-					document.getElementById("userName").innerHTML = "您好，"+name;
-					$("#logout_div").css("display", "block");
-					$("#login_div").css("display", "none");
+					var JSONObject= {
+						"name":name
+				    };
+				    $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/interestGet/",
+						data:JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							var length=result.length;
+							if(length==0){
+								$("#recommendcarousel").css("display", "none");
+								$("#noRecommend").css("display", "block");
+							}
+							else if(length==1){
+								$("#1").css("display", "block");
+								$("#recommendcarousel").css("display", "block");
+								$("#noRecommend").css("display", "none");
+								var JSONObject1= {
+									"typeID":result[0].fields.interest,
+									"length":"1"
+								};
+								$.ajax({
+									type: "POST",
+									url:"http://123.56.26.95/recommendGet/",
+									data: JSONObject1,
+									dataType: "json",
+									jsonp: "callback",
+									success: function(result1){
+										var length1=result1.length;
+										var setID=0;
+										for(var j = 0, len = length1; j < len; j=j+3){
+										    setID=setID+1;
+											var item='<div class="row">'+
+													'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+														'<img src="'+result1[j].fields.img+'" alt="" />'+
+													'</div>'+
+													'<div class="col-md-3" style="margin-top:5%;">'+
+														'<img src="'+result1[j+1].fields.img+'" alt="" />'+
+													'</div>'+
+													'<div class="col-md-3" style="margin-top:5%;">'+
+														'<img src="'+result1[j+2].fields.img+'" alt="" />'+
+													'</div>'+
+													 '</div>'+
+													 
+													 '<div class="row">'+
+													 '<div class="col-md-3" style="margin-left:10%;">'+
+														'<div class="single_team_text text-center">'+
+															'<a id='+result1[j].fields.id+' href='+result1[j].fields.link+' onclick="courseCount(this);"><h6>'+result1[j].fields.name+'</h6></a>'+
+															'<h6>'+result1[j].fields.school+' '+result1[j].fields.teacher+'</h6>'+
+															'<a href="javascript:void(0)" id='+result1[j].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+															'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result1[j].fields.id+' name='+result1[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+														'</div>'+
+													'</div>'+
+													'<div class="col-md-3">'+
+														'<div class="single_team_text text-center">'+
+															'<a id='+result1[j+1].fields.id+' href='+result1[j+1].fields.link+' onclick="courseCount(this);"><h6>'+result1[j+1].fields.name+'</h6></a>'+
+															'<h6>'+result1[j+1].fields.school+' '+result1[j+1].fields.teacher+'</h6>'+
+															'<a href="javascript:void(0)" id='+result1[j+1].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+															'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result1[j+1].fields.id+' name='+result1[j+1].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+														'</div>'+
+													'</div>'+
+													'<div class="col-md-3">'+
+														'<div class="single_team_text text-center">'+
+															'<a id='+result1[j+2].fields.id+' href='+result1[j+2].fields.link+' onclick="courseCount(this);"><h6>'+result1[j+2].fields.name+'</h6></a>'+
+															'<h6>'+result1[j+2].fields.school+' '+result1[j+2].fields.teacher+'</h6>'+
+															'<a href="javascript:void(0)" id='+result1[j+2].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+															'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result1[j+2].fields.id+' name='+result1[j+2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+														'</div>'+
+													'</div>'+
+													 '</div>';
+											    var theID="row"+String(setID);
+												document.getElementById(theID).append(item);
+										}
+									},
+									error: function(result1){					
+									}
+								});
+							}
+							else if(length==2){
+								$("#1").css("display", "block");
+								$("#recommendcarousel").css("display", "block");
+								$("#noRecommend").css("display", "none");
+								for(var i = 0, l =length; i < l; i++){
+									var JSONObject2= {
+										"typeID":result[i].fields.interest,
+										"length":"2"
+									};
+									$.ajax({
+										type: "POST",
+										url:"http://123.56.26.95/recommendGet/",
+										data: JSONObject2,
+										dataType: "json",
+										jsonp: "callback",
+										success: function(result1){
+											var length1=result1.length;
+											var setID=i;
+											for(var j = 0, len = length1; j < len; j=j+3){
+											    setID=setID+1;
+												var item=
+													'<div class="row">'+
+													'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+														'<img src="'+result1[j].fields.img+'" alt="" />'+
+													'</div>'+
+													'<div class="col-md-3" style="margin-top:5%;">'+
+														'<img src="'+result1[j+1].fields.img+'" alt="" />'+
+													'</div>'+
+													'<div class="col-md-3" style="margin-top:5%;">'+
+														'<img src="'+result1[j+2].fields.img+'" alt="" />'+
+													'</div>'+
+													 '</div>'+
+													 
+													 '<div class="row">'+
+													 '<div class="col-md-3" style="margin-left:10%;">'+
+														'<div class="single_team_text text-center">'+
+															'<a id='+result1[j].fields.id+' href='+result1[j].fields.link+' onclick="courseCount(this);"><h6>'+result1[j].fields.name+'</h6></a>'+
+															'<h6>'+result1[j].fields.school+' '+result1[j].fields.teacher+'</h6>'+
+															'<a href="javascript:void(0)" id='+result1[j].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+															'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result1[j].fields.id+' name='+result1[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+														'</div>'+
+													'</div>'+
+													'<div class="col-md-3">'+
+														'<div class="single_team_text text-center">'+
+															'<a id='+result1[j+1].fields.id+' href='+result1[j+1].fields.link+' onclick="courseCount(this);"><h6>'+result1[j+1].fields.name+'</h6></a>'+
+															'<h6>'+result1[j+1].fields.school+' '+result1[j+1].fields.teacher+'</h6>'+
+															'<a href="javascript:void(0)" id='+result1[j+1].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+															'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result1[j+1].fields.id+' name='+result1[j+1].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+														'</div>'+
+													'</div>'+
+													'<div class="col-md-3">'+
+														'<div class="single_team_text text-center">'+
+															'<a id='+result1[j+2].fields.id+' href='+result1[j+2].fields.link+' onclick="courseCount(this);"><h6>'+result1[j+2].fields.name+'</h6></a>'+
+															'<h6>'+result1[j+2].fields.school+' '+result1[j+2].fields.teacher+'</h6>'+
+															'<a href="javascript:void(0)" id='+result1[j+2].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+															'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result1[j+2].fields.id+' name='+result1[j+2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+														'</div>'+
+													'</div>'+
+													 '</div>';
+											    var theID="row"+String(setID);
+												document.getElementById(theID).append(item);
+											}
+										},
+										error: function(result){						
+										}
+									});
+								}
+							}
+							else if(length==3){
+								$("#recommendcarousel").css("display", "block");
+								$("#noRecommend").css("display", "none");
+								var times=0;
+								for(var i = 0, l =length; i < l; i++){
+								    times++;
+									var JSONObject3= {
+										"typeID":result[i].fields.interest,
+										"length":"3"
+									};
+									var setID=times;
+									$.ajax({
+										type: "POST",
+										url:"http://123.56.26.95/recommendGet/",
+										data: JSONObject3,
+										dataType: "json",
+										jsonp: "callback",
+										success: function(result1){
+											var length1=result1.length;
+											for(var j = 0, len = length1; j < len; j=j+3){
+											    setID=setID+1;
+												var item='<div class="row">'+
+												'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
+													'<img src="'+result[j].fields.img+'" alt="" />'+
+												'</div>'+
+												'<div class="col-md-3" style="margin-top:5%;">'+
+													'<img src="'+result[j+1].fields.img+'" alt="" />'+
+												'</div>'+
+												'<div class="col-md-3" style="margin-top:5%;">'+
+													'<img src="'+result[j+2].fields.img+'" alt="" />'+
+												'</div>'+
+											   '</div>'+
+											   
+											   '<div class="row">'+
+											   '<div class="col-md-3" style="margin-left:10%;">'+
+													'<div class="single_team_text text-center">'+
+														'<a id='+result[j].fields.id+' href='+result[j].fields.link+' onclick="courseCount(this);"><h6>'+result[j].fields.name+'</h6></a>'+
+														'<h6>'+result[j].fields.school+' '+result[j].fields.teacher+'</h6>'+
+														'<a href="javascript:void(0)" id='+result[j].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+														'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j].fields.id+' name='+result[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+													'</div>'+
+												'</div>'+
+												'<div class="col-md-3">'+
+													'<div class="single_team_text text-center">'+
+														'<a id='+result[j+1].fields.id+' href='+result[j+1].fields.link+' onclick="courseCount(this);"><h6>'+result[j+1].fields.name+'</h6></a>'+
+														'<h6>'+result[j+1].fields.school+' '+result[j+1].fields.teacher+'</h6>'+
+														'<a href="javascript:void(0)" id='+result[j+1].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+														'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j+1].fields.id+' name='+result[j+1].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+													'</div>'+
+												'</div>'+
+												'<div class="col-md-3">'+
+													'<div class="single_team_text text-center">'+
+														'<a id='+result[j+2].fields.id+' href='+result[j+2].fields.link+' onclick="courseCount(this);"><h6>'+result[j+2].fields.name+'</h6></a>'+
+														'<h6>'+result[j+2].fields.school+' '+result[j+2].fields.teacher+'</h6>'+
+														'<a href="javascript:void(0)" id='+result[j+2].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+														'<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[j+2].fields.id+' name='+result[j+2].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+													'</div>'+
+												'</div>'+
+											   '</div>';
+													
+											    var theID="row"+String(setID);
+												document.getElementById(theID).append(item);
+											}
+										},
+										error: function(result){						
+										}
+									});
+								}
+							}
+						},
+						error: function(result){						
+							alert("查询失败");
+						}
+					});
 				}
-				else{
-					document.getElementById("userName").innerHTML = "";
-					$("#welcome_div").css("display","none");
-					$("#logout_div").css("display", "none");
-					$("#login_div").css("display", "block");
-				}
-			}
-		</script>
-
+			});
+		</script!-->
+		
 		<script type="text/javascript">
 			$(function() {
 			    var name = $.query.get("name");
 				var rNum = $.query.get("r");
 				var seed = $.query.get("s");
+				$("#moocShare").click(function() {
+					var url="../jike_moocUpload?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;
+				});
+				$("#resourceShare").click(function() {
+					var url="../jike_otherUpload?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;
+				});
+				$("#moreRecommend").click(function(){
+					$("#recommendcarousel").carousel('next');
+				});
+				$("#userName2").click(function() {
+					var url="../jike_info?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;
+				});
+				$("#userName").click(function() {
+					var url="../jike_info?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;
+				});
 				$("#login_btn").click(function() {
 					var url="../jike_login?ref=jike_index";
 					window.location.href = url;
@@ -214,53 +874,7 @@
 						dataType: "json",
 						jsonp: "callback",
 						success: function(result){
-						var item1='<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[0].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
-									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[1].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
-									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[2].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
-									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>'+
-						  '<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[3].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
-									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[4].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
-									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[5].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
-									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>';
-					   $("#mooclist").append(item1);
+							appendCourse(result);
 						},
 						error: function(result){						
 							alert("查询失败");
@@ -280,53 +894,7 @@
 						dataType: "json",
 						jsonp: "callback",
 						success: function(result){
-						var item1='<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[0].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
-									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[1].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
-									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[2].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
-									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>'+
-						  '<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[3].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
-									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[4].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
-									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[5].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
-									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>';
-				    $("#mooclist").append(item1);
+							appendCourse(result);
 						},
 						error: function(result){						
 							alert("查询失败");
@@ -346,53 +914,7 @@
 						dataType: "json",
 						jsonp: "callback",
 						success: function(result){
-						var item1='<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[0].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
-									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[1].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
-									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[2].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
-									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>'+
-						  '<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[3].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
-									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[4].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
-									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[5].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
-									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>';
-				    $("#mooclist").append(item1);
+							appendCourse(result);
 						},
 						error: function(result){						
 							alert("查询失败");
@@ -412,53 +934,7 @@
 						dataType: "json",
 						jsonp: "callback",
 						success: function(result){
-						var item1='<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[0].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
-									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[1].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
-									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[2].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
-									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>'+
-						  '<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[3].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
-									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[4].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
-									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[5].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
-									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>';
-				    $("#mooclist").append(item1);
+							appendCourse(result);
 						},
 						error: function(result){						
 							alert("查询失败");
@@ -478,53 +954,7 @@
 						dataType: "json",
 						jsonp: "callback",
 						success: function(result){
-						var item1='<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[0].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
-									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[1].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
-									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[2].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
-									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>'+
-						  '<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[3].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
-									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[4].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
-									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[5].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
-									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>';
-				    $("#mooclist").append(item1);
+							appendCourse(result);
 						},
 						error: function(result){						
 							alert("查询失败");
@@ -544,53 +974,7 @@
 						dataType: "json",
 						jsonp: "callback",
 						success: function(result){
-						var item1='<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[0].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[0].fields.link+'><h6>'+result[0].fields.name+'</h6></a>'+
-									'<h6>'+result[0].fields.school+' '+result[0].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[1].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[1].fields.link+'><h6>'+result[1].fields.name+'</h6></a>'+
-									'<h6>'+result[1].fields.school+' '+result[1].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[2].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[2].fields.link+'><h6>'+result[2].fields.name+'</h6></a>'+
-									'<h6>'+result[2].fields.school+' '+result[2].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>'+
-						  '<div class="row">'+
-							'<div class="col-md-3" style="margin-left:10%; margin-top:5%;">'+
-								'<img src="'+result[3].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[3].fields.link+'><h6>'+result[3].fields.name+'</h6></a>'+
-									'<h6>'+result[3].fields.school+' '+result[3].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[4].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[4].fields.link+'><h6>'+result[4].fields.name+'</h6></a>'+
-									'<h6>'+result[4].fields.school+' '+result[4].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3" style="margin-top:5%;">'+
-								'<img src="'+result[5].fields.img+'" alt="" />'+
-								'<div class="single_team_text text-center">'+
-									'<a href='+result[5].fields.link+'><h6>'+result[5].fields.name+'</h6></a>'+
-									'<h6>'+result[5].fields.school+' '+result[5].fields.teacher+'</h6>'+
-								'</div>'+
-							'</div>'+
-						   '</div>';
-				    $("#mooclist").append(item1);
+							appendCourse(result);
 						},
 						error: function(result){						
 							alert("查询失败");
@@ -606,22 +990,78 @@
 					var index=myselect.selectedIndex;
 					var cID=myselect.options[index].value;
 					var keyword=$('#searchText').val();
+					keyword=encodeURIComponent(keyword);
 					var url="../jike_search?cID="+cID+"&keyword="+keyword+"&name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
 				});
 			});
 		</script>
+	
+		<script type="text/javascript">
+			function reportShow(obj){
+			   var cid= obj.id;
+			   var title= obj.name;
+			   var name = $.query.get("name");
+			   $("#Resourceid").empty();
+			   $("#Resourcetitle").empty();
+			   $("#reportArea").val("");
+			   if(name!=""){
+				   textID='<h6>资料编号：</h6><p id="reportID">'+cid+'</p>';
+				   $("#Resourceid").append(textID);
+				   textTitle='<h6>资料标题：</h6><p id="reportTitle">'+title+'</p>';
+				   $("#Resourcetitle").append(textTitle);
+				   $('#report').modal('show');
+			   }
+			   else{
+					alert("请先登录！");
+			   }
+			}
+		</script>	
 		
-		<script> 
-			 $(document).ready(function(){
-				$("#newscarousel").carousel({interval:2000});//每隔2秒自动轮播 
-			 }); 
-		</script> 
-		
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$("#reportbtn").click(function() {
+				var cid= $("#reportID").text();
+			    var title= $("#reportTitle").text();
+			    var txt=$("#reportArea").val();
+			    var name = $.query.get("name");
+			    if(name!=""){
+				    var JSONObject= {
+						"cID":cid,
+						"title":title,
+						"text":txt,
+						"name":name
+					};
+				    $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/report/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							if(result=="1"){
+								alert("反馈成功");
+								$('#report').modal('hide');
+							}
+							else{
+								alert("反馈失败");
+							}
+						},
+						error: function(result){	
+							alert("连接服务器失败，反馈失败");
+						}
+					});
+				}
+				else{
+					alert("请先登录！");
+				}
+			});				
+		});
+		</script>
     </head>
 
-    <body data-spy="scroll" data-target="#scrollspy">
-        <div class="main_figur">
+    <body id="mainbody" data-spy="scroll" data-target="#scrollspy">
+        <div id="mainpart" class="main_figur">
 	
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 				<div class="container-fluid">
@@ -647,15 +1087,15 @@
 					</div>
 					
 					<div id="login_div" class="nav navbar-nav navbar-right" class="col-md-3">
-						<li><a id="login_btn" class="navbar-link">登录/注册</a></li>
+						<li><a href="javascript:void(0)" id="login_btn" class="navbar-link">登录/注册</a></li>
 				    </div>
 					
 					<div id="logout_div" class="nav navbar-nav navbar-right"class="col-md-1">
-						<li><a id="logout_btn" class="navbar-link">退出</a></li>
+						<li><a href="javascript:void(0)" id="logout_btn" class="navbar-link">退出</a></li>
 				    </div>
 					
 					<div id="welcome_div" class="nav navbar-nav navbar-right"class="col-md-2">
-						<li><a id="userName" class="navbar-link">欢迎您</a></li>
+						<li><a href="javascript:void(0)" id="userName" class="navbar-link">欢迎您</a></li>
 				    </div>
 					</div>
 				</div>
@@ -694,9 +1134,6 @@
 
             </section><!-- End of Home Section -->
 
-
-            
-
             <!-- Portfolio Section -->
             <section id="news" class="team">
                 <div class="container">
@@ -706,48 +1143,91 @@
                                 <div class="row">
                                     <div class="col-md-11">
                                         <h2>最新消息</h2>
-                                    </div>
-									<div class="col-md-1">
-                                        <h6><a style="color:#000;">More</a></h6>
-                                    </div>									
+                                    </div>								
                                 </div>
                             </div>
 
-                                <div id="newscarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
-									<!-- 轮播（Carousel）指标 -->
-									<ol class="carousel-indicators">
-										<li data-target="#newscarousel" data-slide-to="0" class="active"></li>
-										<li data-target="#newscarousel" data-slide-to="1"></li>
-										<li data-target="#newscarousel" data-slide-to="2"></li>
-										<li data-target="#newscarousel" data-slide-to="3"></li>
-										<li data-target="#newscarousel" data-slide-to="4"></li>
-									</ol>   
-									<!-- 轮播（Carousel）项目 -->
-									<div class="carousel-inner">
-										<div class="item active">
-											<img src="../assets/images/homebg.jpg" alt="First slide" >
-										</div>
-										<div class="item">
-											<img src="../assets/images/homebg.jpg" alt="Second slide">
-										</div>
-										<div class="item">
-											<img src="../assets/images/homebg.jpg" alt="Third slide">
-										</div>
-										<div class="item">
-											<img src="../assets/images/homebg.jpg" alt="Fourth slide">
-										</div>
-										<div class="item">
-											<img src="../assets/images/homebg.jpg" alt="Fifth slide">
-										</div>
+                            <div id="newscarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
+								<!-- 轮播（Carousel）指标 -->
+								<ol class="carousel-indicators">
+									<li data-target="#newscarousel" data-slide-to="0" class="active"></li>
+									<li data-target="#newscarousel" data-slide-to="1"></li>
+									<li data-target="#newscarousel" data-slide-to="2"></li>
+									<li data-target="#newscarousel" data-slide-to="3"></li>
+									<li data-target="#newscarousel" data-slide-to="4"></li>
+								</ol>   
+								<!-- 轮播（Carousel）项目 -->
+								<div class="carousel-inner">
+									<div class="item active">
+										<img src="../assets/images/new1.jpg" alt="First slide">
 									</div>
-									
-								</div> 
+									<div class="item">
+										<img src="../assets/images/new2.jpg" alt="Second slide">
+									</div>
+									<div class="item">
+										<img src="../assets/images/new3.jpg" alt="Third slide">
+									</div>
+									<div class="item">
+										<img src="../assets/images/new4.jpg" alt="Fourth slide">
+									</div>
+									<div class="item">
+										<img src="../assets/images/new5.jpg" alt="Fifth slide">
+									</div>
+								</div>
+								
+							</div> 
 
                         </div><!-- End of main Team area -->
                     </div><!-- End of row -->
                 </div><!-- End of container -->
             </section><!-- End of Team Section -->
 
+			<section id="recommend" class="service colorsbg">
+                <div id="recommend_div" class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main_service_area">
+                                <div class="head_title m-y-3 p-t-3 wow fadeInUp">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h2>猜你喜欢</h2>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <h6></h6>
+                                        </div>
+										<div class="col-md-1">
+                                            <h6><a href="javascript:void(0)" id="moreRecommend" onclick="recommendChange();" style="color:#000;">More</a></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="main_service_content">
+									<div id="recommendlist">
+										<div id="recommend1"></div>
+										<div id="recommend2"></div>
+										<div id="recommend3"></div>
+										<div id="recommend4"></div>
+										<div id="recommend5"></div>
+										<div id="recommend6"></div>
+									</div>
+                                </div><!-- End of main service content -->
+								
+								
+								<div id="noRecommend" class="main_service_content" style="display:none;">
+									<div class="row">
+										<div class="col-md-12">
+											<h4>暂无推荐</h4>
+											<a id="userName2" href="javascript:void(0)"><p>点击这里</p></a>
+											<p>前往个人中心设置兴趣标签，获得更多推荐吧！</p>
+										</div>
+								    </div>
+                                </div><!-- End of main service content -->
+								<hr />
+                            </div><!-- End of main service area -->			
+                        </div><!-- End of col-md-12 -->
+                    </div><!-- End of row -->
+                </div><!-- End of container -->
+            </section><!-- End of Service Section -->
+				
             <section id="resource" class="service colorsbg">
                 <div class="container">
                     <div class="row">
@@ -762,7 +1242,7 @@
                                             <h6></h6>
                                         </div>
 									    <div class="col-md-1">
-                                            <h6><a id="mooc" style="color:#000;">More</a></h6>
+                                            <h6><a href="javascript:void(0)" id="mooc" style="color:#000;">More</a></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -828,17 +1308,18 @@
                                             <h6></h6>
                                         </div>
 									    <div class="col-md-1">
-                                            <h6><a id="other" style="color:#000;">More</a></h6>
+                                            <h6><a href="javascript:void(0)" id="other" style="color:#000;">More</a></h6>
                                         </div>
                                     </div>
 									<table id="table" class="table table-hover m-t-1" data-classes="table table-hover"  
 										   data-striped="true"  data-sort-name="stargazers_count"  
 										   data-sort-order="desc">   
 										<tr id="table-head">  
-											<th data-field="title" style="text-align:center;">资料标题</th>  
-											<th data-field="typeid" style="text-align:center;">类别</th>	
-											<th data-field="uploader" style="text-align:center;">上传者</th>  
-											<th data-field="time" style="text-align:center;">上传时间</th>										
+											<th data-field="title">资料标题</th>  
+											<th data-field="typeid">类别</th>	
+											<th data-field="uploader">上传者</th>  
+											<th data-field="time">上传时间</th>
+											<th data-field="operation">操作</th>												
 										</tr> 
 									</table> 
                                 </div>
@@ -851,7 +1332,7 @@
                     </div><!-- End of row -->
                 </div><!-- End of container -->
             </section><!-- End of Service Section -->
-			
+
 			<section id="resource" class="service colorsbg">
                 <div class="container">
                     <div class="row">
@@ -859,54 +1340,23 @@
                             <div class="main_service_area">
                                 <div class="head_title m-y-3 p-t-3 wow fadeInUp">
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <h2>学习建议</h2>
+                                        <div class="col-md-8">
+                                            <h2>课程·资源·分享</h2>
                                         </div>
-                                        <div class="col-md-7">
+                                        <div class="col-md-3">
                                             <h6></h6>
-                                        </div>
-									    <div class="col-md-1">
-                                            <h6><a href="Resources.html" style="color:#000;">More</a></h6>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="main_service_content">
-                                    <div class="row">
-										<div class="col-md-8">
-											<ul class="list-inline" style="margin-left:15%;">
-												<li class="inline-block">
-													<a href="javascript:void(0)" id="tipAll">
-														全部
-													</a>                             
-												</li>                                
-												<li class="inline-block">            
-													<a href="javascript:void(0)" id="tipCS">>
-														计算机
-													</a>                             
-												</li>                                
-												<li class="inline-block">          
-													<a href="javascript:void(0)" id="tipEM">>
-														经济管理
-													</a>                             
-												</li>                                
-												<li class="inline-block">            
-													<a href="javascript:void(0)" id="tipSS">>
-														社会科学
-													</a>                             
-												</li>                                
-												<li class="inline-block">            
-													<a href="javascript:void(0)" id="tipLan">
-														外语
-													</a>                            
-												</li>                                
-												<li class="inline-block">            
-													<a href="javascript:void(0)" id="tipArt">
-														艺术设计
-													</a>
-												</li>
-											</ul> 
+                                <div class="main_service_content">		
+									<div class = "row">
+										<div class = "col-md-6 col-xs-5">
+											<a href="javascript:void(0)" id="moocShare"><h3>慕课分享</h3></a>
 										</div>
-								    </div>
+										<div class = "col-md-6 col-xs-5">
+											<a href="javascript:void(0)" id="resourceShare"><h3>资源上传</h3></a>
+										</div>
+									</div>
                                 </div><!-- End of main service content -->
 								<hr />
                             </div><!-- End of main service area -->			
@@ -914,7 +1364,7 @@
                     </div><!-- End of row -->
                 </div><!-- End of container -->
             </section><!-- End of Service Section -->
-
+			
             <section id="resource" class="service colorsbg">
                 <div class="container">
                     <div class="row">
@@ -922,14 +1372,11 @@
                             <div class="main_service_area">
                                 <div class="head_title m-y-3 p-t-3 wow fadeInUp">
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <h2>主题讨论</h2>
+                                        <div class="col-md-8">
+                                            <h2>主题讨论-即将上线</h2>
                                         </div>
-                                        <div class="col-md-7">
+                                        <div class="col-md-3">
                                             <h6></h6>
-                                        </div>
-									    <div class="col-md-1">
-                                            <h6><a href="Resources.html" style="color:#000;">More</a></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -1074,6 +1521,34 @@
                     </div><!-- End of row -->
                 </div><!-- End of container -->
             </section><!-- End of Contactus Section -->
+			
+			<div class="modal fade" id="report" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								反馈
+							</h4>
+						</div>
+						<div class="modal-body">
+							<div id="Resourceid"></div>
+							<div id="Resourcetitle"></div>
+							<hr>
+							<label for="fRpwd">对本资料的反馈：</label>
+							<textarea class="form-control" name="reportArea" id="reportArea" rows="3" style="width:100%;"></textarea>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+							</button>
+							<button id="reportbtn" type="button" class="btn btn-primary">发送
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
         </div>
 
     </body>

@@ -17,13 +17,13 @@
         <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,400italic,500,100italic,700' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="../assets/css/materialize.min.css">
+        <link rel="stylesheet" href="../assets/css/materialize.css">
         <link rel="stylesheet" href="../assets/css/normalize.css">
         <link rel="stylesheet" href="../assets/css/fonticons.css">
         <link rel="stylesheet" href="../assets/css/magnific-popup.css">
         <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../assets/css/bootstrap1.css">
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../assets/css/bootstrap1.css">
 
         <!-- For navmenu css -->
         <link rel="stylesheet" href="../assets/css/navmenu.css" />
@@ -41,19 +41,133 @@
         <!--<link rel="stylesheet" href="../assets/css/white.css">-->
 
         <!--Old browser  JS-->
-        <script src="../assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-		<script type="text/javascript" src="../assets/js/jquery.form.js"></script>
+        <script type="text/javascript" src="../assets/js/jquery.form.js"></script>
 	    <script type="text/javascript" src="../assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 		<script type="text/javascript" src="../assets/js/vendor/jquery-1.11.2.min.js"></script>
 	    <script type="text/javascript" src="../assets/js/jquery.validate.min.js" ></script>
 		<script type="text/javascript" src="../assets/js/vendor/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../assets/js/Jquery.Query.js"></script>
+		
+		<script type="text/javascript">
+			function courseCount(obj){
+			   var cid= obj.id;
+			   var JSONObject= {
+					"cID":cid
+				};
+			   $.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/courseclick/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					},
+					error: function(result){						
+					}
+				});
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function resourceCount(obj){
+			   var rid= obj.id;
+			   var JSONObject= {
+					"rID":rid
+				};
+			   $.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/resourceclick/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					},
+					error: function(result){						
+					}
+				});
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function courseCollect(obj){
+			   var cid= obj.id;
+			   var name = $.query.get("name");
+			   if(name!=""){
+				   var JSONObject= {
+						"cID":cid,
+						"name":name
+					};
+				   $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/coursecollect/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							if(result=="1")
+								alert("收藏成功");
+							else if(result=="2")
+							    alert("此课程已经在您的收藏中");
+						},
+						error: function(result){	
+							alert("收藏失败");
+						}
+					});
+				}
+				else{
+					alert("请先登录！");
+				}
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function resourceCollect(obj){
+			   var rid= obj.id;
+			   var name = $.query.get("name");
+			   if(name!=""){
+				   var JSONObject= {
+						"rID":rid,
+						"name":name
+					};
+				   $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/resourcecollect/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							if(result=="1")
+								alert("收藏成功");
+							else if(result=="2")
+							    alert("此资源已经在您的收藏中");
+						},
+						error: function(result){	
+							alert("收藏失败");
+						}
+					});
+				}
+				else{
+					alert("请先登录！");
+				}
+			}
+		</script>
+		
 		<script type="text/javascript">
 			$(function(){
 			    getUsername();
 			    var cID = $.query.get("cID");
 			    var keyword = $.query.get("keyword");
+				keyword=decodeURIComponent(keyword);
+				var setID=parseInt(cID)-201;
+				
+				var myselect=document.getElementById("searchID");
+				myselect.options[0].selected = true;	
+							
+				$('#searchText').val("");
+				
 			    if(cID!=""&&keyword!=""){
+					myselect.options[setID].selected = true;	
+				    $('#searchText').val(keyword);
 					var JSONObject= {
 							"cID":cID,
 							"keyword":keyword
@@ -71,9 +185,13 @@
 								for(var i = 0, l =length; i < l; i++){
 									var item ='<div class="row m-b-5"><div class="col-md-4">'+
 											  '<img src="'+result[i].fields.img+'"/></div><div class="col-md-8">'+
-					                          '<a href='+result[i].fields.link+'><h4>'+result[i].fields.name+'</h4></a>'+
+					                          '<a id='+result[i].fields.id+' href='+result[i].fields.link+' onclick="courseCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
 				                              '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
-					                          '<p>'+result[i].fields.content+'</h6></div></div>';
+											  '<h6>来源网站：'+result[i].fields.source+'</h6>'+
+					                          '<p>'+result[i].fields.content+'</p>'+
+											  '<a href="javascript:void(0)" id='+result[i].fields.id+' onclick="courseCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+											  '<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[i].fields.id+' name='+result[i].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+											  '</div></div>';
 									$("#searchresult").append(item);//内容添加到页面上。
 								}
 							},
@@ -93,9 +211,12 @@
 								var length=result.length;
 								for(var i = 0, l =length; i < l; i++){
 									var item ='<div class="row m-b-5"><div class="col-md-8">'+
-					                          '<a href='+result[i].fields.fileAddress+'><h4>'+result[i].fields.name+'</h4></a>'+
+					                          '<a id='+result[i].fields.id+' href='+result[i].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result[i].fields.name+'</h4></a>'+
 				                              '<h6>用户 '+result[i].fields.uploader+' 上传于'+result[i].fields.uploadtime+'</h6>'+
-					                          '<p>'+result[i].fields.content+'</h6></div></div>';
+					                          '<p>'+result[i].fields.content+'</p>'+
+											  '<a href="javascript:void(0)" id='+result[i].fields.id+' onclick="resourceCollect(this);"><h6 style="display: inline;">收藏</h6></a>'+'&nbsp&nbsp'+
+											  '<a href="javascript:void(0)" onclick="reportShow(this);" id='+result[i].fields.id+' name='+result[i].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+											  '</div></div>';
 									$("#searchresult").append(item);//内容添加到页面上。
 								}
 							},
@@ -141,7 +262,7 @@
 					window.location.href = url;
 				});
 				$("#index").click(function() {
-					var url="../jike_index?name="+name+"&r="+rNum+"&s="+seed;
+					var url="../jike_index?name="+name+"&r="+rNum+"&s="+seed+"#home";
 					window.location.href = url;
 				});
 				$("#searchPage").click(function() {
@@ -156,72 +277,91 @@
 					var url="../jike_otherUpload?name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
 				});
-				$("#learningTips").click(function() {
-					var url="../jike_learningTips?name="+name+"&r="+rNum+"&s="+seed;
+				$("#userName").click(function() {
+					var url="../jike_info?name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
 				});
 			});
 		</script>
 		
 		<script type="text/javascript">
-				$(document).ready(function(){
-					$("#search_btn").click(function(){
-						var myselect=document.getElementById("searchID");
-						var index=myselect.selectedIndex;
-						var JSONObject= {
-							"cID":myselect.options[index].value,
-							"keyword":$('#searchText').val()
-						};
-						$("#searchresult").empty();
-						if(myselect.options[index].value!='204'){
-						$.ajax({
-							type: "POST",
-							url:"http://123.56.26.95/keysearch/",
-							data: JSONObject,
-							dataType: "json",
-							jsonp: "callback",
-							success: function(result){
-								var length=result.length;
-								for(var i = 0, l =length; i < l; i++){
-									var item ='<div class="row m-b-5"><div class="col-md-4">'+
-											  '<img src="'+result[i].fields.img+'"/></div><div class="col-md-8">'+
-					                          '<a href='+result[i].fields.link+'><h4>'+result[i].fields.name+'</h4></a>'+
-				                              '<h6>'+result[i].fields.school+' '+result[i].fields.teacher+'</h6>'+
-					                          '<p>资料简介：'+result[i].fields.content+'</h6></div></div>';
-									$("#searchresult").append(item);//内容添加到页面上。
-								}
-							},
-							error: function(result){						
-							    alert("查询失败");
-							}
-						});	
-					}
-					else{
-						$.ajax({
-							type: "POST",
-							url:"http://123.56.26.95/keysearch/",
-							data: JSONObject,
-							dataType: "json",
-							jsonp: "callback",
-							success: function(result){
-								var length=result.length;
-								for(var i = 0, l =length; i < l; i++){
-									var item ='<div class="row m-b-5"><div class="col-md-8">'+
-					                          '<a href='+result[i].fields.fileAddress+'><h4>'+result[i].fields.name+'</h4></a>'+
-				                              '<h6>用户 '+result[i].fields.uploader+' 上传于'+result[i].fields.uploadtime+'</h6>'+
-					                          '<p>'+result[i].fields.content+'</h6></div></div>';
-									$("#searchresult").append(item);//内容添加到页面上。
-								}
-							},
-							error: function(result){						
-							    alert("查询失败");
-							}
-						});	
-					}
-					});
-				})
-			</script>
+			$(document).ready(function(){
+				$("#search_btn").click(function(){
+					var name = $.query.get("name");
+					var rNum = $.query.get("r");
+					var seed = $.query.get("s");
+					var myselect=document.getElementById("searchID");
+					var index=myselect.selectedIndex;
+					var cID=myselect.options[index].value;
+					var keyword=$('#searchText').val();
+					keyword=encodeURIComponent(keyword);
+					var url="../jike_search?cID="+cID+"&keyword="+keyword+"&name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;
+				});
+			})
+		</script>
 
+		<script type="text/javascript">
+			function reportShow(obj){
+			   var cid= obj.id;
+			   var title= obj.name;
+			   var name = $.query.get("name");
+			   $("#Resourceid").empty();
+			   $("#Resourcetitle").empty();
+			    $("#reportArea").val("");
+			   if(name!=""){
+				   textID='<h6>资料编号：</h6><p id="reportID">'+cid+'</p>';
+				   $("#Resourceid").append(textID);
+				   textTitle='<h6>资料标题：</h6><p id="reportTitle">'+title+'</p>';
+				   $("#Resourcetitle").append(textTitle);
+				   $('#report').modal('show');
+			   }
+			   else{
+					alert("请先登录！");
+			   }
+			}
+		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$("#reportbtn").click(function() {
+				var cid= $("#reportID").text();
+			    var title= $("#reportTitle").text();
+			    var txt=$("#reportArea").val();
+			    var name = $.query.get("name");
+			    if(name!=""){
+				    var JSONObject= {
+						"cID":cid,
+						"title":title,
+						"text":txt,
+						"name":name
+					};
+				    $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/report/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							if(result=="1"){
+								alert("反馈成功");
+								$('#report').modal('hide');
+							}
+							else{
+								alert("反馈失败");
+							}
+						},
+						error: function(result){	
+							alert("连接服务器失败，反馈失败");
+						}
+					});
+				}
+				else{
+					alert("请先登录！");
+				}
+			});				
+		});
+		</script>
     </head>
 
     <body data-spy="scroll" data-target="#scrollspy">
@@ -236,18 +376,17 @@
 							<li class="active"><a id="searchPage">搜索</a></li>
 							<li><a id="moocShare" >慕课分享</a></li>
 							<li><a id="resourceShare">资料上传</a></li>
-							<li><a id="learningTips">学习建议</a></li>
 							<li><a id="discussion">主题讨论</a></li>
 						</ul>
 					</div>
 					<div id="login_div" class="nav navbar-nav navbar-right">
-						<li><a id="login_btn" class="navbar-link">登录/注册</a></li>
+						<li><a href="javascript:void(0)" id="login_btn" class="navbar-link">登录/注册</a></li>
 				    </div>
 					<div id="logout_div" class="nav navbar-nav navbar-right">
-						<li><a id="logout_btn" class="navbar-link">退出</a></li>
+						<li><a href="javascript:void(0)" id="logout_btn" class="navbar-link">退出</a></li>
 				    </div>
 					<div id="welcome_div" class="nav navbar-nav navbar-right">
-						<li><a id="userName" class="navbar-link">欢迎您</a></li>
+						<li><a href="javascript:void(0)" id="userName" class="navbar-link">欢迎您</a></li>
 				    </div>
 				</div>
 			</nav>
@@ -279,7 +418,35 @@
 					</div>
                 </div><!-- End of Container-fluid -->
             </section><!-- End of Home Section -->
-
+            
+			
+			<div class="modal fade" id="report" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								反馈
+							</h4>
+						</div>
+						<div class="modal-body">
+							<div id="Resourceid"></div>
+							<div id="Resourcetitle"></div>
+							<hr>
+							<label for="fRpwd">对本资料的反馈：</label>
+							<textarea class="form-control" name="reportArea" id="reportArea" rows="3" style="width:100%;"></textarea>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+							</button>
+							<button id="reportbtn" type="button" class="btn btn-primary">发送
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
 			
 	</body>
 </html>           

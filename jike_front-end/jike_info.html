@@ -1,0 +1,874 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>集课-JIKE</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="icon" type="image/png" href="../assets/myicon.png">
+
+        <!-- Raleway Google fonts  -->
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,400italic,500,100italic,700' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Compiled and minified CSS -->
+		<link rel="stylesheet" href="../assets/css/materialize.css">
+        <link rel="stylesheet" href="../assets/css/normalize.css">
+        <link rel="stylesheet" href="../assets/css/fonticons.css">
+        <link rel="stylesheet" href="../assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../assets/css/bootstrap1.css">
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+
+        <!-- For navmenu css -->
+        <link rel="stylesheet" href="../assets/css/navmenu.css" />
+
+        <!--For Plugins external css-->
+        <link rel="stylesheet" href="../assets/css/plugins.css" />
+
+        <!--Theme custom css -->
+        <link rel="stylesheet" href="../assets/css/style1.css">
+
+        <!--Theme Responsive css-->
+        <link rel="stylesheet" href="../assets/css/responsive.css" />
+
+        <!--Theme Colors css-->
+        <!--<link rel="stylesheet" href="../assets/css/white.css">-->
+
+        <!--Old browser  JS-->
+		<script type="text/javascript" src="../assets/js/jquery.form.js"></script>
+	    <script type="text/javascript" src="../assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+		<script type="text/javascript" src="../assets/js/vendor/jquery-1.11.2.min.js"></script>
+	    <script type="text/javascript" src="../assets/js/jquery.validate.min.js" ></script>
+		<script type="text/javascript" src="../assets/js/vendor/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../assets/js/Jquery.Query.js"></script>
+        <script type="text/javascript" src="../assets/js/materialize.min.js"></script>
+        <script type="text/javascript" src="../assets/js/jquery.easing.1.3.js"></script>
+        <script type="text/javascript" src="../assets/js/materialize.js"></script>
+        <script type="text/javascript" src="../assets/js/jquery.magnific-popup.js"></script>
+        <script type="text/javascript" src="../assets/js/plugins.js"></script>
+        <script type="text/javascript" src="../assets/js/main.js"></script>
+		<script type="text/javascript">
+			function leaveInterest(flag1){
+			   if(flag1=="block")
+			   return confirm("确定离开兴趣设置页面吗？\n未保存的设置将会丢失");
+			   else
+			   return true;
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function courseCount(obj){
+			   var cid= obj.id;
+			   var JSONObject= {
+					"cID":cid
+				};
+			   $.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/courseclick/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					},
+					error: function(result){						
+					}
+				});
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function resourceCount(obj){
+			   var rid= obj.id;
+			   var JSONObject= {
+					"rID":rid
+				};
+			   $.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/resourceclick/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+					},
+					error: function(result){						
+					}
+				});
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function courseCancel(obj){
+			   var cid= obj.id;
+			   var name = $.query.get("name");
+			   if(name!=""){
+				   var JSONObject= {
+						"cID":cid,
+						"name":name
+					};
+				   $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/coursecancel/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							if(result=="1")
+								alert("移除成功");
+							else if(result=="2")
+							    alert("此课程已被移出您的收藏");
+						},
+						error: function(result){	
+							alert("移除失败");
+						}
+					});
+				}
+				else{
+					alert("请先登录！");
+				}
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function resourceCancel(obj){
+			   var rid= obj.id;
+			   var name = $.query.get("name");
+			   if(name!=""){
+				   var JSONObject= {
+						"rID":rid,
+						"name":name
+					};
+				   $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/resourcecancel/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							if(result=="1")
+								alert("移除成功");
+							else if(result=="2")
+							    alert("此课程已被移出您的收藏");
+						},
+						error: function(result){	
+							alert("移除失败");
+						}
+					});
+				}
+				else{
+					alert("请先登录！");
+				}
+			}
+		</script>
+		
+		<script type="text/javascript">
+			$(function(){
+			   getUsername();
+			});
+			
+			function getUsername(){
+			    var name = $.query.get("name");
+				var rNum = $.query.get("r");
+				var seed = $.query.get("s");
+				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
+				if(name!=""&&rNum==rNum2){
+				    $("#welcome_div").css("display","block");
+					document.getElementById("userName").innerHTML = "您好，"+name;
+					$("#logout_div").css("display", "block");
+					$("#login_div").css("display", "none");
+				}
+				else{
+					document.getElementById("userName").innerHTML = "";
+					$("#welcome_div").css("display","none");
+					$("#logout_div").css("display", "none");
+					$("#login_div").css("display", "block");
+				}
+			}
+		</script>
+		
+		<script type="text/javascript">
+			$(function() {
+			    var name = $.query.get("name");
+				var rNum = $.query.get("r");
+				var seed = $.query.get("s");
+				$("#logout_btn").click(function() {
+				    var flag1= $("#selectiList")[0].style.display;
+					if(leaveInterest(flag1)){
+					var url="../jike_index?name=&r=&s=";
+					window.location.href = url;}
+				});
+				$("#index").click(function() {
+					var flag1= $("#selectiList")[0].style.display;
+					if(leaveInterest(flag1)){
+					var url="../jike_index?name="+name+"&r="+rNum+"&s="+seed+"#home";
+					window.location.href = url;}
+				});
+				$("#searchPage").click(function() {
+				    var flag1= $("#selectiList")[0].style.display;
+					if(leaveInterest(flag1)){
+					var url="../jike_search?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;}
+				});
+				$("#moocShare").click(function() {
+					var flag1= $("#selectiList")[0].style.display;
+					if(leaveInterest(flag1)){
+					var url="../jike_moocUpload?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;}
+				});
+				$("#resourceShare").click(function() {
+					var flag1= $("#selectiList")[0].style.display;
+					if(leaveInterest(flag1)){
+					var url="../jike_otherUpload?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;}
+				});
+				$("#userName").click(function() {
+					var flag1= $("#selectiList")[0].style.display;
+					if(leaveInterest(flag1)){
+					var url="../jike_info?name="+name+"&r="+rNum+"&s="+seed;
+					window.location.href = url;}
+				});
+			});
+		</script>
+		
+		<script type="text/javascript">
+			$(function() {
+				$("#moocCollect").click(function(){
+					var flag1= $("#selectiList")[0].style.display;
+					if(leaveInterest(flag1)){
+						$("#moocCollect").focus();
+						$("#displayArea").empty();
+						$("#selectiList").css("display", "none");
+						var name = $.query.get("name");
+						var JSONObject= {
+							"name":name
+						};
+						$.ajax({
+							type: "POST",
+							url:"http://123.56.26.95/moocShow/",
+							data: JSONObject,
+							dataType: "json",
+							jsonp: "callback",
+							success: function(result){
+								var length=result.length;
+								for(var i = 0, l =length; i < l; i++){
+									var courseid=result[i].fields.courseID;
+									var Json_Object= {
+										"cID":courseid
+									};
+									$.ajax({
+										type: "POST",
+										url:"http://123.56.26.95/moocCollectShow/",
+										data: Json_Object,
+										dataType: "json",
+										jsonp: "callback",
+										success: function(result2){
+											var length2=result2.length;
+											for(var j = 0, l =length; j < l; j++){
+												var item ='<div class="row m-b-5"><div class="col-md-4">'+
+											  '<img src="'+result2[j].fields.img+'"/></div><div class="col-md-8">'+
+											  '<a id='+result2[j].fields.id+' href='+result2[j].fields.link+' onclick="courseCount(this);"><h4>'+result2[j].fields.name+'</h4></a>'+
+											  '<h6>'+result2[j].fields.school+' '+result2[j].fields.teacher+'</h6>'+
+											  '<h6>来源网站：'+result2[j].fields.source+'</h6>'+
+											  '<p>'+result2[j].fields.content+'</p>'+
+											  '<a href="javascript:void(0)" id='+result2[j].fields.id+' onclick="courseCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
+											  '<a href="javascript:void(0)" onclick="reportShow(this);" id='+result2[j].fields.id+' name='+result2[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+											  '</div></div>';
+											  $("#displayArea").append(item);//内容添加到页面上。
+											}
+										},
+										error: function(result){						
+											alert("查询失败");
+										}
+									});
+
+								}
+							},
+							error: function(result){						
+								alert("查询失败");
+							}
+						});	
+                    }					
+				});	
+			});			
+		</script>
+		
+		<script type="text/javascript">
+			function reportShow(obj){
+			   var cid= obj.id;
+			   var title= obj.name;
+			   var name = $.query.get("name");
+			   $("#Resourceid").empty();
+			   $("#Resourcetitle").empty();
+			   $("#reportArea").val("");
+			   if(name!=""){
+				   textID='<h6>资料编号：</h6><p id="reportID">'+cid+'</p>';
+				   $("#Resourceid").append(textID);
+				   textTitle='<h6>资料标题：</h6><p id="reportTitle">'+title+'</p>';
+				   $("#Resourcetitle").append(textTitle);
+				   $('#report').modal('show');
+			   }
+			   else{
+					alert("请先登录！");
+			   }
+			}
+		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$("#reportbtn").click(function() {
+				var cid= $("#reportID").text();
+			    var title= $("#reportTitle").text();
+			    var txt=$("#reportArea").val();
+			    var name = $.query.get("name");
+			    if(name!=""){
+				    var JSONObject= {
+						"cID":cid,
+						"title":title,
+						"text":txt,
+						"name":name
+					};
+				    $.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/report/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							if(result=="1"){
+								alert("反馈成功");
+								$('#report').modal('hide');
+							}
+							else{
+								alert("反馈失败");
+							}
+						},
+						error: function(result){	
+							alert("连接服务器失败，反馈失败");
+						}
+					});
+				}
+				else{
+					alert("请先登录！");
+				}
+			});				
+		});
+		</script>
+		
+		<script type="text/javascript">
+		$(function(){
+			$("#resourceCollect").click(function(){
+				var flag1= $("#selectiList")[0].style.display;
+				if(leaveInterest(flag1)){
+					$("#resourceCollect").focus();
+					$("#displayArea").empty();
+					$("#selectiList").css("display", "none");
+					var name = $.query.get("name");
+					var JSONObject= {
+						"name":name
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/otherShow/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							var length=result.length;
+							for(var i = 0, l =length; i < l; i++){
+								var rid=result[i].fields.otherID;
+								var Json_Object= {
+									"rID":rid
+								};
+								$.ajax({
+									type: "POST",
+									url:"http://123.56.26.95/otherCollectShow/",
+									data: Json_Object,
+									dataType: "json",
+									jsonp: "callback",
+									success: function(result2){
+										var length2=result2.length;
+										for(var j = 0, l =length; j < l; j++){
+											var item ='<div class="row m-b-5"><div class="col-md-8" style="margin-left:10%;">'+
+										  '<a id='+result2[j].fields.id+' href='+result2[j].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result2[j].fields.name+'</h4></a>'+
+										  '<h6>用户 '+result2[j].fields.uploader+' 上传于'+result2[j].fields.uploadtime+'</h6>'+
+										  '<p>'+result2[j].fields.content+'</p>'+
+										  '<a href="javascript:void(0)" id='+result2[j].fields.id+' onclick="resourceCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
+										  '<a href="javascript:void(0)" onclick="reportShow(this);" id='+result2[j].fields.id+' name='+result2[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+										  '</div></div>';
+										  $("#displayArea").append(item);//内容添加到页面上。
+										}
+									},
+									error: function(result){						
+										alert("查询失败");
+									}
+								});
+
+							}
+						},
+						error: function(result){						
+							alert("查询失败");
+						}
+					});
+				}				
+			});	
+		});			
+		</script>
+		
+		<script type="text/javascript">
+		$(function(){
+			$("#userInfo").click(function(){
+				var flag1= $("#selectiList")[0].style.display;
+			    if(leaveInterest(flag1)){
+					$("#userInfo").focus();
+					$("#displayArea").empty();
+					$("#selectiList").css("display", "none");
+					var name = $.query.get("name");
+					var JSONObject= {
+						"name":name
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/infoShow/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							var length=result.length;
+							for(var i = 0, l =length; i < l; i++){
+								var item ='<div class="row m-b-5"><div class="col-md-8">'+
+										'<h4 style="margin-left:15%;">用户名：'+result[i].fields.username+'</h4>'+
+										'<h4 style="margin-left:15%;">电话：'+result[i].fields.phone+'</h4>'+
+										'<h4 style="margin-left:15%;">邮箱：'+result[i].fields.email+'</h4>'+
+										'<h4 style="margin-left:15%;"><a href="javascript:void(0)" data-toggle="modal" data-target="#reset">修改密码</a></h4>'+
+										'</div></div>';
+								$("#displayArea").append(item);//内容添加到页面上。
+							}
+						},
+						error: function(result){						
+							alert("查询失败");
+						}
+					});	
+				
+				}		
+			});
+		});			
+		</script>
+		
+		<script>
+		$(document).ready(function() {
+		        var name = $.query.get("name");
+				$("#resetbtn").click(function() {
+				//点击注册按钮时进行的判断
+					var newPassword=$("#fpwd").val();
+					if($("#fopwd").val()==""){
+					    alert("原密码不能为空！");
+					}
+					else if(newPassword.length<5){
+						alert("新密码不能少于5个字符！");
+					}
+					else if($("#fpwd").val()==""){
+					    alert("新密码不能为空！");
+					}
+					else if($("#frpwd").val()!=$("#fpwd").val()){
+						alert("两次输入的新密码不相同，请重新输入！");
+					}
+					else {
+					    var JSONObject= {
+							"username":name,
+							"oldpassword":document.getElementById("fopwd").value,
+							"newpassword":document.getElementById("fpwd").value,
+						};
+						$.ajax({
+							type: "POST",
+							url: "http://123.56.26.95/resetpwd/",
+							data: JSONObject,
+							dataType:"text",
+							success: function (result) {
+								if(result=="0"){
+									alert("原密码不正确！");
+								}
+								else{
+									alert("密码修改成功！");
+									$('#reset').modal('hide');
+								}
+							},
+							error: function () {
+								alert("向服务器请求失败，密码修改失败！");
+							}
+						});
+					}
+				});
+			});
+	
+		</script>
+
+		<script type="text/javascript">
+		$(function(){
+			$("#interestSetting").click(function(){
+				$("#interestSetting").focus();
+				$("#displayArea").empty();
+				$("#selectiList").css("display", "block");
+				var name = $.query.get("name");
+				var JSONObject= {
+					"name":name
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/interestShow/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+						var length=result.length;				
+						if(length==0){
+							$("#cID1").options[0].selected = true;
+							$("#cID2").options[0].selected = true;
+						    $("#cID3").options[0].selected = true;
+						}
+						else if(length==1){
+						    var myselect1=document.getElementById("cID1");
+							var result1=parseInt(result[0].fields.interest)-100;
+							myselect1.options[result1].selected = true;
+							
+							$("#cID2").options[0].selected = true;
+						    $("#cID3").options[0].selected = true;
+						}
+						else if(length==2){
+							var myselect1=document.getElementById("cID1");
+							var result1=parseInt(result[0].fields.interest)-100;
+							myselect1.options[result1].selected = true;
+							
+							var myselect2=document.getElementById("cID2");
+							var result2=parseInt(result[1].fields.interest)-100;
+							myselect2.options[result2].selected = true;
+							
+							$("#cID3").options[0].selected = true;
+						}
+						else if(length==3){
+							var myselect1=document.getElementById("cID1");
+							var result1=parseInt(result[0].fields.interest)-100;
+							myselect1.options[result1].selected = true;
+							
+							var myselect2=document.getElementById("cID2");
+							var result2=parseInt(result[1].fields.interest)-100;
+							myselect2.options[result2].selected = true;
+							
+							var myselect3=document.getElementById("cID3");
+							var result3=parseInt(result[2].fields.interest)-100;
+							myselect3.options[result3].selected = true;	
+						}
+						$("#selectiList").css("display", "block");
+					},
+					error: function(result){						
+						alert("查询失败");
+					}
+				});		
+			});	
+		});			
+		</script>
+		
+		<script>
+		$(document).ready(function(){
+		  $("#save_btn").click(function(){
+			var name = $.query.get("name");
+			var rNum = $.query.get("r");
+			var seed = $.query.get("s");
+			var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);
+			var myselect1=document.getElementById("cID1");
+			var index1=myselect1.selectedIndex;
+			var interest1= myselect1.options[index1].value;
+			var myselect2=document.getElementById("cID2");
+			var index2=myselect2.selectedIndex;
+			var interest2= myselect2.options[index2].value;
+			var myselect3=document.getElementById("cID3");
+			var index3=myselect3.selectedIndex;
+			var interest3= myselect3.options[index3].value;
+			if(name!=""&&rNum==rNum2){
+				var JSONObject= {
+					"name":name,
+					"interest1":interest1,
+					"interest2":interest2,
+					"interest3":interest3,
+				};
+				$.ajax({
+					type: "POST",
+					url:"http://123.56.26.95/interestSave/",
+					data: JSONObject,
+					dataType: "json",
+					jsonp: "callback",
+					success: function(result){
+						if(result=="0"){
+							alert("保存成功！");
+						}
+						else{
+							alert("保存失败！");
+						}
+					},
+					error: function(result){						
+						alert("连接服务器失败！保存失败！");
+					}
+				});	
+			}
+			else{
+				alert("请先登录！");
+			}
+		  });
+		});
+		</script>
+
+    </head>
+
+    <body data-spy="scroll" data-target="#scrollspy">
+        <div class="main_figur">
+
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+				<div class="container-fluid">
+					<div>
+						<ul class="nav navbar-nav">
+						    <li><a class="navbar-brand"><b>JIKE</b></a></li>
+							<li><a id="index">首页</a></li>
+							<li><a id="searchPage">搜索</a></li>
+							<li><a id="moocShare" >慕课分享</a></li>
+							<li><a id="resourceShare">资料上传</a></li>
+							<li><a id="discussion">主题讨论</a></li>
+						</ul>
+					</div>
+					<div id="login_div" class="nav navbar-nav navbar-right">
+						<li><a href="javascript:void(0)" id="login_btn" class="navbar-link">登录/注册</a></li>
+				    </div>
+					<div id="logout_div" class="nav navbar-nav navbar-right">
+						<li><a href="javascript:void(0)" id="logout_btn" class="navbar-link">退出</a></li>
+				    </div>
+					<div id="welcome_div" class="nav navbar-nav navbar-right">
+						<li><a href="javascript:void(0)" id="userName" class="navbar-link">欢迎您</a></li>
+				    </div>
+				</div>
+			</nav>
+			
+			<div>
+				<br><br><br><br><br>
+			</div>
+			
+            <section id="resource" class="service colorsbg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main_service_area">
+                                <div class="head_title m-y-3 p-t-3 wow fadeInUp">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h2>个人空间</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main_service_content">
+                                    <div class="row">
+										<div class="col-md-8">
+											<ul class="list-inline" style="margin-left:15%;">
+											    <li class="inline-block">            
+													<a href="javascript:void(0)" id="userInfo">
+														个人资料
+													</a>                             
+												</li> 	
+												<li class="inline-block">
+													<a href="javascript:void(0)" id="moocCollect">
+														慕课收藏
+													</a>                             
+												</li>                                
+												<li class="inline-block">            
+													<a href="javascript:void(0)" id="resourceCollect">
+														资源收藏
+													</a>                             
+												</li>
+												<li class="inline-block">            
+													<a href="javascript:void(0)" id="interestSetting">
+														兴趣设置
+													</a>                             
+												</li> 											
+											</ul> 
+										</div>
+								    </div>
+                                </div><!-- End of main service content -->
+								<hr />
+								<div class="main_service_content" id="displayArea">
+					
+					            </div>
+								
+								<div class="row" id="selectiList" style="display:none;">
+									<div class="col-md-1"></div>
+									<div class="col-md-8">
+										<div class="container m-t-3 m-b-2">
+											<form role="form">
+												<div class="form-group">
+													<label for="cID1">兴趣标签1</label>
+													<select class="form-control" id = "cID1">
+														<option value="100">请选择......</option>
+														<option value="101">计算机</option>
+														<option value="102">经管</option>
+														<option value="103">创业</option>
+														<option value="104">电子</option>
+														<option value="105">工程</option>
+														<option value="106">环境·地球</option>
+														<option value="107">医学·健康</option>
+														<option value="108">生命科学</option>
+														<option value="109">数学</option>
+														<option value="110">物理</option>
+														<option value="111">化学</option>
+														<option value="112">社科·法律</option>
+														<option value="113">文学</option>
+														<option value="114">历史</option>
+														<option value="115">哲学</option>
+														<option value="116">建筑</option>
+														<option value="117">外语</option>
+														<option value="118">教育</option>
+														<option value="119">艺术·设计</option>
+														<option value="120">公共管理</option>
+														<option value="121">职场</option>
+														<option value="122">大学先修课</option>
+														<option value="199">其他</option>
+													</select>
+												</div>
+												<br>
+												<div class="form-group">
+													<label for="cID2">兴趣标签2</label>
+													<select class="form-control" id = "cID2">
+														<option value="100">请选择......</option>
+														<option value="101">计算机</option>
+														<option value="102">经管</option>
+														<option value="103">创业</option>
+														<option value="104">电子</option>
+														<option value="105">工程</option>
+														<option value="106">环境·地球</option>
+														<option value="107">医学·健康</option>
+														<option value="108">生命科学</option>
+														<option value="109">数学</option>
+														<option value="110">物理</option>
+														<option value="111">化学</option>
+														<option value="112">社科·法律</option>
+														<option value="113">文学</option>
+														<option value="114">历史</option>
+														<option value="115">哲学</option>
+														<option value="116">建筑</option>
+														<option value="117">外语</option>
+														<option value="118">教育</option>
+														<option value="119">艺术·设计</option>
+														<option value="120">公共管理</option>
+														<option value="121">职场</option>
+														<option value="122">大学先修课</option>
+														<option value="199">其他</option>
+													</select>
+												</div>
+												<br>
+												<div class="form-group">
+													<label for="cID3">兴趣标签3</label>
+													<select class="form-control" id = "cID3">
+														<option value="100">请选择......</option>
+														<option value="101">计算机</option>
+														<option value="102">经管</option>
+														<option value="103">创业</option>
+														<option value="104">电子</option>
+														<option value="105">工程</option>
+														<option value="106">环境·地球</option>
+														<option value="107">医学·健康</option>
+														<option value="108">生命科学</option>
+														<option value="109">数学</option>
+														<option value="110">物理</option>
+														<option value="111">化学</option>
+														<option value="112">社科·法律</option>
+														<option value="113">文学</option>
+														<option value="114">历史</option>
+														<option value="115">哲学</option>
+														<option value="116">建筑</option>
+														<option value="117">外语</option>
+														<option value="118">教育</option>
+														<option value="119">艺术·设计</option>
+														<option value="120">公共管理</option>
+														<option value="121">职场</option>
+														<option value="122">大学先修课</option>
+														<option value="199">其他</option>
+													</select>
+												</div>
+												
+												<button id="save_btn" type="button" class="btn btn-default">保存</button>
+												<br>
+												<br>
+											</form>
+										</div><!-- End of Container-fluid -->
+									</div>
+								</div>
+								
+                            </div><!-- End of main service area -->			
+                        </div><!-- End of col-md-12 -->
+                    </div><!-- End of row -->
+					
+					
+                </div><!-- End of container -->
+            </section><!-- End of Service Section -->
+			
+			<div class="modal fade" id="reset" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								重新设置密码
+							</h4>
+						</div>
+						<div class="modal-body">
+							<label for="fOpwd">原密码</label>
+							<input type="password" class="form-control" id="fopwd" placeholder="请输入原密码">
+							<label for="fPwd">新密码</label>
+							<input type="password" class="form-control" id="fpwd" placeholder="请输入新密码">
+							<label for="fRpwd">再次输入新密码</label>
+							<input type="password" class="form-control" id="frpwd" placeholder="请再次输入新密码">
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+							</button>
+							<button id="resetbtn" type="button" class="btn btn-primary">修改密码
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<div class="modal fade" id="report" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								反馈
+							</h4>
+						</div>
+						<div class="modal-body">
+							<div id="Resourceid"></div>
+							<div id="Resourcetitle"></div>
+							<hr>
+							<label for="fRpwd">对本资料的反馈：</label>
+							<textarea class="form-control" name="reportArea" id="reportArea" rows="3" style="width:100%;"></textarea>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+							</button>
+							<button id="reportbtn" type="button" class="btn btn-primary">发送
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+		</div>
+		
+	</body>
+</html>           
