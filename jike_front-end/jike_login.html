@@ -147,12 +147,8 @@
 		<script>  
 			function email_test(str){ 
 				var i,flag=0; 
-				var at_symbol=0; //“@”检测的位置 
-				 
+				var at_symbol=0; //“@”检测的位置 				 
 				var dot_symbol=0; //“.”检测的位置 
-				 
-				if(char_test(str.charAt(0))==0 ) 
-					return (1); //首字符必须用字母 
 					  
 				//检测“@”的位置 
 				for (i=1;i<str.length;i++) {
@@ -163,20 +159,20 @@
 					 }
 				 } 
 			 
-			  
-			if(at_symbol==str.length-1 || at_symbol==0) 
-				return(2); //没有邮件服务器域名
-			 
-			//简单的检测有没有“.”，以确定服务器名是否合法  
-			for(i=at_symbol+1;i<str.length;i++) {
-				if(str.charAt(i)=='.'){
-					dot_symbol=i; 
-				}
+				  
+				if(at_symbol==str.length-1 || at_symbol==0) 
+					return(2); //没有邮件服务器域名
+				 
+				//简单的检测有没有“.”，以确定服务器名是否合法  
 				for(i=at_symbol+1;i<str.length;i++) {
-					if(dot_symbol==0 || dot_symbol==str.length-1) 
-					return (6); 
-				}
-			  }
+					if(str.charAt(i)=='.'){
+						dot_symbol=i; 
+					}
+					for(i=at_symbol+1;i<str.length;i++) {
+						if(dot_symbol==0 || dot_symbol==str.length-1) 
+						return (6); 
+					}
+				  }
 				
 				return 0; //邮件名合法 
 			}
