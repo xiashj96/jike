@@ -104,7 +104,8 @@
 					email: {  
 						email: true  
 					},
-					phone: {  
+					phone: {
+						required: true,
 						rangelength:[11,11],
 					}, 
 				},  
@@ -112,7 +113,8 @@
 					email: {    
 						email: "请输入有效电子邮箱"  
 					}, 
-					phone: {  
+					phone: {
+						required:"请输入有效手机号码",
 						rangelength:"请输入有效手机号码"
 					},
 				}  
