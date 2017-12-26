@@ -120,6 +120,9 @@
 				var myselect=document.getElementById("cID1");
 				var index=myselect.selectedIndex;
 				var name = $.query.get("name");
+				if(index==0) alert("请选择资料类别");
+				else if($('#name').val()=="") alert("请输入资料标题");
+				else{
 				formData.append("cID", myselect.options[index].value);
 				formData.append("cname", $('#name').val());
 				formData.append("link", $('#link').val());
@@ -130,13 +133,14 @@
 				request.onreadystatechange=function(){
 					if(request.readyState==4){
 						if(request.status==200){
-							alert("上传成功！")
+							alert("上传成功！");
 						}
 					}
 				}			
 				request.open("POST", "http://123.56.26.95/otherupload/");
 				request.send(formData);
 				return false;
+				}
 			}
 			else{
 				alert("请先登录！");
@@ -193,7 +197,7 @@
 					<div class="container m-t-3 m-b-2">
 						<form role="form">
 							<div class="form-group">
-								<label for="cID">课程类别*</label>
+								<label for="cID">资料类别*</label>
 								<select class="form-control" id = "cID1">
 								    <option value="" selected="selected">请选择......</option>
 									<option value="101">计算机</option>
