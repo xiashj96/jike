@@ -100,8 +100,17 @@
 		<script type="text/javascript">
 		$().ready(function() {  
 			$("#register_form").validate({  
-				rules: {   
-					email: {  
+				rules: { 
+				    username: "required",  
+					password: {  
+						required: true,  
+						minlength: 5  
+					},
+					rpassword: {  
+						equalTo: "#register_psw"  
+					}, 
+					email: {
+					    required: true,  
 						email: true  
 					},
 					phone: {
@@ -109,8 +118,17 @@
 						rangelength:[11,11],
 					}, 
 				},  
-				messages: {  
-					email: {    
+				messages: {
+					username: "请输入姓名",  
+					password: {  
+						required: "请输入密码",  
+						minlength: jQuery.format("密码不能小于{0}个字 符")  
+					},  
+					rpassword: {  
+						equalTo: "两次输入的密码不一样"  
+					},  
+					email: {
+						required: "请输入有效电子邮箱" ,
 						email: "请输入有效电子邮箱"  
 					}, 
 					phone: {
@@ -176,11 +194,15 @@
 		$(document).ready(function() {
 				$("#reset").click(function() {
 				//点击注册按钮时进行的判断
+				    var newPassword=$("#fpwd").val();
 					if ($("#fname").val()== "") {
 						alert("用户名不能为空！");
 					} 
 					else if($("#fpwd").val()==""){
 					    alert("新密码不能为空！");
+					}
+					else if(newPassword.length<5){
+						alert("新密码不能少于5个字符！");
 					}
 					else if($("#frpwd").val()!=$("#fpwd").val()){
 						alert("两次输入的新密码不相同，请重新输入！");
@@ -279,7 +301,7 @@
 						</div>  
 						<div class="form-group">  
 								<i class="fa fa-lock fa-lg"></i>  
-								<input class="form-control required" id="register_psw" type="password" placeholder=" 密码" id="register_password" name="register_password"/>  
+								<input class="form-control required" id="register_psw" type="password" placeholder=" 密码（不少于5个字符）" name="password"/>  
 						</div>  
 						<div class="form-group">  
 								<i class="fa fa-check fa-lg"></i>  
