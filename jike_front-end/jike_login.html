@@ -24,6 +24,7 @@
 	    <script type="text/javascript" src="../assets/js/jquery.validate.min.js" ></script>
 		<script type="text/javascript" src="../assets/js/vendor/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../assets/js/Jquery.Query.js"></script>
+		<script type="text/javascript" src="../assets/js/jquery.cookie.js"></script>
 				
 		<style type="text/css">
 			body{background: url(../assets/images/login.jpg) no-repeat;
@@ -40,6 +41,11 @@
 		
 		<script type="text/javascript">
 			$(function() {
+				if ($.cookie("rmbUser") == "true") {
+				$("#remember").prop("checked", true);
+				$("#login_name").val($.cookie("username"));
+				$("#login_psw").val($.cookie("password")); 
+			
 			    var ref = $.query.get("ref");
 				$("#register_btn").click(function() {
 					$("#register_form").css("display", "block");
@@ -58,12 +64,25 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 			    var ref = $.query.get("ref");
-				$("#submit_btn").click(function() {	    
+				$("#submit_btn").click(function() {	 
+									
 				//点击登陆按钮时进行的判断
 					if ($("#login_name").val()== "" || $("#login_psw").val()== "") {
 						alert("用户名或密码不能为空！");
 					} 
 					else {
+						if ($("#remember").prop("checked")) {
+						var username = $("#login_name").val();
+						var password = $("#login_psw").val();
+						$.cookie("rmbUser", "true", { expires: 7 }); //存储一个带7天期限的cookie
+						$.cookie("username", username, { expires: 7 });
+						$.cookie("password", password, { expires: 7 });
+						}else{
+						$.cookie("rmbUser", "false", { expire: -1 });
+						$.cookie("username", "", { expires: -1 });
+						$.cookie("password", "", { expires: -1 });
+						} 
+						
 					    var JSONObject= {
 							"username":document.getElementById("login_name").value,
 							"password":document.getElementById("login_psw").value
@@ -319,7 +338,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<label class="checkbox" style="color:#fff;">
-										<input type="checkbox" name="remember" value="1"/>记住我
+										<input type="checkbox" id="remember" name="remember" value="1"/>记住我
 									</label> 
 								</div>
 								<div class="col-md-6" style="text-align:right;margin-top:5px;">
