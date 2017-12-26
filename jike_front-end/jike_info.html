@@ -62,6 +62,12 @@
 			   return true;
 			}
 		</script>
+		<script type="text/javascript">
+			window.onbeforeunload = function(){
+				var flag1= $("#selectiList")[0].style.display;
+				return leaveInterest(flag1);
+			}
+		</script>
 		
 		<script type="text/javascript">
 			function courseCount(obj){
@@ -198,40 +204,28 @@
 				var rNum = $.query.get("r");
 				var seed = $.query.get("s");
 				$("#logout_btn").click(function() {
-				    var flag1= $("#selectiList")[0].style.display;
-					if(leaveInterest(flag1)){
 					var url="../jike_index?name=&r=&s=";
-					window.location.href = url;}
+					window.location.href = url;
 				});
 				$("#index").click(function() {
-					var flag1= $("#selectiList")[0].style.display;
-					if(leaveInterest(flag1)){
 					var url="../jike_index?name="+name+"&r="+rNum+"&s="+seed+"#home";
-					window.location.href = url;}
+					window.location.href = url;
 				});
 				$("#searchPage").click(function() {
-				    var flag1= $("#selectiList")[0].style.display;
-					if(leaveInterest(flag1)){
 					var url="../jike_search?name="+name+"&r="+rNum+"&s="+seed;
-					window.location.href = url;}
+					window.location.href = url;
 				});
 				$("#moocShare").click(function() {
-					var flag1= $("#selectiList")[0].style.display;
-					if(leaveInterest(flag1)){
 					var url="../jike_moocUpload?name="+name+"&r="+rNum+"&s="+seed;
-					window.location.href = url;}
+					window.location.href = url;
 				});
 				$("#resourceShare").click(function() {
-					var flag1= $("#selectiList")[0].style.display;
-					if(leaveInterest(flag1)){
 					var url="../jike_otherUpload?name="+name+"&r="+rNum+"&s="+seed;
-					window.location.href = url;}
+					window.location.href = url;
 				});
 				$("#userName").click(function() {
-					var flag1= $("#selectiList")[0].style.display;
-					if(leaveInterest(flag1)){
 					var url="../jike_info?name="+name+"&r="+rNum+"&s="+seed;
-					window.location.href = url;}
+					window.location.href = url;
 				});
 			});
 		</script>
