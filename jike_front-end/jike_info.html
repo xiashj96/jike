@@ -48,6 +48,14 @@
 	    <script type="text/javascript" src="../assets/js/jquery.validate.min.js" ></script>
 		<script type="text/javascript" src="../assets/js/vendor/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../assets/js/Jquery.Query.js"></script>
+		<script type="text/javascript">
+			function leaveInterest(flag1){
+			   if(flag1=="block")
+			   return confirm("确定离开此页面吗？\n未保存的内容将会丢失");
+			   else
+			   return true;
+			}
+		</script>
 		
 		<script type="text/javascript">
 			function courseCount(obj){
@@ -184,28 +192,40 @@
 				var rNum = $.query.get("r");
 				var seed = $.query.get("s");
 				$("#logout_btn").click(function() {
+				    var flag1= $("#selectiList").style.display;
+					if(leaveInterest(flag1)){
 					var url="../jike_index?name=&r=&s=";
-					window.location.href = url;
+					window.location.href = url;}
 				});
 				$("#index").click(function() {
+					var flag1= $("#selectiList").style.display;
+					if(leaveInterest(flag1)){
 					var url="../jike_index?name="+name+"&r="+rNum+"&s="+seed+"#home";
-					window.location.href = url;
+					window.location.href = url;}
 				});
 				$("#searchPage").click(function() {
+				    var flag1= $("#selectiList").style.display;
+					if(leaveInterest(flag1)){
 					var url="../jike_search?name="+name+"&r="+rNum+"&s="+seed;
-					window.location.href = url;
+					window.location.href = url;}
 				});
 				$("#moocShare").click(function() {
+					var flag1= $("#selectiList").style.display;
+					if(leaveInterest(flag1)){
 					var url="../jike_moocUpload?name="+name+"&r="+rNum+"&s="+seed;
-					window.location.href = url;
+					window.location.href = url;}
 				});
 				$("#resourceShare").click(function() {
+					var flag1= $("#selectiList").style.display;
+					if(leaveInterest(flag1)){
 					var url="../jike_otherUpload?name="+name+"&r="+rNum+"&s="+seed;
-					window.location.href = url;
+					window.location.href = url;}
 				});
 				$("#userName").click(function() {
+					var flag1= $("#selectiList").style.display;
+					if(leaveInterest(flag1)){
 					var url="../jike_info?name="+name+"&r="+rNum+"&s="+seed;
-					window.location.href = url;
+					window.location.href = url;}
 				});
 			});
 		</script>
@@ -213,58 +233,61 @@
 		<script type="text/javascript">
 			$(function() {
 				$("#moocCollect").click(function(){
-					$("#moocCollect").focus();
-					$("#displayArea").empty();
-					$("#selectiList").css("display", "none");
-					var name = $.query.get("name");
-					var JSONObject= {
-						"name":name
-					};
-					$.ajax({
-						type: "POST",
-						url:"http://123.56.26.95/moocShow/",
-						data: JSONObject,
-						dataType: "json",
-						jsonp: "callback",
-						success: function(result){
-							var length=result.length;
-							for(var i = 0, l =length; i < l; i++){
-							    var courseid=result[i].fields.courseID;
-								var Json_Object= {
-									"cID":courseid
-								};
-								$.ajax({
-									type: "POST",
-									url:"http://123.56.26.95/moocCollectShow/",
-									data: Json_Object,
-									dataType: "json",
-									jsonp: "callback",
-									success: function(result2){
-										var length2=result2.length;
-										for(var j = 0, l =length; j < l; j++){
-											var item ='<div class="row m-b-5"><div class="col-md-4">'+
-										  '<img src="'+result2[j].fields.img+'"/></div><div class="col-md-8">'+
-										  '<a id='+result2[j].fields.id+' href='+result2[j].fields.link+' onclick="courseCount(this);"><h4>'+result2[j].fields.name+'</h4></a>'+
-										  '<h6>'+result2[j].fields.school+' '+result2[j].fields.teacher+'</h6>'+
-										  '<h6>来源网站：'+result2[j].fields.source+'</h6>'+
-										  '<p>'+result2[j].fields.content+'</p>'+
-										  '<a href="javascript:void(0)" id='+result2[j].fields.id+' onclick="courseCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
-										  '<a href="javascript:void(0)" onclick="reportShow(this);" id='+result2[j].fields.id+' name='+result2[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
-										  '</div></div>';
-								          $("#displayArea").append(item);//内容添加到页面上。
+					var flag1= $("#selectiList").style.display;
+					if(leaveInterest(flag1)){
+						$("#moocCollect").focus();
+						$("#displayArea").empty();
+						$("#selectiList").css("display", "none");
+						var name = $.query.get("name");
+						var JSONObject= {
+							"name":name
+						};
+						$.ajax({
+							type: "POST",
+							url:"http://123.56.26.95/moocShow/",
+							data: JSONObject,
+							dataType: "json",
+							jsonp: "callback",
+							success: function(result){
+								var length=result.length;
+								for(var i = 0, l =length; i < l; i++){
+									var courseid=result[i].fields.courseID;
+									var Json_Object= {
+										"cID":courseid
+									};
+									$.ajax({
+										type: "POST",
+										url:"http://123.56.26.95/moocCollectShow/",
+										data: Json_Object,
+										dataType: "json",
+										jsonp: "callback",
+										success: function(result2){
+											var length2=result2.length;
+											for(var j = 0, l =length; j < l; j++){
+												var item ='<div class="row m-b-5"><div class="col-md-4">'+
+											  '<img src="'+result2[j].fields.img+'"/></div><div class="col-md-8">'+
+											  '<a id='+result2[j].fields.id+' href='+result2[j].fields.link+' onclick="courseCount(this);"><h4>'+result2[j].fields.name+'</h4></a>'+
+											  '<h6>'+result2[j].fields.school+' '+result2[j].fields.teacher+'</h6>'+
+											  '<h6>来源网站：'+result2[j].fields.source+'</h6>'+
+											  '<p>'+result2[j].fields.content+'</p>'+
+											  '<a href="javascript:void(0)" id='+result2[j].fields.id+' onclick="courseCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
+											  '<a href="javascript:void(0)" onclick="reportShow(this);" id='+result2[j].fields.id+' name='+result2[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+											  '</div></div>';
+											  $("#displayArea").append(item);//内容添加到页面上。
+											}
+										},
+										error: function(result){						
+											alert("查询失败");
 										}
-									},
-									error: function(result){						
-										alert("查询失败");
-									}
-								});
+									});
 
+								}
+							},
+							error: function(result){						
+								alert("查询失败");
 							}
-						},
-						error: function(result){						
-							alert("查询失败");
-						}
-					});		
+						});	
+                    }					
 				});	
 			});			
 		</script>
@@ -334,56 +357,59 @@
 		<script type="text/javascript">
 		$(function(){
 			$("#resourceCollect").click(function(){
-				$("#resourceCollect").focus();
-				$("#displayArea").empty();
-				$("#selectiList").css("display", "none");
-				var name = $.query.get("name");
-				var JSONObject= {
-					"name":name
-				};
-				$.ajax({
-					type: "POST",
-					url:"http://123.56.26.95/otherShow/",
-					data: JSONObject,
-					dataType: "json",
-					jsonp: "callback",
-					success: function(result){
-						var length=result.length;
-						for(var i = 0, l =length; i < l; i++){
-						    var rid=result[i].fields.otherID;
-							var Json_Object= {
-								"rID":rid
-							};
-							$.ajax({
-								type: "POST",
-								url:"http://123.56.26.95/otherCollectShow/",
-								data: Json_Object,
-								dataType: "json",
-								jsonp: "callback",
-								success: function(result2){
-									var length2=result2.length;
-									for(var j = 0, l =length; j < l; j++){
-										var item ='<div class="row m-b-5"><div class="col-md-8" style="margin-left:10%;">'+
-									  '<a id='+result2[j].fields.id+' href='+result2[j].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result2[j].fields.name+'</h4></a>'+
-									  '<h6>用户 '+result2[j].fields.uploader+' 上传于'+result2[j].fields.uploadtime+'</h6>'+
-									  '<p>'+result2[j].fields.content+'</p>'+
-									  '<a href="javascript:void(0)" id='+result2[j].fields.id+' onclick="resourceCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
-									  '<a href="javascript:void(0)" onclick="reportShow(this);" id='+result2[j].fields.id+' name='+result2[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
-									  '</div></div>';
-							          $("#displayArea").append(item);//内容添加到页面上。
+				var flag1= $("#selectiList").style.display;
+				if(leaveInterest(flag1)){
+					$("#resourceCollect").focus();
+					$("#displayArea").empty();
+					$("#selectiList").css("display", "none");
+					var name = $.query.get("name");
+					var JSONObject= {
+						"name":name
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/otherShow/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							var length=result.length;
+							for(var i = 0, l =length; i < l; i++){
+								var rid=result[i].fields.otherID;
+								var Json_Object= {
+									"rID":rid
+								};
+								$.ajax({
+									type: "POST",
+									url:"http://123.56.26.95/otherCollectShow/",
+									data: Json_Object,
+									dataType: "json",
+									jsonp: "callback",
+									success: function(result2){
+										var length2=result2.length;
+										for(var j = 0, l =length; j < l; j++){
+											var item ='<div class="row m-b-5"><div class="col-md-8" style="margin-left:10%;">'+
+										  '<a id='+result2[j].fields.id+' href='+result2[j].fields.fileAddress+' onclick="resourceCount(this);"><h4>'+result2[j].fields.name+'</h4></a>'+
+										  '<h6>用户 '+result2[j].fields.uploader+' 上传于'+result2[j].fields.uploadtime+'</h6>'+
+										  '<p>'+result2[j].fields.content+'</p>'+
+										  '<a href="javascript:void(0)" id='+result2[j].fields.id+' onclick="resourceCancel(this);"><h6 style="display: inline;">取消收藏</h6></a>'+'&nbsp&nbsp'+
+										  '<a href="javascript:void(0)" onclick="reportShow(this);" id='+result2[j].fields.id+' name='+result2[j].fields.name+'><h6 style="display: inline;">反馈</h6></a>'+
+										  '</div></div>';
+										  $("#displayArea").append(item);//内容添加到页面上。
+										}
+									},
+									error: function(result){						
+										alert("查询失败");
 									}
-								},
-								error: function(result){						
-									alert("查询失败");
-								}
-							});
+								});
 
+							}
+						},
+						error: function(result){						
+							alert("查询失败");
 						}
-					},
-					error: function(result){						
-						alert("查询失败");
-					}
-				});		
+					});
+				}				
 			});	
 		});			
 		</script>
@@ -391,35 +417,39 @@
 		<script type="text/javascript">
 		$(function(){
 			$("#userInfo").click(function(){
-				$("#userInfo").focus();
-				$("#displayArea").empty();
-				$("#selectiList").css("display", "none");
-				var name = $.query.get("name");
-				var JSONObject= {
-					"name":name
-				};
-				$.ajax({
-					type: "POST",
-					url:"http://123.56.26.95/infoShow/",
-					data: JSONObject,
-					dataType: "json",
-					jsonp: "callback",
-					success: function(result){
-						var length=result.length;
-						for(var i = 0, l =length; i < l; i++){
-							var item ='<div class="row m-b-5"><div class="col-md-8">'+
-									'<h4 style="margin-left:15%;">用户名：'+result[i].fields.username+'</h4>'+
-									'<h4 style="margin-left:15%;">电话：'+result[i].fields.phone+'</h4>'+
-									'<h4 style="margin-left:15%;">邮箱：'+result[i].fields.email+'</h4>'+
-									'<h4 style="margin-left:15%;"><a href="javascript:void(0)" data-toggle="modal" data-target="#reset">修改密码</a></h4>'+
-									'</div></div>';
-							$("#displayArea").append(item);//内容添加到页面上。
+				var flag1= $("#selectiList").style.display;
+			    if(leaveInterest(flag1)){
+					$("#userInfo").focus();
+					$("#displayArea").empty();
+					$("#selectiList").css("display", "none");
+					var name = $.query.get("name");
+					var JSONObject= {
+						"name":name
+					};
+					$.ajax({
+						type: "POST",
+						url:"http://123.56.26.95/infoShow/",
+						data: JSONObject,
+						dataType: "json",
+						jsonp: "callback",
+						success: function(result){
+							var length=result.length;
+							for(var i = 0, l =length; i < l; i++){
+								var item ='<div class="row m-b-5"><div class="col-md-8">'+
+										'<h4 style="margin-left:15%;">用户名：'+result[i].fields.username+'</h4>'+
+										'<h4 style="margin-left:15%;">电话：'+result[i].fields.phone+'</h4>'+
+										'<h4 style="margin-left:15%;">邮箱：'+result[i].fields.email+'</h4>'+
+										'<h4 style="margin-left:15%;"><a href="javascript:void(0)" data-toggle="modal" data-target="#reset">修改密码</a></h4>'+
+										'</div></div>';
+								$("#displayArea").append(item);//内容添加到页面上。
+							}
+						},
+						error: function(result){						
+							alert("查询失败");
 						}
-					},
-					error: function(result){						
-						alert("查询失败");
-					}
-				});			
+					});	
+				
+				}		
 			});
 		});			
 		</script>
