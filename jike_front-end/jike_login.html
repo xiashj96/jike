@@ -98,27 +98,26 @@
 		</script>
 		
 		<script type="text/javascript">
-		 $("#register_form").validate({  
-			rules: {  
-				username: "required",   
-				email: {  
-					email: true  
-				},
-				phone: {  
-					rangelength:[11,11],
-				}, 
-			},  
-			messages: {  
-				username: "请输入姓名",  
-				email: {    
-					email: "请输入有效电子邮箱"  
-				}, 
-				phone: {  
-					rangelength:"请输入有效手机号码"
-				},
-			}  
-		});  
-		
+		$().ready(function() {  
+			$("#register_form").validate({  
+				rules: {   
+					email: {  
+						email: true  
+					},
+					phone: {  
+						rangelength:[11,11],
+					}, 
+				},  
+				messages: {  
+					email: {    
+						email: "请输入有效电子邮箱"  
+					}, 
+					phone: {  
+						rangelength:"请输入有效手机号码"
+					},
+				}  
+			});  
+		});
 		</script>
 		
         <script type="text/javascript">
