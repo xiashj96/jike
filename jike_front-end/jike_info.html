@@ -219,6 +219,10 @@
 					var url="../jike_index?name="+name+"&r="+rNum+"&s="+seed+"#home";
 					window.location.href = url;}
 				});
+				$("#indexlogo").click(function() {
+					var url="../jike_index?name="+name+"&r="+rNum+"&s="+seed+"#home";
+					window.location.href = url;
+				});
 				$("#searchPage").click(function() {
 				    var flag1= $("#selectiList")[0].style.display;
 					if(leaveInterest(flag1)){
@@ -645,7 +649,7 @@
 				<div class="container-fluid">
 					<div>
 						<ul class="nav navbar-nav">
-						    <li><a class="navbar-brand"><b>JIKE</b></a></li>
+						    <li><a id="indexlogo" class="navbar-brand"><b>JIKE</b></a></li>
 							<li><a id="index">首页</a></li>
 							<li><a id="searchPage">搜索</a></li>
 							<li><a id="moocShare" >慕课分享</a></li>
