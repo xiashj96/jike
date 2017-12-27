@@ -7,6 +7,8 @@ from misa.views import register22
 from misa.views import run, Farest, public, publicd, Mine, resetPassword
 from misa.views import search, up
 from misa.views import userregister, otherupload, moocupload, userlogin, mooclist, resourcelist, keysearch, typesearch
+from misa.views import courseclick,resourceclick,coursecollect,resourcecollect, infoShow, moocShow, moocCollectShow
+from misa.views import otherShow, otherCollectShow, coursecancel, resourcecancel, forgetpwd, resetpwd, report, interestSave,interestShow, interestGet, recommendGet
 from django.views.static import serve
 
 admin.autodiscover()
@@ -26,9 +28,22 @@ urlpatterns = [
     url(r'^jike_otherUpload/',rb_views.jike_otherUpload),
     url(r'^jike_search/',rb_views.jike_search),
     url(r'^jike_login/',rb_views.jike_login),
+    url(r'^jike_info/',rb_views.jike_info),
     url(r'^userlogin/', userlogin),
     url(r'^up', up),
+    url(r'^interestGet', interestGet),
+    url(r'^recommendGet', recommendGet),
+    url(r'^interestSave', interestSave),
+    url(r'^interestShow', interestShow),
     url(r'^search', search),
+    url(r'^report', report),
+    url(r'^forgetpwd',forgetpwd),
+    url(r'^resetpwd',resetpwd),
+    url(r'^infoShow',infoShow),
+    url(r'^moocShow',moocShow),
+    url(r'^moocCollectShow',moocCollectShow),
+    url(r'^otherShow',otherShow),
+    url(r'^otherCollectShow',otherCollectShow),
 #    url(r'^blog/', include('blog.urls')),
     url(r'^admin/', include(admin.site.urls)),   # database admin
     url(r'^log/', login),                       # user login
@@ -42,6 +57,12 @@ urlpatterns = [
     url(r'^resourcelist/',resourcelist),
     url(r'^keysearch/',keysearch),
     url(r'^typesearch/',typesearch),
+    url(r'^coursecancel',coursecancel),
+    url(r'^resourcecancel',resourcecancel),
+    url(r'^coursecollect',coursecollect),
+    url(r'^resourcecollect',resourcecollect),
+    url(r'^courseclick',courseclick),
+    url(r'^resourceclick',resourceclick),
 #    url(r'^forgetpassword/', forgetpassword),
 #    url(r'^runworld/', runworld),
  #   url(r'^setappointmentrun/', setAppointmentRun),

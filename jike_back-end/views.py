@@ -2,8 +2,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.core import serializers
-from django.db.models import Q
-from misa.models import Member, Courserecord, News, Discussion, Jkuser, Jkmooc, Jkother, Jkcollection, Jkinterest
+from django.db.models import Q,F
+from misa.models import Member, Courserecord, News, Discussion, Jkuser, Jkmooc, Jkother, Jkmooccollection, Jkothercollection, Jkinterest, Jkreport
 #from runningbear.forms import PhotoForm
 import datetime
 import json
@@ -47,6 +47,9 @@ def jike_otherUpload(request):
 
 def jike_search(request):
     return render_to_response('jike_search.html')
+
+def jike_info(request):
+    return render_to_response('jike_info.html')
 
 def login(request):  #front end: username,password
     errors = []
@@ -235,6 +238,143 @@ def moocupload(request):
             new_upload.save()
             out_data['ret']='1'
     return HttpResponse(json.dumps(out_data), content_type="application/json")
+
+def interestSave(request):
+    out_data = {}
+    if request.method == 'POST':
+        NAME = request.POST.get('name',None)
+        I1 = request.POST.get('interest1',None)
+        I2 = request.POST.get('interest2',None)
+        I3 = request.POST.get('interest3',None)
+        Jkinterest.objects.filter(username=NAME).delete()
+        if I1!='100':
+            new_upload = Jkinterest(username=NAME,interest=I1)
+            new_upload.save()
+        if I2!='100':
+            new_upload = Jkinterest(username=NAME,interest=I2)
+            new_upload.save()
+        if I3!='100':
+            new_upload = Jkinterest(username=NAME,interest=I3)
+            new_upload.save()
+        out_data = '0'
+    return HttpResponse(out_data)
+
+def interestShow(request):
+    errors = []
+    out_list = []
+    if request.method == 'POST':
+        NAME=request.POST.get('name',None)      
+        interest = Jkinterest.objects.filter(username=NAME)
+        out_list = serializers.serialize("json", interest)
+        print(out_list)
+    #print(type(out_list))
+    return HttpResponse(out_list, content_type="application/json")
+
+def interestGet(request):
+    errors = []
+    out_list = []
+    if request.method == 'POST':
+        NAME=request.POST.get('name',None) 
+        print(NAME)     
+        interest = Jkinterest.objects.filter(username=NAME)
+        print(interest)
+        out_list = serializers.serialize("json", interest)
+        print(out_list)
+    return HttpResponse(out_list, content_type="application/json")
+
+def recommendGet(request):
+    errors = []
+    out_list = []
+    if request.method == 'POST':
+        TID=request.POST.get('typeID',None)
+        Length=request.POST.get('length',None)
+        if Length == '1':
+            allcourse = Jkmooc.objects.filter(typeID=TID)
+            allcourse = allcourse.order_by('-clicktime')[:18]
+            out_list = serializers.serialize("json",allcourse)
+        elif Length == '2':
+            allcourse = Jkmooc.objects.filter(typeID=TID)
+            allcourse = allcourse.order_by('-clicktime')[:9]
+            out_list = serializers.serialize("json",allcourse) 
+        elif Length == '3':
+            allcourse = Jkmooc.objects.filter(typeID=TID)
+            allcourse = allcourse.order_by('-clicktime')[:6]
+            out_list = serializers.serialize("json",allcourse)     
+        print(out_list)
+    #print(type(out_list))
+    return HttpResponse(out_list, content_type="application/json")
+
+
+def report(request):
+    out_data = {}
+    if request.method == 'POST':
+        print("zongzongzong!")
+        CID = request.POST.get('cID',None)
+        TITLE = request.POST.get('title',None)
+        USER = request.POST.get('name',None)
+        TEXT = request.POST.get('text',None)
+        new_upload = Jkreport(resourceID=CID,resourceTitle=TITLE,userName=USER,context=TEXT)
+        new_upload.save()
+        out_data='1'
+    return HttpResponse(out_data)
+
+def coursecancel(request):
+    out_data={}
+    if request.method == 'POST':
+        CID = request.POST.get('cID',None)
+        NAME = request.POST.get('name',None)
+        collection = Jkmooccollection.objects.filter(username=NAME,courseID=CID)
+        if len(collection) == 0:
+            print ('cancelled')
+            out_data = '2'
+        else:
+            Jkmooccollection.objects.filter(username=NAME,courseID=CID).delete()
+            out_data = '1'
+        return HttpResponse(out_data)
+
+def resourcecancel(request):
+    out_data={}
+    if request.method == 'POST':
+        RID = request.POST.get('rID',None)
+        NAME = request.POST.get('name',None)
+        collection = Jkothercollection.objects.filter(username=NAME,otherID=RID)
+        if len(collection) == 0:
+            print ('cancelled')
+            out_data = '2'
+        else:
+            Jkothercollection.objects.filter(username=NAME,otherID=RID).delete()
+            out_data = '1'
+        return HttpResponse(out_data)
+
+def coursecollect(request):
+    out_data={}
+    if request.method == 'POST':
+        CID = request.POST.get('cID',None)
+        NAME = request.POST.get('name',None)
+        collection = Jkmooccollection.objects.filter(username=NAME,courseID=CID)
+        if len(collection) != 0:
+            print ('collected')
+            out_data = '2'
+        else:
+            new_collect=Jkmooccollection(username=NAME,courseID=CID)
+            new_collect.save()
+            out_data = '1'
+        return HttpResponse(out_data)
+
+def resourcecollect(request):
+    out_data={}
+    if request.method == 'POST':
+        RID = request.POST.get('rID',None)
+        NAME = request.POST.get('name',None)
+        collection = Jkothercollection.objects.filter(username=NAME,otherID=RID)
+        if len(collection) != 0:
+            print ('collected')
+            out_data = '2'
+        else:
+            new_collect=Jkothercollection(username=NAME,otherID=RID)
+            new_collect.save()
+            out_data = '1'
+        return HttpResponse(out_data)
 	
 def register21(request):
     out_data = {}
@@ -490,6 +630,120 @@ def search(request):
     #print(type(out_list))
     return HttpResponse(out_list, content_type="application/json")
 
+def forgetpwd(request):
+    errors = []
+    out_list = {}
+    if request.method == 'POST':
+        name=request.POST.get('username',None)
+        newpassword=request.POST.get('password',None)
+        EMAIL=request.POST.get('email',None)
+        PHONE=request.POST.get('phone',None)
+        user = Jkuser.objects.filter(username=name)
+        if len(user)==0:
+            out_list='0'
+        else:
+            userinfo = Jkuser.objects.filter(username=name,phone=PHONE,email=EMAIL)
+            if len(userinfo)==0:
+                out_list='2'
+            else:
+                Jkuser.objects.filter(username=name).update(password=newpassword)
+                out_list='1'
+    return HttpResponse(out_list)
+
+def resetpwd(request):
+    errors = []
+    out_list = {}
+    if request.method == 'POST':
+        name=request.POST.get('username',None)
+        oldpassword=request.POST.get('oldpassword',None)
+        newpassword=request.POST.get('newpassword',None)
+        user = Jkuser.objects.filter(username=name,password=oldpassword)
+        if len(user)==0:
+            out_list='0'
+        else:
+            Jkuser.objects.filter(username=name).update(password=newpassword)
+            out_list='1'
+    return HttpResponse(out_list)
+
+def courseclick(request):
+    errors = []
+    out_list = []
+    if request.method == 'POST':
+        CID=request.POST.get('cID',None)
+        cid=int(CID)
+        if not CID:
+            errors.append('cID post error')
+        Jkmooc.objects.filter(id=cid).update(clicktime=F('clicktime')+1)
+    return HttpResponse(request,content_type="application/json")
+
+def resourceclick(request):
+    errors = []
+    out_list = []
+    if request.method == 'POST':
+        RID=request.POST.get('rID',None)
+        rid=int(RID)
+        if not RID:
+            errors.append('cID post error')
+        Jkother.objects.filter(id=rid).update(clicktime=F('clicktime')+1)
+    return HttpResponse(request,content_type="application/json")
+
+def infoShow(request):
+    errors = []
+    out_list = []
+    if request.method == 'POST':
+        NAME = request.POST.get('name',None)      
+        userinfo = Jkuser.objects.filter(username=NAME)
+        out_list = serializers.serialize("json", userinfo)
+        print(out_list)
+    #print(type(out_list))
+    return HttpResponse(out_list, content_type="application/json")
+
+def moocShow(request):
+    errors = []
+    out_list = []
+    if request.method == 'POST':
+        NAME = request.POST.get('name',None)      
+        moocid = Jkmooccollection.objects.filter(username=NAME)
+        out_list = serializers.serialize("json",moocid)
+        print(out_list)
+    #print(type(out_list))
+    return HttpResponse(out_list, content_type="application/json")
+
+def moocCollectShow(request):
+    errors = []
+    out_list = []
+    if request.method == 'POST':
+        cid = request.POST.get('cID',None) 
+        cid = int(cid)     
+        mooc = Jkmooc.objects.filter(id=cid)
+        out_list = serializers.serialize("json",mooc)
+        print(out_list)
+    #print(type(out_list))
+    return HttpResponse(out_list, content_type="application/json")
+
+def otherShow(request):
+    errors = []
+    out_list = []
+    if request.method == 'POST':
+        NAME = request.POST.get('name',None)      
+        otherid = Jkothercollection.objects.filter(username=NAME)
+        out_list = serializers.serialize("json",otherid)
+        print(out_list)
+    #print(type(out_list))
+    return HttpResponse(out_list, content_type="application/json")
+
+def otherCollectShow(request):
+    errors = []
+    out_list = []
+    if request.method == 'POST':
+        rid = request.POST.get('rID',None) 
+        rid = int(rid)     
+        other = Jkother.objects.filter(id=rid)
+        out_list = serializers.serialize("json",other)
+        print(out_list)
+    #print(type(out_list))
+    return HttpResponse(out_list, content_type="application/json")
+
 def mooclist(request):
     errors = []
     out_list = []
@@ -498,10 +752,10 @@ def mooclist(request):
         if not CID:
             errors.append('cID post error')
         if CID=='000':
-            allcourse = Jkmooc.objects.order_by('clicktime')[:6]
+            allcourse = Jkmooc.objects.order_by('-clicktime')[:6]
         else:
             allcourse = Jkmooc.objects.filter(typeID=CID)
-            allcourse = allcourse.order_by('clicktime')[:6]
+            allcourse = allcourse.order_by('-clicktime')[:6]
         out_list = serializers.serialize("json", allcourse)
         print(out_list)
     #print(type(out_list))
@@ -511,7 +765,7 @@ def resourcelist(request):
     errors = []
     out_list = []
     if request.method == 'POST':
-        allcourse = Jkother.objects.order_by('clicktime')[:5]
+        allcourse = Jkother.objects.order_by('-clicktime')[:5]
         out_list = serializers.serialize("json", allcourse)
         print(out_list)
     #print(type(out_list))

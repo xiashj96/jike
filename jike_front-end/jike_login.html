@@ -24,6 +24,7 @@
 	    <script type="text/javascript" src="../assets/js/jquery.validate.min.js" ></script>
 		<script type="text/javascript" src="../assets/js/vendor/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../assets/js/Jquery.Query.js"></script>
+		<script type="text/javascript" src="../assets/js/jquery.cookie.js"></script>
 				
 		<style type="text/css">
 			body{background: url(../assets/images/login.jpg) no-repeat;
@@ -40,6 +41,11 @@
 		
 		<script type="text/javascript">
 			$(function() {
+				if ($.cookie("rmbUser") == "true") {
+				$("#remember").prop("checked", true);
+				$("#login_name").val($.cookie("username"));
+				$("#login_psw").val($.cookie("password")); }
+			
 			    var ref = $.query.get("ref");
 				$("#register_btn").click(function() {
 					$("#register_form").css("display", "block");
@@ -58,12 +64,25 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 			    var ref = $.query.get("ref");
-				$("#submit_btn").click(function() {	    
+				$("#submit_btn").click(function() {	 
+									
 				//点击登陆按钮时进行的判断
 					if ($("#login_name").val()== "" || $("#login_psw").val()== "") {
 						alert("用户名或密码不能为空！");
 					} 
 					else {
+						if ($("#remember").prop("checked")) {
+						var username = $("#login_name").val();
+						var password = $("#login_psw").val();
+						$.cookie("rmbUser", "true", { expires: 7 }); //存储一个带7天期限的cookie
+						$.cookie("username", username, { expires: 7 });
+						$.cookie("password", password, { expires: 7 });
+						}else{
+						$.cookie("rmbUser", "false", { expire: -1 });
+						$.cookie("username", "", { expires: -1 });
+						$.cookie("password", "", { expires: -1 });
+						} 
+						
 					    var JSONObject= {
 							"username":document.getElementById("login_name").value,
 							"password":document.getElementById("login_psw").value
@@ -97,13 +116,98 @@
 			});
 		</script>
 		
+		<script type="text/javascript">
+		$().ready(function() {  
+			$("#register_form").validate({  
+				rules: { 
+				    username:{
+						required: true, 
+					},
+					password: {  
+						required: true,  
+						minlength: 5  
+					},
+					rpassword: {  
+						equalTo: "#register_psw"  
+					}, 
+					email: {
+					    required: true,  
+						email: true  
+					},
+					phone: {
+						required: true,
+						rangelength:[11,11],
+					}, 
+				},  
+				messages: {
+					username:{
+						required: "请输入用户名"
+					},  
+					password: {  
+						required: "请输入密码",  
+						minlength: jQuery.format("密码不能小于{0}个字符")  
+					},  
+					rpassword: {  
+						equalTo: "两次输入的密码不一样"  
+					},  
+					email: {
+						required: "请输入有效电子邮箱" ,
+						email: "请输入有效电子邮箱"  
+					}, 
+					phone: {
+						required:"请输入有效手机号码",
+						rangelength:"请输入有效手机号码"
+					},
+				}  
+			});  
+		});
+		</script>
+		
+		<script>  
+			function email_test(str){ 
+				var i,flag=0; 
+				var at_symbol=0; //“@”检测的位置 				 
+				var dot_symbol=0; //“.”检测的位置 
+					  
+				//检测“@”的位置 
+				for (i=1;i<str.length;i++) {
+					if(str.charAt(i)=='@'){ 
+						 at_symbol=i; 
+						 break; 
+					}
+				} 
+			   
+				if(at_symbol==str.length-1 || at_symbol==0) 
+					return(2); //没有邮件服务器域名
+				 
+				//简单的检测有没有“.”，以确定服务器名是否合法  
+				for(i=at_symbol+1;i<str.length;i++) {
+					if(str.charAt(i)=='.'){
+						dot_symbol=i; 
+					}
+				}
+					if(dot_symbol==0 || dot_symbol==str.length-1) {
+						return (6); 					
+					}
+								
+				return (0); //邮件名合法 
+			}
+		</script>
+		
+		
         <script type="text/javascript">
 			$(document).ready(function() {
 				$("#register").click(function() {
 				//点击注册按钮时进行的判断
+				    var password=$("#register_psw").val();
+					var emailAddress=$("#register_email").val();
+					var phoneNo=$("#register_phone").val();
 					if ($("#register_name").val()== "" || $("#register_psw").val()== "") {
 						alert("用户名或密码不能为空！");
 					} 
+					else if(password.length<5){
+					    alert("密码不能少于5个字符！");
+					}
 					else if($("#register_rpsw").val()!=$("#register_psw").val()){
 						alert("两次输入的密码不相同，请重新输入！");
 					}
@@ -111,7 +215,13 @@
 						alert("请输入电子邮箱！");
 					}
 					else if($("#register_phone").val()== ""){
-						alert("请输入联系电话！");
+						alert("请输入手机号码！");
+					}
+					else if(email_test(emailAddress)!=0){
+						alert("请输入有效的电子邮箱！");
+					}
+					else if(phoneNo.length!=11){
+						alert("请输入有效的手机号码！");
 					}
 					else {
 					    var JSONObject= {
@@ -146,6 +256,65 @@
 				});
 			});
 		</script>
+		
+		<script>
+		$(document).ready(function() {
+				$("#reset").click(function() {
+				//点击注册按钮时进行的判断
+				    var newPassword=$("#fpwd").val();
+					if ($("#fname").val()== "") {
+						alert("用户名不能为空！");
+					} 
+					else if($("#fpwd").val()==""){
+					    alert("新密码不能为空！");
+					}
+					else if(newPassword.length<5){
+						alert("新密码不能少于5个字符！");
+					}
+					else if($("#frpwd").val()!=$("#fpwd").val()){
+						alert("两次输入的新密码不相同，请重新输入！");
+					}
+					else if($("#femail").val()== ""){
+						alert("邮箱不能为空！");
+					}
+					else if($("#fphone").val()== ""){
+						alert("联系电话不能为空！");
+					}
+					else {
+					    var JSONObject= {
+							"username":document.getElementById("fname").value,
+							"password":document.getElementById("fpwd").value,
+							"email":document.getElementById("femail").value,
+							"phone":document.getElementById("fphone").value,
+						};
+						$.ajax({
+							type: "POST",
+							url: "http://123.56.26.95/forgetpwd/",
+							data: JSONObject,
+							dataType:"text",
+							success: function (result) {
+								if(result=="0"){
+									alert("用户名不存在！");
+								}
+								else if (result == "2") {
+									alert("邮箱或电话信息不正确！");
+								}
+								else{
+									alert("密码修改成功，请重新登录！");
+									$("#register_form").css("display", "none");
+									$("#login_form").css("display", "block");
+									$('#forget').modal('hide');
+								}
+							},
+							error: function () {
+								alert("向服务器请求失败，注册失败！");
+							}
+						});
+					}
+				});
+			});
+	
+		</script>
 						
 		</head>
 		
@@ -169,15 +338,15 @@
 							<div class="row">
 								<div class="col-md-6">
 									<label class="checkbox" style="color:#fff;">
-										<input type="checkbox" name="remember" value="1"/>记住我
+										<input type="checkbox" id="remember" name="remember" value="1"/>记住我
 									</label> 
 								</div>
 								<div class="col-md-6" style="text-align:right;margin-top:5px;">
-									<a id="forget_btn" class="" style="color:#fff;">忘记密码？</a>	
+									<a href="javascript:void(0)" id="forget_btn" class="" style="color:#fff;" data-toggle="modal" data-target="#forget">忘记密码？</a>	
 							    </div>
 							</div>
 							<hr />  
-							<a id="register_btn" class="" style="color:#fff;">还没有账号？立刻注册！</a>  
+							<a href="javascript:void(0)" id="register_btn" class="" style="color:#fff;">还没有账号？立刻注册！</a>  
 						</div>  
 						<div class="form-group">  
 							<input id="submit_btn" type="button" class="btn btn-success pull-right" value="登录"/>
@@ -199,7 +368,7 @@
 						</div>  
 						<div class="form-group">  
 								<i class="fa fa-lock fa-lg"></i>  
-								<input class="form-control required" id="register_psw" type="password" placeholder=" 密码" id="register_password" name="register_password"/>  
+								<input class="form-control required" id="register_psw" type="password" placeholder=" 密码（不少于5个字符）" name="password"/>  
 						</div>  
 						<div class="form-group">  
 								<i class="fa fa-check fa-lg"></i>  
@@ -211,7 +380,7 @@
 						</div>
 						<div class="form-group">  
 							<i class="fa fa-phone fa-lg"></i>  
-							<input id="register_phone" class="form-control required" type="text" placeholder=" 电话" name="phone" maxlength="16" /> 
+							<input id="register_phone" class="form-control required" type="text" placeholder=" 手机" name="phone" maxlength="16" /> 
 						</div>						
 						<div class="form-group">  
 							<input type="button" id="register" class="btn btn-success pull-right" value="注册"/>  
@@ -220,7 +389,40 @@
 					</div> 
 					<div class="col-sm-2 col-md-2"></div>
 				</form>  
-			</div>  
+			</div>
+			
+			<div class="modal fade" id="forget" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								重新设置密码
+							</h4>
+						</div>
+						<div class="modal-body">
+							<label for="fName">用户名</label>
+							<input type="text" class="form-control" id="fname" placeholder="请输入用户名">
+							<label for="fEmail">邮箱</label>
+							<input type="text" class="form-control" id="femail" placeholder="请输入注册邮箱">
+							<label for="fPhone">电话</label>
+							<input type="text" class="form-control" id="fphone" placeholder="请输入联系电话">
+							<label for="fPwd">新密码</label>
+							<input type="password" class="form-control" id="fpwd" placeholder="请输入新密码">
+							<label for="fRpwd">再次输入新密码</label>
+							<input type="password" class="form-control" id="frpwd" placeholder="请再次输入新密码">
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+							</button>
+							<button id="reset" type="button" class="btn btn-primary">修改密码
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
 			</div>  
 		
 		</body>

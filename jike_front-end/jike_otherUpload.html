@@ -48,6 +48,11 @@
 		<script type="text/javascript" src="../assets/js/vendor/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../assets/js/Jquery.Query.js"></script>
 		<script type="text/javascript">
+			window.onbeforeunload = function(){
+				return confirm("确定离开此页面吗？\n未保存的内容将会丢失");
+			}
+		</script>
+		<script type="text/javascript">
 			$(function(){
 			   getUsername();
 			});
@@ -86,9 +91,13 @@
 					window.location.href = url;
 				});
 				$("#index").click(function() {
-					var url="../jike_index?name="+name+"&r="+rNum+"&s="+seed;
+					var url="../jike_index?name="+name+"&r="+rNum+"&s="+seed+"#home";
 					window.location.href = url;
 				});
+				$("#indexlogo").click(function() {
+					var url="../jike_index?name="+name+"&r="+rNum+"&s="+seed+"#home";
+					window.location.href = url;
+				});				
 				$("#searchPage").click(function() {
 					var url="../jike_search?name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
@@ -101,8 +110,8 @@
 					var url="../jike_otherUpload?name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
 				});
-				$("#learningTips").click(function() {
-					var url="../jike_learningTips?name="+name+"&r="+rNum+"&s="+seed;
+				$("#userName").click(function() {
+					var url="../jike_info?name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
 				});
 			});
@@ -120,29 +129,27 @@
 				var myselect=document.getElementById("cID1");
 				var index=myselect.selectedIndex;
 				var name = $.query.get("name");
+				if(index==0) alert("请选择资料类别");
+				else if($('#name').val()=="") alert("请输入资料标题");
+				else if($('#inputfile').val()=="") alert("请输入附加资料文件");
+				else{
 				formData.append("cID", myselect.options[index].value);
 				formData.append("cname", $('#name').val());
 				formData.append("link", $('#link').val());
 				formData.append("uploader",name);
-				formData.append("introduction", $('#introduction').value);
+				formData.append("introduction", $('#introduction').val());
 				formData.append("file", $('#inputfile')[0].files[0]);
 				var request = new XMLHttpRequest();
-				request.onreadystatechange=state_Change;
+				request.onreadystatechange=function(){
+					if(request.readyState==4){
+						if(request.status==200){
+							alert("上传成功！");
+						}
+					}
+				}			
 				request.open("POST", "http://123.56.26.95/otherupload/");
 				request.send(formData);
-				alert("发送中，点击“确认”以继续……");
-				alert("上传成功");
-				function state_Change()
-				{
-				if (xmlhttp.readyState==4)
-				  {// 4 = "loaded"
-				  if (xmlhttp.status==200)
-					{// 200 = "OK"
-						alert("上传成功");
-					}
-				  else
-					{ alert("上传失败，请重新上传"); }
-				  }
+				return false;
 				}
 			}
 			else{
@@ -163,23 +170,22 @@
 				<div class="container-fluid">
 					<div>
 						<ul class="nav navbar-nav">
-						    <li><a class="navbar-brand"><b>JIKE</b></a></li>
+						    <li><a id="indexlogo" class="navbar-brand"><b>JIKE</b></a></li>
 							<li><a id="index">首页</a></li>
 							<li><a id="searchPage">搜索</a></li>
 							<li><a id="moocShare" >慕课分享</a></li>
 							<li class="active"><a id="resourceShare">资料上传</a></li>
-							<li><a id="learningTips">学习建议</a></li>
 							<li><a id="discussion">主题讨论</a></li>
 						</ul>
 					</div>
 					<div id="login_div" class="nav navbar-nav navbar-right">
-						<li><a id="login_btn" class="navbar-link">登录/注册</a></li>
+						<li><a href="javascript:void(0)" id="login_btn" class="navbar-link">登录/注册</a></li>
 				    </div>
 					<div id="logout_div" class="nav navbar-nav navbar-right">
-						<li><a id="logout_btn" class="navbar-link">退出</a></li>
+						<li><a href="javascript:void(0)" id="logout_btn" class="navbar-link">退出</a></li>
 				    </div>
 					<div id="welcome_div" class="nav navbar-nav navbar-right">
-						<li><a id="userName" class="navbar-link">欢迎您</a></li>
+						<li><a href="javascript:void(0)" id="userName" class="navbar-link">欢迎您</a></li>
 				    </div>
 				</div>
 			</nav>
@@ -201,7 +207,7 @@
 					<div class="container m-t-3 m-b-2">
 						<form role="form">
 							<div class="form-group">
-								<label for="cID">课程类别*</label>
+								<label for="cID">资料类别*</label>
 								<select class="form-control" id = "cID1">
 								    <option value="" selected="selected">请选择......</option>
 									<option value="101">计算机</option>
@@ -235,20 +241,20 @@
 									   placeholder="请输入资料标题（必填）" style="width:75%;">
 							</div>
 							<div class="form-group">
-								<label for="link">网站链接</label>
-								<input type="text" class="form-control" id="link"
-									   placeholder="请输入网站链接" style="width:75%;">
+								<label for="inputfile">附加文件*</label>
+								<input type="file" id="inputfile">
 							</div>
 							<div class="form-group">
-								<label for="inputfile">附加文件</label>
-								<input type="file" id="inputfile">
+								<label for="link">来源网站链接</label>
+								<input type="text" class="form-control" id="link"
+									   placeholder="请输入网站链接" style="width:75%;">
 							</div>
 							<div class="form-group">
 								<label for="introduction">资料简介</label>
                                 <textarea class="form-control" name="introduction" id="introduction" rows="8" 
 								placeholder="请输入资料信息（如：内容简介等）" style="width:75%;"></textarea>
                             </div>
-							<button type="submit" class="btn btn-default" id="upload_btn">上传</button>
+							<button type="button" class="btn btn-default" id="upload_btn">上传</button>
 						</form>
 					</div><!-- End of Container-fluid -->
 				</div>
