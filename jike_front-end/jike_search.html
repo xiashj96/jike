@@ -319,8 +319,8 @@
 				var rNum = $.query.get("r");
 				var seed = $.query.get("s");
 				var rNum2= Math.round(10000*((seed * 9301 + 49297) % 233280)/233280.0);			
-				
-			   $("#Resourcetitle").empty();
+				$("#Resourceid").empty();
+			    $("#Resourcetitle").empty();
 			    $("#reportArea").val("");
 			   if(name!=""&&rNum==rNum2){
 				   textID='<h6>资料编号：</h6><p id="reportID">'+cid+'</p>';

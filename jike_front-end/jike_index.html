@@ -592,6 +592,37 @@
 			
 			});
 		</script>
+        
+        <script>  
+			function email_test(str){ 
+				var i,flag=0; 
+				var at_symbol=0; //“@”检测的位置 				 
+				var dot_symbol=0; //“.”检测的位置 
+					  
+				//检测“@”的位置 
+				for (i=1;i<str.length;i++) {
+					if(str.charAt(i)=='@'){ 
+						 at_symbol=i; 
+						 break; 
+					}
+				} 
+			   
+				if(at_symbol==str.length-1 || at_symbol==0) 
+					return(2); //没有邮件服务器域名
+				 
+				//简单的检测有没有“.”，以确定服务器名是否合法  
+				for(i=at_symbol+1;i<str.length;i++) {
+					if(str.charAt(i)=='.'){
+						dot_symbol=i; 
+					}
+				}
+					if(dot_symbol==0 || dot_symbol==str.length-1) {
+						return (6); 					
+					}
+								
+				return (0); //邮件名合法 
+			}
+		</script>
 		
 		<!--script type="text/javascript">
 			$(function(){
@@ -870,6 +901,23 @@
 				$("#other").click(function() {
 					var url="../jike_search?name="+name+"&r="+rNum+"&s="+seed;
 					window.location.href = url;
+				});
+                $("#send_btn").click(function() {
+					var name=$("#contact_name").val();
+                    var phone=$("#contact_phone").val();
+                    var email=$("#contact_email").val();
+                    var message=$("#contact_message").val();
+                    if (name=="") alert("请输入您的姓名");
+                    else if(phone==""||phone.length<11) alert("请输入有效手机号码");
+                    else if(email==""||email_test(email)!=0) alert("请输入有效邮箱地址");
+                    else if(message=="") alert("请输入留言");
+                    else{
+                        name=$("#contact_name").val("");
+                        phone=$("#contact_phone").val("");
+                        email=$("#contact_email").val("");
+                        message=$("#contact_message").val("");
+                        alert("您的留言我们已收到，谢谢！");
+                        }    
 				});
 				$("#moocAll").click(function() {
 					$("#moocAll").focus();
@@ -1441,7 +1489,7 @@
                                 </div>
                                 <div class="col-md-3">
 									<div class="signle_service_left text-sm-center wow fadeInleft">
-										<img src="../assets/images/ecode.jpg" alt="" />
+										<img src="../assets/images/jike-QRcode.png" alt="" />
 									</div>
                                 </div>
                             </div>
@@ -1476,7 +1524,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" id="name" name="name" placeholder="您的姓名" required="">
+                                                            <input type="text" class="form-control" id="contact_name" name="name" placeholder="您的姓名" required="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1484,19 +1532,19 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="联系电话" required="">
+                                                            <input type="text" class="form-control" id="contact_phone" name="phone" placeholder="联系电话" required="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="email" class="form-control" id="email" name="email" placeholder="邮箱地址" required="">
+                                                            <input type="email" class="form-control" id="contact_email" name="email" placeholder="邮箱地址" required="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <textarea class="form-control" name="message" id="message" rows="8" placeholder="您的留言" style="width:100%;"></textarea>
+                                                            <textarea class="form-control" name="message" id="contact_message" rows="8" placeholder="您的留言" style="width:100%;"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
